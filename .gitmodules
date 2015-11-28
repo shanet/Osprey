@@ -1,0 +1,15 @@
+[submodule "libraries/Adafruit_10DOF"]
+	path = libraries/Adafruit_10DOF
+	url = git@github.com:adafruit/Adafruit_10DOF.git
+[submodule "libraries/Adafruit_BMP085_Unified"]
+	path = libraries/Adafruit_BMP085_Unified
+	url = git@github.com:adafruit/Adafruit_BMP085_Unified.git
+[submodule "libraries/Adafruit_L3GD20_U"]
+	path = libraries/Adafruit_L3GD20_U
+	url = git@github.com:adafruit/Adafruit_L3GD20_U.git
+[submodule "libraries/Adafruit_LSM303DLHC"]
+	path = libraries/Adafruit_LSM303DLHC
+	url = git@github.com:adafruit/Adafruit_LSM303DLHC.git
+[submodule "libraries/Adafruit_Sensor"]
+	path = libraries/Adafruit_Sensor
+	url = git@github.com:adafruit/Adafruit_Sensor.git

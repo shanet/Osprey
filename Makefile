@@ -61,14 +61,14 @@ MKVERSION = 1.0
 
 # Determine operating system environment.
 # Possible values are (tested): Linux, FreeBSD (on 8.1), ...
-OSNAME =	$(shell uname)
+OSNAME = $(shell uname)
 
 # Name of the program and source .ino (previously .pde) file.
 # No extension here (e.g. PROJECT = Blink).
-PROJECT ?=	osprey
+PROJECT ?= osprey
 
 # Project version. Only used for packing the source into an archive.
-VERSION ?=	1.0
+VERSION ?= 1.0
 
 # Arduino model. E.g. atmega328, mega2560, uno.
 # Valid model names can be found in $(ARDUINO_DIR)/hardware/arduino/avr/boards.txt
@@ -94,18 +94,18 @@ ARCH ?= avr
 # USBASP: e.g. /dev/ttyS0
 # It is a good idea to use udev rules to create a device name that is constant,
 # based on the serial number etc. of the USB device.
-PORT ?=		/dev/ttyACM1
+PORT ?= /dev/ttyACM1
 
 # Arduino version (e.g. 23 for 0023, or 105 for 1.0.5).
 # Make sure this matches ARDUINO_DIR below!
 #ARDUINO = 	23
-ARDUINO ?= 	165
+ARDUINO ?= 165
 
 # Location of the official Arduino IDE.
 # E.g. /usr/local/arduino, or $(HOME)/arduino
 # Make sure this matches ARDUINO above!
 #ARDUINO_DIR =	/usr/local/pckg/arduino/arduino-0023
-ARDUINO_DIR ?=	/usr/share/arduino
+ARDUINO_DIR ?= /usr/share/arduino
 
 # Arduino 0.x based on 328P now need the new programmer protocol.
 # Arduino 1.6+ uses the avr109 programmer by default
@@ -120,19 +120,20 @@ ARDUINO_DIR ?=	/usr/share/arduino
 # Standard Arduino libraries used, e.g. EEPROM, LiquidCrystal.
 # Give the name of the directory containing the library source files.
 ifndef ARDUINO_LIBS
-ARDUINO_LIBS =
-ARDUINO_LIBS += EEPROM
-ARDUINO_LIBS += Wire
-ARDUINO_LIBS += SPI
-ifdef SD  # Comment out this condition to always use the SD library.
-ARDUINO_LIBS += SD
-endif
+	ARDUINO_LIBS =
+	ARDUINO_LIBS += EEPROM
+	ARDUINO_LIBS += Wire
+	ARDUINO_LIBS += SPI
+
+	ifdef SD  # Comment out this condition to always use the SD library.
+		ARDUINO_LIBS += SD
+	endif
 endif
 
 # User libraries (in ~/sketchbook/libraries/).
 # Give the name of the directory containing the library source files.
 USER_LIBDIR ?=	./libraries
-USER_LIBS ?=
+USER_LIBS ?= Adafruit_Sensor Adafruit_10DOF  Adafruit_BMP085_Unified  Adafruit_L3GD20_U  Adafruit_LSM303DLHC
 
 # Additional pre-compiled libraries to link with.
 # Always leave the math (m) library last!
@@ -466,7 +467,7 @@ CFLAGS =	-mmcu=$(MCU) \
 		$(OPT_WARN) $(OPT_OTHER) $(CEXTRA)
 CXXFLAGS =	-mmcu=$(MCU) \
 		$(OPT_OPTIMS) $(OPT_DEBUG) $(CXXSTANDARD) $(CDEFS) \
-		$(OPT_WARN) $(OPT_OTHER) $(CEXTRA)
+		$(OPT_WARN) $(OPT_OTHER) $(CEXTRA) -fno-use-cxa-atexit
 
 
 ### Assembler flags.

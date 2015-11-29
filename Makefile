@@ -124,6 +124,7 @@ ifndef ARDUINO_LIBS
 	ARDUINO_LIBS += EEPROM
 	ARDUINO_LIBS += Wire
 	ARDUINO_LIBS += SPI
+	ARDUINO_LIBS += SoftwareSerial
 
 	ifdef SD  # Comment out this condition to always use the SD library.
 		ARDUINO_LIBS += SD
@@ -133,7 +134,7 @@ endif
 # User libraries (in ~/sketchbook/libraries/).
 # Give the name of the directory containing the library source files.
 USER_LIBDIR ?=	./libraries
-USER_LIBS ?= Adafruit_Sensor Adafruit_10DOF  Adafruit_BMP085_Unified  Adafruit_L3GD20_U  Adafruit_LSM303DLHC
+USER_LIBS ?= Adafruit_Sensor Adafruit_10DOF Adafruit_BMP085_Unified Adafruit_L3GD20_U Adafruit_LSM303DLHC Adafruit-GPS-Library
 
 # Additional pre-compiled libraries to link with.
 # Always leave the math (m) library last!

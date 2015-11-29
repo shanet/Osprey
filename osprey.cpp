@@ -1,13 +1,4 @@
-#include <Wire.h>
-#include "constants.h"
-#include "accelerometer.h"
-#include "barometer.h"
-#include "thermometer.h"
-
-#include <libraries/Adafruit_Sensor/Adafruit_Sensor.h>
-
-void initSensors(void);
-void printInitError(const char* const message);
+#include "osprey.h"
 
 void setup(void) {
   Serial.begin(9600);

@@ -13,3 +13,6 @@
 [submodule "libraries/Adafruit_Sensor"]
 	path = libraries/Adafruit_Sensor
 	url = git@github.com:adafruit/Adafruit_Sensor.git
+[submodule "libraries/Adafruit-GPS-Library"]
+	path = libraries/Adafruit-GPS-Library
+	url = git@github.com:adafruit/Adafruit-GPS-Library.git

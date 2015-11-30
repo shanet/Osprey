@@ -1,18 +1,16 @@
 #include "accelerometer.h"
 
-Adafruit_10DOF dof;
-Adafruit_LSM303_Accel_Unified accelerometer;
-Adafruit_LSM303_Mag_Unified magnetometer;
+Adafruit_10DOF Accelerometer::dof = Adafruit_10DOF();
+Adafruit_LSM303_Accel_Unified Accelerometer::accelerometer = Adafruit_LSM303_Accel_Unified(30301);
+Adafruit_LSM303_Mag_Unified Accelerometer::magnetometer = Adafruit_LSM303_Mag_Unified(30302);
 
-int initAccelerometer(void) {
-  dof = Adafruit_10DOF();
-  accelerometer = Adafruit_LSM303_Accel_Unified(30301);
-  magnetometer = Adafruit_LSM303_Mag_Unified(30302);
+Accelerometer::Accelerometer() {}
 
+int Accelerometer::init() {
   return accelerometer.begin() & magnetometer.begin();
 }
 
-float getRoll(void) {
+float Accelerometer::getRoll() {
   sensors_vec_t orientation;
   getAccelOrientation(&orientation);
 
@@ -23,7 +21,7 @@ float getRoll(void) {
   return orientation.roll;
 }
 
-float getPitch(void) {
+float Accelerometer::getPitch() {
   sensors_vec_t orientation;
   getAccelOrientation(&orientation);
 
@@ -34,7 +32,7 @@ float getPitch(void) {
   return orientation.pitch;
 }
 
-float getHeading(void) {
+float Accelerometer::getHeading() {
   sensors_vec_t orientation;
   getMagOrientation(&orientation);
 
@@ -45,14 +43,14 @@ float getHeading(void) {
   return orientation.heading;
 }
 
-void getAccelOrientation(sensors_vec_t *orientation) {
+void Accelerometer::getAccelOrientation(sensors_vec_t *orientation) {
   sensors_event_t event;
   accelerometer.getEvent(&event);
 
   dof.accelGetOrientation(&event, orientation);
 }
 
-void getMagOrientation(sensors_vec_t *orientation) {
+void Accelerometer::getMagOrientation(sensors_vec_t *orientation) {
   sensors_event_t event;
   magnetometer.getEvent(&event);
 

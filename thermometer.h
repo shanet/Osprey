@@ -3,8 +3,18 @@
 
 #include <libraries/Adafruit_BMP085_Unified/Adafruit_BMP085_U.h>
 #include "constants.h"
+#include "sensor.h"
 
-int initThermometer(void);
-float getTemperature(void);
+using namespace std;
+
+class Thermometer : public virtual Sensor {
+  public:
+    Thermometer();
+    int init();
+    float getTemperature(void);
+
+  protected:
+    static Adafruit_BMP085_Unified thermometer;
+};
 
 #endif

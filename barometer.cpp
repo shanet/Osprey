@@ -1,10 +1,12 @@
 #include "barometer.h"
 
-Adafruit_BMP085_Unified barometer;
-float groundLevel;
+Adafruit_BMP085_Unified Barometer::barometer = Adafruit_BMP085_Unified(18001);
 
-int initBarometer(void) {
-  barometer = Adafruit_BMP085_Unified(18001);
+Barometer::Barometer() {
+  thermometer = Thermometer();
+}
+
+int Barometer::init() {
   int initResult = barometer.begin();
 
   if(initResult) {
@@ -14,11 +16,7 @@ int initBarometer(void) {
   return initResult;
 }
 
-void setGroundLevel(void) {
-  groundLevel = getPressureAltitude(SENSORS_PRESSURE_SEALEVELHPA, getPressure(), getTemperature());
-}
-
-float getPressure(void) {
+float Barometer::getPressure() {
   sensors_event_t event;
   barometer.getEvent(&event);
 
@@ -29,27 +27,31 @@ float getPressure(void) {
   return event.pressure;
 }
 
-float getAltitudeAboveSeaLevel(void) {
+float Barometer::getAltitudeAboveSeaLevel() {
   float pressure = getPressure();
 
   if(pressure == NO_DATA) {
     return NO_DATA;
   }
 
-  return getPressureAltitude(PRESSURE * MERCURY_TO_HPA_CONVERSION, pressure, getTemperature());
+  return getPressureAltitude(PRESSURE * MERCURY_TO_HPA_CONVERSION, pressure, thermometer.getTemperature());
 }
 
-float getAltitudeAboveGround(void) {
+float Barometer::getAltitudeAboveGround() {
   float pressure = getPressure();
 
   if(pressure == NO_DATA) {
     return NO_DATA;
   }
 
-  return getPressureAltitude(SENSORS_PRESSURE_SEALEVELHPA, pressure, getTemperature()) - groundLevel;
+  return getPressureAltitude(SENSORS_PRESSURE_SEALEVELHPA, pressure, thermometer.getTemperature()) - groundLevel;
 }
 
-float getPressureAltitude(float setting, float pressure, float temperature) {
+float Barometer::getPressureAltitude(float setting, float pressure, float temperature) {
   // Convert atmospheric pressure, SLP and temp to altitude
   return barometer.pressureToAltitude(setting, pressure, temperature);
+}
+
+void Barometer::setGroundLevel() {
+  groundLevel = getPressureAltitude(SENSORS_PRESSURE_SEALEVELHPA, getPressure(), thermometer.getTemperature());
 }

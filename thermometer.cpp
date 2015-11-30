@@ -1,13 +1,14 @@
 #include "thermometer.h"
 
-Adafruit_BMP085_Unified thermometer;
+Adafruit_BMP085_Unified Thermometer::thermometer = Adafruit_BMP085_Unified(18001);
 
-int initThermometer(void) {
-  thermometer = Adafruit_BMP085_Unified(18001);
+Thermometer::Thermometer() {}
+
+int Thermometer::init() {
   return thermometer.begin();
 }
 
-float getTemperature(void) {
+float Thermometer::getTemperature() {
   sensors_event_t event;
   thermometer.getEvent(&event);
 

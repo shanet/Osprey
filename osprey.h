@@ -5,6 +5,7 @@
 #include "accelerometer.h"
 #include "barometer.h"
 #include "gps.h"
+#include "radio.h"
 #include "thermometer.h"
 
 void initSensors(void);

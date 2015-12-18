@@ -3,7 +3,9 @@
 SoftwareSerial GPS::gpsSerial = SoftwareSerial(3, 2);
 Adafruit_GPS GPS::gps = Adafruit_GPS(&gpsSerial);
 
-GPS::GPS() {}
+GPS::GPS() {
+  volatile char iso8601[ISO_8601_LENGTH];
+}
 
 int GPS::init() {
   // 9600 NMEA is the default baud rate for Adafruit MTK GPS's- some use 4800
@@ -43,14 +45,45 @@ SIGNAL(TIMER0_COMPA_vect) {
   GPS::gps.read();
 }
 
-Adafruit_GPS* GPS::getGPS() {
+char* GPS::getIso8601() {
+  updateBuffers();
+  return (char*)iso8601;
+}
+
+float GPS::getLatitude() {
+  return gps.latitudeDegrees;
+}
+
+float GPS::getLongitude() {
+  return gps.longitudeDegrees;
+}
+
+float GPS::getSpeed() {
+  return gps.speed;
+}
+
+float GPS::getAltitude() {
+  return gps.altitude;
+}
+
+int GPS::getQuality() {
+  return gps.fixquality;
+}
+
+void GPS::updateBuffers() {
   // If a new NMEA sentece is available, parse it
-  if(gps.newNMEAreceived()) {
-    if(!gps.parse(gps.lastNMEA())) {
-      // Parsing of the sentence failed. Nothing to return.
-      return NULL;
-    }
+  if(gps.newNMEAreceived() && !gps.parse(gps.lastNMEA())) {
+    return;
   }
 
+  updateIso8601();
+}
+
+void GPS::updateIso8601() {
+  sprintf((char*)iso8601, "20%d-%02d-%02dT%02d:%02d:%02d.%02dZ", gps.year, gps.month, gps.day, gps.hour, gps.minute, gps.seconds, gps.milliseconds);
+}
+
+Adafruit_GPS* GPS::getRawGPS() {
+  updateBuffers();
   return &gps;
 }

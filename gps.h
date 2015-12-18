@@ -5,20 +5,33 @@
 #include <SoftwareSerial.h>
 #include "sensor.h"
 
+#define ISO_8601_LENGTH 32
+
 using namespace std;
 
 class GPS : public virtual Sensor {
   public:
     GPS();
     int init();
-    Adafruit_GPS* getGPS(void);
+
+    char* getIso8601();
+    float getLatitude();
+    float getLongitude();
+    float getSpeed();
+    float getAltitude();
+    int getQuality();
+
+    Adafruit_GPS* getRawGPS();
+    void updateBuffers();
 
     static Adafruit_GPS gps;
 
   protected:
-    static SoftwareSerial gpsSerial;
+    void setInterrupt(bool useInterrupt);
+    void updateIso8601();
 
-    void setInterrupt(boolean useInterrupt);
+    volatile char iso8601[];
+    static SoftwareSerial gpsSerial;
 };
 
 #endif

@@ -3,88 +3,51 @@
 Accelerometer accelerometer;
 Barometer barometer;
 GPS gps;
+Radio radio;
 Thermometer thermometer;
 
 void setup(void) {
-  Serial.begin(115200);
   initSensors();
-  Serial.println("Ready to roll.\n");
+  radio.send("Ready to roll.\r\n");
 }
 
 void loop(void) {
-  Serial.print("Roll: ");
-  Serial.print(accelerometer.getRoll());
+  radio.send("Roll: ");
+  radio.send(accelerometer.getRoll());
 
-  Serial.print(" | Pitch: ");
-  Serial.print(accelerometer.getPitch());
+  radio.send(" | Pitch: ");
+  radio.send(accelerometer.getPitch());
 
-  Serial.print(" | Heading: ");
-  Serial.print(accelerometer.getHeading());
+  radio.send(" | Heading: ");
+  radio.send(accelerometer.getHeading());
 
-  Serial.print(" | Press. Alt: ");
-  Serial.print(barometer.getAltitudeAboveSeaLevel());
+  radio.send(" | Press. Alt: ");
+  radio.send(barometer.getAltitudeAboveSeaLevel());
 
-  Serial.print(" | AGL: ");
-  Serial.print(barometer.getAltitudeAboveGround());
+  radio.send(" | AGL: ");
+  radio.send(barometer.getAltitudeAboveGround());
 
-  Serial.print(" | Temp: ");
-  Serial.print(thermometer.getTemperature());
+  radio.send(" | Temp: ");
+  radio.send(thermometer.getTemperature());
 
-  Adafruit_GPS *gps_data = gps.getGPS();
+  radio.send(" | ISO8601: ");
+  radio.send(gps.getIso8601());
 
-  if(gps_data) {
-    if(gps_data->fix) {
-      Serial.print(" | Time: ");
-      Serial.print(gps_data->hour, DEC);
-      Serial.print(':');
-      Serial.print(gps_data->minute, DEC);
-      Serial.print(':');
-      Serial.print(gps_data->seconds, DEC);
-      Serial.print('.');
-      Serial.print(gps_data->milliseconds);
+  radio.send(" | Location: ");
+  radio.send(gps.getLatitude(), 6);
+  radio.send(", ");
+  radio.send(gps.getLongitude(), 6);
 
-      Serial.print(" | Date: ");
-      Serial.print(gps_data->day, DEC);
-      Serial.print('/');
-      Serial.print(gps_data->month, DEC);
-      Serial.print("/20");
-      Serial.print(gps_data->year, DEC);
+  radio.send(" | Speed (kt): ");
+  radio.send(gps.getSpeed());
 
-      Serial.print(" | Fix: ");
-      Serial.print((int)gps_data->fix);
+  radio.send(" | Altitude: ");
+  radio.send(gps.getAltitude());
 
-      Serial.print(" | Quality: ");
-      Serial.print((int)gps_data->fixquality);
+  radio.send(" | Quality: ");
+  radio.send(gps.getQuality());
 
-      Serial.print(" | Location: ");
-      Serial.print(gps_data->latitude, 4);
-      Serial.print(gps_data->lat);
-      Serial.print(", ");
-      Serial.print(gps_data->longitude, 4);
-      Serial.print(gps_data->lon);
-
-      Serial.print(" | Location (degrees): ");
-      Serial.print(gps_data->latitudeDegrees, 4);
-      Serial.print(", ");
-      Serial.print(gps_data->longitudeDegrees, 4);
-
-      Serial.print(" | Speed (kt): ");
-      Serial.print(gps_data->speed);
-
-      Serial.print(" | Angle: ");
-      Serial.print(gps_data->angle);
-
-      Serial.print(" | Altitude: ");
-      Serial.print(gps_data->altitude);
-
-      Serial.print(" | Satellites: ");
-      Serial.print((int)gps_data->satellites);
-    } else {
-      Serial.print(" | No GPS Fix");
-    }
-  }
-
-  Serial.println("");
+  radio.send("\r\n");
   delay(1000);
 }
 
@@ -97,18 +60,23 @@ void initSensors(void) {
     printInitError("Failed to intialize barometer");
   }
 
-  if(!thermometer.init()) {
-    printInitError("Failed to intialize thermometer");
-  }
-
   if(!gps.init()) {
     printInitError("Failed to intialize GPS");
+  }
+
+  if(!radio.init()) {
+    printInitError("Failed to intialize radio");
+  }
+
+  if(!thermometer.init()) {
+    printInitError("Failed to intialize thermometer");
   }
 }
 
 void printInitError(const char* const message) {
   while(1) {
-    Serial.println(message);
+    radio.send(message);
+    radio.send("\r\n");
     delay(1000);
   }
 }

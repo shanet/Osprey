@@ -8,5 +8,12 @@
 #include "radio.h"
 #include "thermometer.h"
 
-void initSensors(void);
+Accelerometer accelerometer;
+Barometer barometer;
+GPS gps;
+Radio radio;
+Thermometer thermometer;
+
+void printJSON();
+void initSensors();
 void printInitError(const char* const message);

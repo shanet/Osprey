@@ -1,54 +1,60 @@
 #include "osprey.h"
 
-Accelerometer accelerometer;
-Barometer barometer;
-GPS gps;
-Radio radio;
-Thermometer thermometer;
-
 void setup(void) {
   initSensors();
   radio.send("Ready to roll.\r\n");
 }
 
 void loop(void) {
-  radio.send("Roll: ");
+  printJSON();
+  delay(1000);
+}
+
+void printJSON() {
+  // The JSON structure is simple enough. Rather than bringing in another library to do a bunch
+  // of heavylifting, just construct the string manually.
+
+  radio.send("{");
+
+  radio.send("\"roll\": ");
   radio.send(accelerometer.getRoll());
 
-  radio.send(" | Pitch: ");
+  radio.send(", \"pitch\": ");
   radio.send(accelerometer.getPitch());
 
-  radio.send(" | Heading: ");
+  radio.send(", \"heading\": ");
   radio.send(accelerometer.getHeading());
 
-  radio.send(" | Press. Alt: ");
+  radio.send(", \"pressure_altitude\": ");
   radio.send(barometer.getAltitudeAboveSeaLevel());
 
-  radio.send(" | AGL: ");
+  radio.send(", \"agl\": ");
   radio.send(barometer.getAltitudeAboveGround());
 
-  radio.send(" | Temp: ");
+  radio.send(", \"temp\": ");
   radio.send(thermometer.getTemperature());
 
-  radio.send(" | ISO8601: ");
+  radio.send(", \"iso8601\": \"");
   radio.send(gps.getIso8601());
+  radio.send("\"");
 
-  radio.send(" | Location: ");
+  radio.send(", \"latitude\": ");
   radio.send(gps.getLatitude(), 6);
-  radio.send(", ");
+
+  radio.send(", \"longitude\": ");
   radio.send(gps.getLongitude(), 6);
 
-  radio.send(" | Speed (kt): ");
+  radio.send(", \"speed\": ");
   radio.send(gps.getSpeed());
 
-  radio.send(" | Altitude: ");
+  radio.send(", \"gps_altitude\": ");
   radio.send(gps.getAltitude());
 
-  radio.send(" | Quality: ");
+  radio.send(", \"gps_quality\": ");
   radio.send(gps.getQuality());
 
+  radio.send("}");
   radio.send("\r\n");
-  delay(1000);
 }
 
 void initSensors(void) {

@@ -1,10 +1,15 @@
 #ifndef RADIO_H
 #define RADIO_H
 
-#include <Arduino.h>
-#include "sensor.h"
-
+#define F_CPU 16000000UL
+#define BAUD 9600
 #define RADIO_MAX_LINE_LENGTH 128
+
+#include <Arduino.h>
+#include <avr/io.h>
+#include <util/setbaud.h>
+
+#include "sensor.h"
 
 using namespace std;
 

@@ -10,7 +10,20 @@ volatile int Radio::messagePosition = 0;
 Radio::Radio() {}
 
 int Radio::init() {
-  Serial.begin(115200);
+  UBRR0H = UBRRH_VALUE;
+  UBRR0L = UBRRL_VALUE;
+
+  #if USE_2X
+    UCSR0A |= _BV(U2X0);
+  #else
+    UCSR0A &= ~(_BV(U2X0));
+  #endif
+
+  // Use 8-bit data
+  UCSR0C = _BV(UCSZ01) | _BV(UCSZ00);
+
+  // Enable RX and TX
+  UCSR0B = _BV(RXEN0) | _BV(TXEN0);
 
   // Set an interrupt to read the radio data once every millisecond
   setInterrupt(true);
@@ -38,8 +51,12 @@ SIGNAL(TIMER0_COMPB_vect) {
 }
 
 void Radio::send(const char* const message) {
-  //radioSerial.write(message);
-  Serial.print(message);
+  for(int i=0; message[i] != '\0'; i++) {
+    // Only write data to the URD0 register when the USART data register empty bit is set. Only when this
+    // is empty can we write new data to be transmitted to the register.
+    loop_until_bit_is_set(UCSR0A, UDRE0);
+    UDR0 = message[i];
+  }
 }
 
 void Radio::send(float message, int precision) {
@@ -61,11 +78,12 @@ char* Radio::recv() {
 }
 
 char Radio::read() {
-  if(!Serial.available()) {
+  // Only read data from the URD) register if the receive complete bit (RXC0) is set on the UCSR0A register
+  if(bit_is_clear(UCSR0A, RXC0)) {
     return 0;
   }
 
-  char c = Serial.read();
+  char c = UDR0;
 
   // If the end of the line, set a NUL terminator and swap the message buffers
   if(c == '\n') {

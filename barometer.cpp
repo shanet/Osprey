@@ -1,6 +1,7 @@
 #include "barometer.h"
 
 Adafruit_BMP085_Unified Barometer::barometer = Adafruit_BMP085_Unified(18001);
+float Barometer::pressureSetting = DEFAULT_PRESSURE_SETTING;
 
 Barometer::Barometer() {
   thermometer = Thermometer();
@@ -34,7 +35,7 @@ float Barometer::getAltitudeAboveSeaLevel() {
     return NO_DATA;
   }
 
-  return getPressureAltitude(PRESSURE * MERCURY_TO_HPA_CONVERSION, pressure, thermometer.getTemperature());
+  return getPressureAltitude(pressureSetting * MERCURY_TO_HPA_CONVERSION, pressure, thermometer.getTemperature());
 }
 
 float Barometer::getAltitudeAboveGround() {
@@ -45,6 +46,18 @@ float Barometer::getAltitudeAboveGround() {
   }
 
   return getPressureAltitude(SENSORS_PRESSURE_SEALEVELHPA, pressure, thermometer.getTemperature()) - groundLevel;
+}
+
+void Barometer::setPressureSetting(float pressureSetting) {
+  Barometer::pressureSetting = pressureSetting;
+}
+
+float Barometer::getPressureSetting() {
+  return pressureSetting;
+}
+
+void Barometer::zero() {
+  setGroundLevel();
 }
 
 float Barometer::getPressureAltitude(float setting, float pressure, float temperature) {

@@ -1,4 +1,9 @@
-#define PRESSURE 30.17 // inches of mercury
-
 #define NO_DATA -1
 #define MERCURY_TO_HPA_CONVERSION 33.8638866667
+#define DEFAULT_PRESSURE_SETTING 29.92 // inches of mercury
+
+#define COMMAND_ZERO_SENSORS 0
+#define COMMAND_SET_PRESSURE 1
+
+#define COMMAND_ERR 0
+#define COMMAND_ACK 1

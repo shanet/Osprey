@@ -14,6 +14,9 @@ GPS gps;
 Radio radio;
 Thermometer thermometer;
 
+char commandStatus;
+
 void printJSON();
+void processCommand();
 void initSensors();
 void printInitError(const char* const message);

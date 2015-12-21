@@ -13,13 +13,17 @@ class Barometer : public virtual Sensor {
   public:
     Barometer();
     int init();
+    float getPressure();
     float getAltitudeAboveSeaLevel();
     float getAltitudeAboveGround();
-    float getPressure();
-    float getTemperature();
+    void setPressureSetting(float pressure);
+    float getPressureSetting();
+    void zero();
 
   protected:
     static Adafruit_BMP085_Unified barometer;
+    static float pressureSetting;
+
     Thermometer thermometer;
     float groundLevel;
 

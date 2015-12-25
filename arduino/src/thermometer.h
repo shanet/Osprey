@@ -1,7 +1,7 @@
 #ifndef THERMOMETER_H
 #define THERMOMETER_H
 
-#include <libraries/Adafruit_BMP085_Unified/Adafruit_BMP085_U.h>
+#include <lib/Adafruit_BMP085_Unified/Adafruit_BMP085_U.h>
 #include "constants.h"
 #include "sensor.h"
 

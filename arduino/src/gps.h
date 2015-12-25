@@ -1,7 +1,7 @@
 #ifndef GPS_H
 #define GPS_H
 
-#include <libraries/Adafruit-GPS-Library/Adafruit_GPS.h>
+#include <lib/Adafruit-GPS-Library/Adafruit_GPS.h>
 #include <SoftwareSerial.h>
 #include "sensor.h"
 

@@ -1,4 +1,4 @@
-#include <libraries/Adafruit_Sensor/Adafruit_Sensor.h>
+#include <lib/Adafruit_Sensor/Adafruit_Sensor.h>
 #include <Wire.h>
 
 #include "constants.h"

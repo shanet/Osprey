@@ -3,6 +3,8 @@
 
 #include <lib/Adafruit-GPS-Library/Adafruit_GPS.h>
 #include <SoftwareSerial.h>
+#include <Wire.h>
+
 #include "sensor.h"
 
 #define ISO_8601_LENGTH 32

@@ -1,6 +1,3 @@
-#include <lib/Adafruit_Sensor/Adafruit_Sensor.h>
-#include <Wire.h>
-
 #include "constants.h"
 #include "accelerometer.h"
 #include "barometer.h"

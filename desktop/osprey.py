@@ -10,14 +10,10 @@ import signal
 import serial
 import threading
 
+from command import Command, InvalidCommandError
+
 ARDUINO_BLOCK_DEVICE = '/dev/ttyUSB0'
 BAUD_RATE = 9600
-
-COMMAND_ZERO = 0
-COMMAND_SET_PRESSURE = 1
-
-COMMAND_ERR = 0
-COMMAND_ACK = 1
 
 class Osprey(object):
   freezeDisplay = False
@@ -77,7 +73,7 @@ class Osprey(object):
           lines.append('GPS Quality: %d' % parsedData['gps_quality'])
 
           lines.append('Previous Command: %s' % parsedData['previous_command'])
-          lines.append('Command Status: %s' % ('ACK' if parsedData['command_status'] == COMMAND_ACK else 'ERR'))
+          lines.append('Command Status: %s' % ('ACK' if parsedData['command_status'] == Command.COMMAND_ACK else 'ERR'))
 
           self.displayLines(lines)
         except Exception as exception:
@@ -124,9 +120,9 @@ class Osprey(object):
     self.outputWindow.scrollok(True)
 
   def makeInputWindow(self):
-    self.inputWindow = self.screen.subwin(1, self.width-1, self.height-2, 1)
+    self.inputWindow = self.screen.subwin(1, self.width-3, self.height-2, 1)
 
-    self.input = curses.textpad.Textbox(self.inputWindow)
+    self.input = curses.textpad.Textbox(self.inputWindow, insert_mode=True)
     curses.textpad.rectangle(self.screen, self.height-3, 0, self.height-1, self.width-2)
     self.inputWindow.move(0, 0)
 
@@ -141,9 +137,9 @@ class CursesSendThread(threading.Thread):
 
     while True:
       message = self.curses.input.edit(self.inputValidator)[:-1]
-      self.sendCommandToClient(message.strip())
+      self.sendCommandToClient(message)
       self.curses.screen.refresh()
-      self.clearChatInput()
+      self.clearCommandInput()
 
   def inputValidator(self, char):
     if char == curses.KEY_HOME:
@@ -155,39 +151,18 @@ class CursesSendThread(threading.Thread):
     else:
       return char
 
-  def clearChatInput(self):
+  def clearCommandInput(self):
     self.curses.inputWindow.deleteln()
     self.curses.inputWindow.move(0, 0)
     self.curses.inputWindow.deleteln()
 
-  def sendCommandToClient(self, command):
+  def sendCommandToClient(self, input):
     try:
-      message = self.commandToMessage(command)
-      self.curses.serial.write(message.encode())
-    except Exception as e:
+      command = Command(input)
+      self.curses.serial.write(command.encode())
+    except InvalidCommandError as e:
       self.curses.displayLines([str(e)], minTime=3)
       return
-
-  def commandToMessage(self, input):
-    parts = input.split(' ')
-
-    # if len(parts) > 2:
-      # raise Exception('Invalid Message: Too many arguments: %d' % len(parts))
-
-    command = parts[0]
-    if command == 'zero':
-      command_num = COMMAND_ZERO
-    elif command == 'pressure':
-      command_num = COMMAND_SET_PRESSURE
-    else:
-      raise Exception('Invalid Message: Unknown command')
-
-    if len(parts) > 1:
-      arg = parts[1]
-    else:
-      arg = ''
-
-    return "%d%s\n" % (command_num, str(arg))
 
 def signalHandler(signalNum, frame):
   if signalNum == int(signal.SIGALRM):

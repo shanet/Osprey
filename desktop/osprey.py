@@ -156,6 +156,8 @@ class CursesSendThread(threading.Thread):
       return curses.ascii.ENQ
     elif char == curses.KEY_ENTER or char == ord('\n'):
       return curses.ascii.BEL
+    elif char == curses.ascii.DEL:
+      return curses.ascii.BS
     else:
       return char
 

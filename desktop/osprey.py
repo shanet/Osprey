@@ -89,6 +89,7 @@ class Osprey(object):
 
     self.makeOutputWindow()
     self.makeInputWindow()
+    self.makeStatusWindow()
     self.screen.refresh()
 
   def displayLines(self, lines, minTime=None):
@@ -120,11 +121,18 @@ class Osprey(object):
     self.outputWindow.scrollok(True)
 
   def makeInputWindow(self):
-    self.inputWindow = self.screen.subwin(1, self.width-3, self.height-2, 1)
+    self.inputWindow = self.screen.subwin(1, self.width-26, self.height-2, 1)
 
     self.input = curses.textpad.Textbox(self.inputWindow, insert_mode=True)
-    curses.textpad.rectangle(self.screen, self.height-3, 0, self.height-1, self.width-2)
+    curses.textpad.rectangle(self.screen, self.height-3, 0, self.height-1, self.width-25)
     self.inputWindow.move(0, 0)
+
+  def makeStatusWindow(self):
+    status = 'Osprey Debug Console'
+
+    self.statusWindow = self.screen.subwin(self.height-3, self.width-24)
+    self.statusWindow.border(0)
+    self.statusWindow.addstr(1, 2, status)
 
 class CursesSendThread(threading.Thread):
   def __init__(self, curses):

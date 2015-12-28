@@ -1,2 +1,4 @@
-bin/*
+arduino/bin/*
 *.log
+
+*.py[cod]

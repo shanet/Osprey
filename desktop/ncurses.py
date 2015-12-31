@@ -1,21 +1,18 @@
 import curses
 import curses.ascii
 import curses.textpad
-import datetime
-import dateutil.parser
-import json
 import signal
-import serial
 import threading
 
 from command import Command, InvalidCommandError
+from radio import Radio
 
 class OspreyNcurses(object):
   freezeDisplay = False
 
   def __init__(self, blockDevice, baudRate):
-    self.serial = serial.Serial(blockDevice, baudRate)
     signal.signal(signal.SIGALRM, ncursesSignalHandler)
+    self.radio = Radio(blockDevice, baudRate)
 
   def start(self):
     curses.wrapper(self.run)
@@ -33,50 +30,37 @@ class OspreyNcurses(object):
     self.read()
 
   def read(self):
-    with open('osprey.log', 'w') as log:
-      self.displayLines(['Waiting for data...'])
+    self.displayLines(['Waiting for data...'])
 
-      while True:
-        rawData = str(self.serial.readline())[2:-5]
+    while True:
+      try:
+        curData = self.radio.read()
 
-        try:
-          parsedData = json.loads(rawData)
+        lines = []
 
-          log.write("%s\n" % json.dumps(parsedData))
+        lines.append('Time: %s' % curData['timestamp'])
+        lines.append('Coordinates: %f, %f' % (curData['latitude'], curData['longitude']))
 
-          try:
-            timestamp = dateutil.parser.parse(parsedData['iso8601'])
-            timestamp = timestamp.strftime('%b %d %Y %H.%M.%S:%f')[:-3]
-          except:
-            timestamp = parsedData['iso8601']
+        lines.append('Roll: %.2f\xb0' % curData['roll'])
+        lines.append('Pitch: %.2f\xb0' % curData['pitch'])
+        lines.append('Heading: %.2f\xb0' % curData['heading'])
 
-          lines = []
+        lines.append('Pressure Altitude: %.2fm' % curData['pressure_altitude'])
+        lines.append('GPS Altitude: %.2fm' % curData['gps_altitude'])
+        lines.append('Above Ground Level: %.2fm' % curData['agl'])
+        lines.append('Pressure Setting: %.2f\" Hg' % curData['pressure_setting'])
 
-          lines.append('Time: %s' % timestamp)
-          lines.append('Coordinates: %f, %f' % (parsedData['latitude'], parsedData['longitude']))
+        lines.append('Temperature: %.2f\xb0C' % curData['temp'])
+        lines.append('GPS Speed: %.2fkt' % curData['speed'])
+        lines.append('GPS Quality: %d' % curData['gps_quality'])
 
-          lines.append('Roll: %.2f\xb0' % parsedData['roll'])
-          lines.append('Pitch: %.2f\xb0' % parsedData['pitch'])
-          lines.append('Heading: %.2f\xb0' % parsedData['heading'])
+        lines.append('Previous Command: %s' % curData['previous_command'])
+        lines.append('Command Status: %s' % ('ACK' if curData['command_status'] == Command.COMMAND_ACK else 'ERR'))
 
-          lines.append('Pressure Altitude: %.2fm' % parsedData['pressure_altitude'])
-          lines.append('GPS Altitude: %.2fm' % parsedData['gps_altitude'])
-          lines.append('Above Ground Level: %.2fm' % parsedData['agl'])
-          lines.append('Pressure Setting: %.2f\" Hg' % parsedData['pressure_setting'])
-
-          lines.append('Temperature: %.2f\xb0C' % parsedData['temp'])
-          lines.append('GPS Speed: %.2fkt' % parsedData['speed'])
-          lines.append('GPS Quality: %d' % parsedData['gps_quality'])
-
-          lines.append('Previous Command: %s' % parsedData['previous_command'])
-          lines.append('Command Status: %s' % ('ACK' if parsedData['command_status'] == Command.COMMAND_ACK else 'ERR'))
-
-          self.displayLines(lines)
-        except Exception as exception:
-          errString = "Invalid JSON: %s:\n%s" % (exception, rawData)
-          self.displayLines([errString])
-          log.write(errString)
-          continue
+        self.displayLines(lines)
+      except Exception as exception:
+        self.displayLines([str(exception)])
+        continue
 
   def drawUI(self):
     self.setColors()

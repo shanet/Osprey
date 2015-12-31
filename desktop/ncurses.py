@@ -13,8 +13,8 @@ from command import Command, InvalidCommandError
 class OspreyNcurses(object):
   freezeDisplay = False
 
-  def __init__(self, block_device, baud_rate):
-    self.serial = serial.Serial(block_device, baud_rate)
+  def __init__(self, blockDevice, baudRate):
+    self.serial = serial.Serial(blockDevice, baudRate)
     signal.signal(signal.SIGALRM, ncursesSignalHandler)
 
   def start(self):

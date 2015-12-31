@@ -5,25 +5,23 @@ import signal
 import argparse
 
 from ncurses import OspreyNcurses
+from qt import OspreyQt
 
 DEFAULT_BLOCK_DEVICE = '/dev/ttyUSB0'
 DEFAULT_BAUD_RATE = 9600
 
-ncursesUI = None
-qtUI = None
+ui = None
 
 def main():
   signal.signal(signal.SIGINT, signalHandler)
   args = parseCmdLineArgs()
 
   if args.ncurses:
-    global ncursesUI
-    ncursesUI = OspreyNcurses(args.device, args.baud)
-    ncursesUI.start()
+    ui = OspreyNcurses(args.device, args.baud)
   else:
-    # TODO
-    pass
+    ui = OspreyQt(args.device, args.baud)
 
+  ui.start()
   sys.exit(0)
 
 def parseCmdLineArgs():
@@ -38,10 +36,8 @@ def parseCmdLineArgs():
     return args
 
 def signalHandler(signal, frame):
-  if ncursesUI is not None:
-    ncursesUI.stop()
-  elif qtUI is not None:
-    qtUI.stop()
+  if ui is not None:
+    ui.stop()
 
   sys.exit(0)
 

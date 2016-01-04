@@ -1,3 +1,4 @@
+import numpy
 import sys
 import threading
 import time
@@ -16,6 +17,10 @@ from PySide.QtGui import QMessageBox
 from PySide.QtGui import QPushButton
 from PySide.QtGui import QWidget
 from PySide.QtGui import QVBoxLayout
+
+from pyqtgraph import mkPen
+from pyqtgraph import PlotDataItem
+from pyqtgraph import PlotWidget
 
 import constants
 
@@ -46,19 +51,23 @@ class OspreyQt(QApplication):
     self.quit()
 
 class QPrimaryWindow(QMainWindow):
-  updateDisplaysSignal = Signal(dict)
+  updateDatasetSignal = Signal(dict)
 
   def __init__(self, radio):
     QMainWindow.__init__(self)
     self.radio = radio
+    self.numDataPoints = 0
     self.dataDisplays = {}
-    self.updateDisplaysSignal.connect(self.updateDisplaysSlot)
+    self.updateDatasetSignal.connect(self.updateDatasetSlot)
+    self.createDataBuffers()
 
     dataDisplaysLayout = self.buildDataDisplayGrid()
+    graphsLayout = self.buildGraphs()
     commandInputLayout = self.buildCommandInput()
 
     centralLayout = QVBoxLayout()
     centralLayout.addLayout(dataDisplaysLayout)
+    centralLayout.addLayout(graphsLayout)
     centralLayout.addStretch(1)
     centralLayout.addLayout(commandInputLayout)
 
@@ -67,6 +76,20 @@ class QPrimaryWindow(QMainWindow):
     self.centralWidget.setLayout(centralLayout)
 
     self.setCentralWidget(self.centralWidget)
+
+  def createDataBuffers(self):
+    self.dataBuffers = {}
+
+    for display in constants.DISPLAYS:
+      plotData = PlotDataItem()
+
+      if 'color' in display:
+        plotData.setPen(mkPen({'color': display['color']}))
+
+      self.dataBuffers[display['field']] = {
+        'plotData': plotData,
+        'points': numpy.zeros((1000, 2)),
+      }
 
   def buildDataDisplayGrid(self):
     grid = QGridLayout()
@@ -95,11 +118,41 @@ class QPrimaryWindow(QMainWindow):
 
     return hbox
 
+  def buildGraphs(self):
+    vbox = QVBoxLayout()
+
+    accelerometerGraph = PlotWidget(title='Orientation', labels={'left': ('Degrees', 'degrees'), 'bottom': ('Time', 'seconds')})
+    accelerometerGraph.addItem(self.dataBuffers['roll']['plotData'])
+    accelerometerGraph.addItem(self.dataBuffers['pitch']['plotData'])
+    accelerometerGraph.addItem(self.dataBuffers['heading']['plotData'])
+
+    vbox.addWidget(accelerometerGraph)
+
+    return vbox
+
   @Slot(dict)
-  def updateDisplaysSlot(self, dataset):
+  def updateDatasetSlot(self, dataset):
+    self.updateDataBuffers(dataset)
+    self.updateDataDisplays(dataset)
+    self.updateGraphs(dataset)
+
+  def updateDataBuffers(self, dataset):
+    for key, data in dataset.items():
+      if key in self.dataBuffers and isinstance(data, float):
+        self.dataBuffers[key]['points'][self.numDataPoints] = (self.numDataPoints, data)
+
+    self.numDataPoints += 1
+
+  def updateDataDisplays(self, dataset):
     for key, data in dataset.items():
       if key in self.dataDisplays:
         self.dataDisplays[key].setData(data)
+
+  def updateGraphs(self, dataset):
+    for key, data in dataset.items():
+      if key in self.dataBuffers:
+        points = self.dataBuffers[key]['points']
+        self.dataBuffers[key]['plotData'].setData(points[0:self.numDataPoints])
 
   def sendCommand(self):
     try:
@@ -120,7 +173,7 @@ class RadioThread(threading.Thread):
     while True:
       try:
         data = self.radio.read()
-        self.window.updateDisplaysSignal.emit(data)
+        self.window.updateDatasetSignal.emit(data)
       except Exception as exception:
         print(exception)
       finally:

@@ -13,16 +13,19 @@ DISPLAYS = [
     'label': 'Roll',
     'field': 'roll',
     'units': '\xb0',
+    'color': 'FF0000',
   },
   {
     'label': 'Pitch',
     'field': 'pitch',
     'units': '\xb0',
+    'color': '00FF00',
   },
   {
     'label': 'Heading',
     'field': 'heading',
     'units': '\xb0',
+    'color': '0000FF',
   },
   {
     'label': 'Pressure Altitude',

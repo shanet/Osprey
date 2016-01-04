@@ -16,6 +16,7 @@ class Radio(object):
     try:
       parsedData = json.loads(rawData)
       self.parseTimestamp(parsedData)
+      self.addCoordinatesString(parsedData)
 
       self.log.write("%s\n" % json.dumps(parsedData))
       return parsedData
@@ -30,3 +31,9 @@ class Radio(object):
       data['timestamp'] = data['timestamp'].strftime('%b %d %Y %H.%M.%S:%f')[:-3]
     except:
       data['timestamp'] = data['iso8601']
+
+  def addCoordinatesString(self, data):
+    data['coordinates'] = '%f, %f' % (data['latitude'], data['longitude'])
+
+  def send(self, command):
+    self.serial.write(command.encode())

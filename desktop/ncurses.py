@@ -39,7 +39,7 @@ class OspreyNcurses(object):
         lines = []
 
         lines.append('Time: %s' % curData['timestamp'])
-        lines.append('Coordinates: %f, %f' % (curData['latitude'], curData['longitude']))
+        lines.append('Coordinates: %s' % (curData['coordinates']))
 
         lines.append('Roll: %.2f\xb0' % curData['roll'])
         lines.append('Pitch: %.2f\xb0' % curData['pitch'])
@@ -148,11 +148,9 @@ class CursesSendThread(threading.Thread):
 
   def sendCommandToClient(self, input):
     try:
-      command = Command(input)
-      self.curses.serial.write(command.encode())
-    except InvalidCommandError as e:
-      self.curses.displayLines([str(e)], minTime=3)
-      return
+      self.curses.radio.send(Command(input))
+    except InvalidCommandError as exception:
+      self.curses.displayLines([str(exception)], minTime=3)
 
 def ncursesSignalHandler(signalNum, frame):
   if signalNum == int(signal.SIGALRM):

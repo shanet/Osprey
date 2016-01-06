@@ -3,6 +3,8 @@ import dateutil.parser
 import json
 import serial
 
+import exceptions
+
 class Radio(object):
   LOG_FILE = 'osprey.log'
 
@@ -18,18 +20,19 @@ class Radio(object):
       self.parseTimestamp(parsedData)
       self.addCoordinatesString(parsedData)
 
-      self.log.write("%s\n" % json.dumps(parsedData))
+      self.log.write('%s\n' % rawData)
       return parsedData
-    except Exception as exception:
+    except json.decoder.JSONDecodeError as exception:
       message = 'Invalid JSON: %s:\n%s' % (exception, rawData)
       self.log.write(message)
-      raise Exception(message)
+      raise exceptions.RadioReceiveError(message)
 
   def parseTimestamp(self, data):
     try:
-      data['timestamp'] = dateutil.parser.parse(data['iso8601'])
-      data['timestamp'] = data['timestamp'].strftime('%b %d %Y %H.%M.%S:%f')[:-3]
+      data['datetime'] = dateutil.parser.parse(data['iso8601'])
+      data['timestamp'] = data['datetime'].strftime('%b %d %Y %H.%M.%S:%f')[:-3]
     except:
+      data['datetime'] = None
       data['timestamp'] = data['iso8601']
 
   def addCoordinatesString(self, data):

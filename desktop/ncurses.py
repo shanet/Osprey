@@ -4,6 +4,8 @@ import curses.textpad
 import signal
 import threading
 
+import exceptions
+
 from command import Command, InvalidCommandError
 from radio import Radio
 
@@ -58,7 +60,7 @@ class OspreyNcurses(object):
         lines.append('Command Status: %s' % ('ACK' if curData['command_status'] == Command.COMMAND_ACK else 'ERR'))
 
         self.displayLines(lines)
-      except Exception as exception:
+      except exceptions.RadioReceiveError as exception:
         self.displayLines([str(exception)])
         continue
 

@@ -23,6 +23,7 @@ from pyqtgraph import PlotDataItem
 from pyqtgraph import PlotWidget
 
 import constants
+import exceptions
 
 from command import Command, InvalidCommandError
 from qDataDisplay import QDataDisplay
@@ -57,6 +58,7 @@ class QPrimaryWindow(QMainWindow):
     QMainWindow.__init__(self)
     self.radio = radio
     self.numDataPoints = 0
+    self.startTime = None
     self.dataDisplays = {}
     self.updateDatasetSignal.connect(self.updateDatasetSlot)
     self.createDataBuffers()
@@ -137,9 +139,17 @@ class QPrimaryWindow(QMainWindow):
     self.updateGraphs(dataset)
 
   def updateDataBuffers(self, dataset):
+    if not self.startTime and dataset['datetime']:
+      self.startTime = dataset['datetime']
+
     for key, data in dataset.items():
+      if not self.startTime or not dataset['datetime']:
+        continue
+
+      time = (dataset['datetime'] - self.startTime).total_seconds()
+
       if key in self.dataBuffers and isinstance(data, float):
-        self.dataBuffers[key]['points'][self.numDataPoints] = (self.numDataPoints, data)
+        self.dataBuffers[key]['points'][self.numDataPoints] = (time, data)
 
     self.numDataPoints += 1
 
@@ -174,7 +184,7 @@ class RadioThread(threading.Thread):
       try:
         data = self.radio.read()
         self.window.updateDatasetSignal.emit(data)
-      except Exception as exception:
-        print(exception)
+      except exceptions.RadioReceiveError as exception:
+        print(str(exception))
       finally:
         time.sleep(1)

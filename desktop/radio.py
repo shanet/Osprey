@@ -20,11 +20,11 @@ class Radio(object):
       self.parseTimestamp(parsedData)
       self.addCoordinatesString(parsedData)
 
-      self.log.write('%s\n' % rawData)
+      self.writeLog('%s\n' % rawData)
       return parsedData
     except json.decoder.JSONDecodeError as exception:
       message = 'Invalid JSON: %s:\n%s' % (exception, rawData)
-      self.log.write(message)
+      self.writeLog(message)
       raise exceptions.RadioReceiveError(message)
 
   def parseTimestamp(self, data):
@@ -40,3 +40,7 @@ class Radio(object):
 
   def send(self, command):
     self.serial.write(command.encode())
+
+  def writeLog(self, message):
+    self.log.write(message)
+    self.log.flush()

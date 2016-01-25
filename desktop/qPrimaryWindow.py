@@ -48,7 +48,7 @@ class QPrimaryWindow(QMainWindow):
     for index, (key, display) in enumerate(constants.DISPLAYS.items()):
       dataDisplay = QDataDisplay(self, display['label'], display['units'] if 'units' in display else '')
 
-      grid.addWidget(dataDisplay, int(index/5), index%5)
+      grid.addWidget(dataDisplay, int(index / constants.DATA_DISPLAYS_PER_ROW), index % constants.DATA_DISPLAYS_PER_ROW)
       self.dataDisplays[display['field']] = dataDisplay
 
     grid.setHorizontalSpacing(1)

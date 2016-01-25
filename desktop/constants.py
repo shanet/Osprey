@@ -1,6 +1,9 @@
 DEFAULT_LABEL = 'N/A'
 NUMPY_ARRAY_SIZE = 1000
 
+DATA_DISPLAYS_PER_ROW = 5
+GRAPHS_PER_ROW = 3
+
 DISPLAYS = {
   'time': {
     'label': 'Time (UTC)',
@@ -32,11 +35,13 @@ DISPLAYS = {
     'label': 'Pressure Altitude',
     'field': 'pressure_altitude',
     'units': 'm',
+    'color': '00FF00',
   },
   'gps_altitude':{
     'label': 'GPS Altitude',
     'field': 'gps_altitude',
     'units': 'm',
+    'color': 'FFAA00',
   },
   'agl': {
     'label': 'Above Ground Level',
@@ -52,6 +57,7 @@ DISPLAYS = {
     'label': 'Temperature',
     'field': 'temp',
     'units': '\xb0C',
+    'color': '9900FF',
   },
   'speed': {
     'label': 'GPS Speed',
@@ -89,5 +95,12 @@ GRAPHS = {
       DISPLAYS['pressure_altitude'],
     ],
     'labels': {'left': ('Meters', 'meters'), 'bottom': ('Time', 'seconds')},
+  },
+  'temperature': {
+    'title': 'Temperature',
+    'displays': [
+      DISPLAYS['temp'],
+    ],
+    'labels': {'left': ('Temperature', 'celsius'), 'bottom': ('Time', 'seconds')},
   },
 }

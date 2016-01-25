@@ -22,6 +22,13 @@ class QGraph(QWidget):
 
     self.graph = PlotWidget(title=config['title'], labels=config['labels'])
 
+    # Only add a legend to the graph if there is more than one dataset displayed on it
+    if len(self.datasets) > 1:
+      self.graph.addLegend()
+
+    # Show grid lines
+    self.graph.showGrid(x=True, y=True)
+
     for _, dataset in self.datasets.items():
       self.graph.addItem(dataset['plotData'])
 
@@ -30,7 +37,7 @@ class QGraph(QWidget):
     self.setLayout(vbox)
 
   def createDatasetForDisplay(self, display):
-    plotData = PlotDataItem()
+    plotData = PlotDataItem(name=display['label'])
 
     if 'color' in display:
       plotData.setPen(mkPen({'color': display['color']}))

@@ -10,7 +10,7 @@ class QGraphLayout(QGridLayout):
     self.startTime = None
     self.graphs = []
 
-    for index, (_, graph) in enumerate(graphs.items()):
+    for index, graph in enumerate(graphs):
       graph = QGraph(graph, parent)
 
       self.graphs.append(graph)

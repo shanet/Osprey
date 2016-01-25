@@ -91,8 +91,8 @@ RIGHT_DATA_DISPLAYS = [
   DISPLAYS['previous_command'],
 ]
 
-GRAPHS = {
-  'orientation': {
+GRAPHS = [
+  {
     'title': 'Orientation',
     'displays': [
       DISPLAYS['roll'],
@@ -101,7 +101,7 @@ GRAPHS = {
     ],
     'labels': {'left': ('Degrees', 'degrees'), 'bottom': ('Time', 'seconds')},
   },
-  'altitude': {
+  {
     'title': 'Altitude',
     'displays': [
       DISPLAYS['gps_altitude'],
@@ -109,18 +109,18 @@ GRAPHS = {
     ],
     'labels': {'left': ('Meters', 'meters'), 'bottom': ('Time', 'seconds')},
   },
-  'temperature': {
-    'title': 'Temperature',
-    'displays': [
-      DISPLAYS['temp'],
-    ],
-    'labels': {'left': ('Temperature', 'celsius'), 'bottom': ('Time', 'seconds')},
-  },
-  'speed': {
+  {
     'title': 'Speed',
     'displays': [
       DISPLAYS['speed'],
     ],
     'labels': {'left': ('Speed', 'knots'), 'bottom': ('Time', 'seconds')},
   },
-}
+  {
+    'title': 'Temperature',
+    'displays': [
+      DISPLAYS['temp'],
+    ],
+    'labels': {'left': ('Temperature', 'celsius'), 'bottom': ('Time', 'seconds')},
+  },
+]

@@ -8,7 +8,7 @@ void setup(void) {
 void loop(void) {
   printJSON();
   processCommand();
-  delay(1000);
+  delay(100);
 }
 
 void printJSON() {

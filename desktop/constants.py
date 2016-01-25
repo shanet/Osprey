@@ -1,8 +1,8 @@
 DEFAULT_LABEL = 'N/A'
 NUMPY_ARRAY_SIZE = 1000
 
-DATA_DISPLAYS_PER_ROW = 5
-GRAPHS_PER_ROW = 3
+RIGHT_DATA_DISPLAYS_PER_ROW = 2
+GRAPHS_PER_ROW = 2
 
 DISPLAYS = {
   'time': {
@@ -63,6 +63,7 @@ DISPLAYS = {
     'label': 'GPS Speed',
     'field': 'speed',
     'units': 'kt',
+    'color': 'FFFF00',
   },
   'gps_quality': {
     'label': 'GPS Quality',
@@ -77,6 +78,18 @@ DISPLAYS = {
     'field': 'command_status',
   },
 }
+
+LEFT_DATA_DISPLAYS = [
+  DISPLAYS['coordinates'],
+  DISPLAYS['agl'],
+]
+
+RIGHT_DATA_DISPLAYS = [
+  DISPLAYS['pressure_setting'],
+  DISPLAYS['gps_quality'],
+  DISPLAYS['command_status'],
+  DISPLAYS['previous_command'],
+]
 
 GRAPHS = {
   'orientation': {
@@ -102,5 +115,12 @@ GRAPHS = {
       DISPLAYS['temp'],
     ],
     'labels': {'left': ('Temperature', 'celsius'), 'bottom': ('Time', 'seconds')},
+  },
+  'speed': {
+    'title': 'Speed',
+    'displays': [
+      DISPLAYS['speed'],
+    ],
+    'labels': {'left': ('Speed', 'knots'), 'bottom': ('Time', 'seconds')},
   },
 }

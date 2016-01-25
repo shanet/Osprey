@@ -15,7 +15,8 @@ import constants
 
 from command import Command, InvalidCommandError
 from qGraphLayout import QGraphLayout
-from qDataDisplay import QDataDisplay
+from qBigDataDisplay import QBigDataDisplay
+from qSmallDataDisplay import QSmallDataDisplay
 
 class QPrimaryWindow(QMainWindow):
   updateDatasetSignal = Signal(dict)
@@ -26,7 +27,7 @@ class QPrimaryWindow(QMainWindow):
     self.dataDisplays = {}
     self.updateDatasetSignal.connect(self.updateDatasetSlot)
 
-    dataDisplaysLayout = self.buildDataDisplayGrid()
+    dataDisplaysLayout = self.buildDataDisplays()
     graphs = self.buildGraphs()
     commandInputLayout = self.buildCommandInput()
 
@@ -42,14 +43,39 @@ class QPrimaryWindow(QMainWindow):
 
     self.setCentralWidget(self.centralWidget)
 
-  def buildDataDisplayGrid(self):
+  def buildDataDisplays(self):
+    hbox = QHBoxLayout()
+    hbox.addStretch(1)
+
+    for widget in self.buildLeftDataDisplays():
+      hbox.addWidget(widget)
+      hbox.addStretch(1)
+
+    hbox.addLayout(self.buildRightDataDisplays())
+
+    return hbox
+
+  def buildLeftDataDisplays(self):
+    widgets = []
+
+    for display in constants.LEFT_DATA_DISPLAYS:
+      units = display['units'] if 'units' in display else ''
+      widget = QBigDataDisplay(self, display['label'], units)
+
+      self.dataDisplays[display['field']] = widget
+      widgets.append(widget)
+
+    return widgets
+
+  def buildRightDataDisplays(self):
     grid = QGridLayout()
 
-    for index, (key, display) in enumerate(constants.DISPLAYS.items()):
-      dataDisplay = QDataDisplay(self, display['label'], display['units'] if 'units' in display else '')
+    for index, display in enumerate(constants.RIGHT_DATA_DISPLAYS):
+      units = display['units'] if 'units' in display else ''
+      widget = QSmallDataDisplay(self, display['label'], units)
 
-      grid.addWidget(dataDisplay, int(index / constants.DATA_DISPLAYS_PER_ROW), index % constants.DATA_DISPLAYS_PER_ROW)
-      self.dataDisplays[display['field']] = dataDisplay
+      self.dataDisplays[display['field']] = widget
+      grid.addWidget(widget, int(index / constants.RIGHT_DATA_DISPLAYS_PER_ROW), index % constants.RIGHT_DATA_DISPLAYS_PER_ROW)
 
     grid.setHorizontalSpacing(1)
     grid.setVerticalSpacing(1)

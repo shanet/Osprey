@@ -1,15 +1,13 @@
 #ifndef RADIO_H
 #define RADIO_H
 
-#define F_CPU 16000000UL
-#define BAUD 9600
-#define RADIO_MAX_LINE_LENGTH 128
-
 #include <Arduino.h>
-#include <avr/io.h>
-#include <util/setbaud.h>
+#include <avr/dtostrf.h>
 
 #include "sensor.h"
+
+#define RADIO_BAUD 9600
+#define RADIO_MAX_LINE_LENGTH 64
 
 using namespace std;
 
@@ -22,17 +20,18 @@ class Radio : public virtual Sensor {
     void send(int message);
     char* recv();
 
+    static void floatToString(float num, int precision, char *buffer);
     static char read();
 
   protected:
+    static Uart *RadioSerial;
+
     static volatile char message1[];
     static volatile char message2[];
 
     static volatile char *currentMessage;
     static volatile char *previousMessage;
     static volatile int messagePosition;
-
-    void setInterrupt(bool useInterrupt);
 };
 
 #endif

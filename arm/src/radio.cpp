@@ -1,5 +1,7 @@
 #include "radio.h"
 
+Uart *Radio::RadioSerial = &Serial1;
+
 volatile char Radio::message1[RADIO_MAX_LINE_LENGTH];
 volatile char Radio::message2[RADIO_MAX_LINE_LENGTH];
 
@@ -10,59 +12,19 @@ volatile int Radio::messagePosition = 0;
 Radio::Radio() {}
 
 int Radio::init() {
-  UBRR0H = UBRRH_VALUE;
-  UBRR0L = UBRRL_VALUE;
-
-  #if USE_2X
-    UCSR0A |= _BV(U2X0);
-  #else
-    UCSR0A &= ~(_BV(U2X0));
-  #endif
-
-  // Use 8-bit data
-  UCSR0C = _BV(UCSZ01) | _BV(UCSZ00);
-
-  // Enable RX and TX
-  UCSR0B = _BV(RXEN0) | _BV(TXEN0);
-
-  // Set an interrupt to read the radio data once every millisecond
-  setInterrupt(true);
-
+  RadioSerial->begin(RADIO_BAUD);
   return 1;
-}
-
-void Radio::setInterrupt(bool enable) {
-  if(enable) {
-    // Set the Output Compare Register B to fire an interrupt when the value is equal to below
-    OCR0B = 0x00;
-
-    // Enable the COMPB interrupt by flipping the proper bit on the TIMSK0 mask
-    TIMSK0 |= _BV(OCIE0B);
-  } else {
-    // Disable the COMPB interrupt
-    TIMSK0 &= ~_BV(OCIE0B);
-  }
-}
-
-SIGNAL(TIMER0_COMPB_vect) {
-  // This interrupt is called whenever the Output Compare Register B equals the
-  // value set above in the setInterrupt() function (roughly once per millisecond)
-  Radio::read();
 }
 
 void Radio::send(const char* const message) {
   for(int i=0; message[i] != '\0'; i++) {
-    // Only write data to the URD0 register when the USART data register empty bit is set. Only when this
-    // is empty can we write new data to be transmitted to the register.
-    loop_until_bit_is_set(UCSR0A, UDRE0);
-    UDR0 = message[i];
+    RadioSerial->write(message[i]);
   }
 }
 
 void Radio::send(float message, int precision) {
   char buffer[RADIO_MAX_LINE_LENGTH];
-  dtostrf(message, 1, precision, buffer);
-
+  floatToString(message, precision, buffer);
   send(buffer);
 }
 
@@ -74,16 +36,16 @@ void Radio::send(int message) {
 }
 
 char* Radio::recv() {
+  read();
   return (char*)previousMessage;
 }
 
 char Radio::read() {
-  // Only read data from the URD) register if the receive complete bit (RXC0) is set on the UCSR0A register
-  if(bit_is_clear(UCSR0A, RXC0)) {
+  if(!RadioSerial->available()) {
     return 0;
   }
 
-  char c = UDR0;
+  char c = RadioSerial->read();
 
   // If the end of the line, set a NUL terminator and swap the message buffers
   if(c == '\n') {
@@ -110,4 +72,23 @@ char Radio::read() {
   }
 
   return c;
+}
+
+void Radio::floatToString(float num, int precision, char *buffer) {
+  // Get the whole part of the number
+  int characteristic = num;
+
+  // Subtract the whole part leaving only the fractional part
+  num -= characteristic;
+
+  // If negative, make positive
+  if(num < 0) {
+    num = -num;
+  }
+
+  // Move the decimal place by the amount of precision specified
+  int mantissa = num * pow(10, precision);
+
+  // Combine the characteristic and mantissa in a string
+  sprintf(buffer, "%d.%d", characteristic, mantissa);
 }

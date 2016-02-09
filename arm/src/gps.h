@@ -1,12 +1,15 @@
 #ifndef GPS_H
 #define GPS_H
 
-#include <lib/Adafruit-GPS-Library/Adafruit_GPS.h>
-#include <SoftwareSerial.h>
+#include <Adafruit-GPS-Library/Adafruit_GPS.h>
+#include <wiring_private.h>
 #include <Wire.h>
 
 #include "sensor.h"
 
+#define GPS_RX_PIN 11
+#define GPS_TX_PIN 10
+#define GPS_BAUD 9600
 #define ISO_8601_LENGTH 32
 
 using namespace std;
@@ -26,6 +29,7 @@ class GPS : public virtual Sensor {
     Adafruit_GPS* getRawGPS();
     void updateBuffers();
 
+    static Uart GPSSerial;
     static Adafruit_GPS gps;
 
   protected:
@@ -33,7 +37,6 @@ class GPS : public virtual Sensor {
     void updateIso8601();
 
     volatile char iso8601[];
-    static SoftwareSerial gpsSerial;
 };
 
 #endif

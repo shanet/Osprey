@@ -15,5 +15,6 @@ char commandStatus;
 
 void printJSON();
 void processCommand();
+void heartbeat();
 void initSensors();
 void printInitError(const char* const message);

@@ -1,15 +1,18 @@
 #include "gps.h"
 
-SoftwareSerial GPS::gpsSerial = SoftwareSerial(3, 2);
-Adafruit_GPS GPS::gps = Adafruit_GPS(&gpsSerial);
+Uart GPS::GPSSerial(&sercom1, GPS_RX_PIN, GPS_TX_PIN, SERCOM_RX_PAD_0, UART_TX_PAD_2);
+Adafruit_GPS GPS::gps = Adafruit_GPS(&GPS::GPSSerial);
 
 GPS::GPS() {
   volatile char iso8601[ISO_8601_LENGTH];
 }
 
 int GPS::init() {
-  // 9600 NMEA is the default baud rate for Adafruit MTK GPS's- some use 4800
-  gps.begin(9600);
+  //gps.begin(GPS_BAUD);
+  GPSSerial.begin(GPS_BAUD);
+
+  pinPeripheral(GPS_RX_PIN, PIO_SERCOM);
+  pinPeripheral(GPS_TX_PIN, PIO_SERCOM);
 
   // Get RMC (recommended minimum) and GGA (fix data) data
   gps.sendCommand(PMTK_SET_NMEA_OUTPUT_RMCGGA);
@@ -18,30 +21,14 @@ int GPS::init() {
   gps.sendCommand(PMTK_SET_NMEA_UPDATE_5HZ);
   gps.sendCommand(PMTK_API_SET_FIX_CTL_5HZ);
 
-  // Set an interrupt to read the GPS data once every millisecond
-  setInterrupt(true);
-
   delay(1000);
 
   return 1;
 }
 
-void GPS::setInterrupt(boolean enable) {
-  if(enable) {
-    // Set the Output Compare Register A to fire an interrupt when the value is equal to below
-    OCR0A = 0xAF;
-
-    // Enable the COMPA interrupt by flipping the proper bit on the TIMSK0 mask
-    TIMSK0 |= _BV(OCIE0A);
-  } else {
-    // Disable the COMPA interrupt
-    TIMSK0 &= ~_BV(OCIE0A);
-  }
-}
-
-SIGNAL(TIMER0_COMPA_vect) {
-  // This interrupt is called whenever the Output Compare Register A equals the
-  // value set above in the setInterrupt() function (roughly once per millisecond)
+void SERCOM1_Handler() {
+  // Call the interrupt handler for the serial object before trying to read from it
+  GPS::GPSSerial.IrqHandler();
   GPS::gps.read();
 }
 

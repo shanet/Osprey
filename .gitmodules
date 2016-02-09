@@ -1,18 +1,18 @@
-[submodule "arduino/lib/Adafruit_10DOF"]
-	path = arduino/lib/Adafruit_10DOF
+[submodule "arm/lib/Adafruit_10DOF"]
+	path = arm/lib/Adafruit_10DOF
 	url = git@github.com:adafruit/Adafruit_10DOF.git
-[submodule "arduino/lib/Adafruit_BMP085_Unified"]
-	path = arduino/lib/Adafruit_BMP085_Unified
+[submodule "arm/lib/Adafruit_BMP085_Unified"]
+	path = arm/lib/Adafruit_BMP085_Unified
 	url = git@github.com:adafruit/Adafruit_BMP085_Unified.git
-[submodule "arduino/lib/Adafruit_L3GD20_U"]
-	path = arduino/lib/Adafruit_L3GD20_U
+[submodule "arm/lib/Adafruit_L3GD20_U"]
+	path = arm/lib/Adafruit_L3GD20_U
 	url = git@github.com:adafruit/Adafruit_L3GD20_U.git
-[submodule "arduino/lib/Adafruit_LSM303DLHC"]
-	path = arduino/lib/Adafruit_LSM303DLHC
+[submodule "arm/lib/Adafruit_LSM303DLHC"]
+	path = arm/lib/Adafruit_LSM303DLHC
 	url = git@github.com:adafruit/Adafruit_LSM303DLHC.git
-[submodule "arduino/lib/Adafruit_Sensor"]
-	path = arduino/lib/Adafruit_Sensor
+[submodule "arm/lib/Adafruit_Sensor"]
+	path = arm/lib/Adafruit_Sensor
 	url = git@github.com:adafruit/Adafruit_Sensor.git
-[submodule "arduino/lib/Adafruit-GPS-Library"]
-	path = arduino/lib/Adafruit-GPS-Library
+[submodule "arm/lib/Adafruit-GPS-Library"]
+	path = arm/lib/Adafruit-GPS-Library
 	url = git@github.com:adafruit/Adafruit-GPS-Library.git

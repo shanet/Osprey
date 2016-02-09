@@ -2,18 +2,18 @@
 
 void setup(void) {
   initSensors();
-  radio.send("Ready to roll.\r\n");
+  pinMode(13, OUTPUT);
 }
 
 void loop(void) {
   printJSON();
   processCommand();
-  delay(100);
+  heartbeat();
 }
 
 void printJSON() {
-  // The JSON structure is simple enough. Rather than bringing in another library to do a bunch
-  // of heavylifting, just construct the string manually.
+  // The JSON structure is simple enough. Rather than bringing in another
+  // library to do a bunch of heavylifting, just construct the string manually.
 
   radio.send("{");
 
@@ -91,7 +91,14 @@ void processCommand() {
   }
 }
 
-void initSensors(void) {
+void heartbeat() {
+  digitalWrite(13, HIGH);
+  delay(100);
+  digitalWrite(13, LOW);
+  delay(100);
+}
+
+void initSensors() {
   if(!accelerometer.init()) {
     printInitError("Failed to intialize accelerometer");
   }

@@ -1,4 +1,4 @@
-arduino/bin/*
+arm/bin/*
 *.log
 
 *.py[cod]

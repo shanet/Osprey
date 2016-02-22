@@ -55,12 +55,15 @@ int endFlight(char *arg) {
 
 int zeroSensors(char *arg) {
   barometer.zero();
+  clock.reset();
+
   commandStatus = COMMAND_ACK;
   return commandStatus;
 }
 
 int setPressure(char *arg) {
   barometer.setPressureSetting(atof(arg));
+
   commandStatus = COMMAND_ACK;
   return commandStatus;
 }

@@ -1,7 +1,6 @@
 #ifndef BATTERY_H
 #define BATTERY_H
 
-#include "constants.h"
 #include "sensor.h"
 
 #define BATTERY_PIN A7
@@ -13,7 +12,7 @@ class Battery : public virtual Sensor {
   public:
     Battery();
     int init();
-    float getVoltage();
+    float voltage();
 };
 
 #endif

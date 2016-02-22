@@ -42,6 +42,7 @@ class OspreyNcurses(object):
         lines = []
 
         lines.append('Time: %s' % curData['timestamp'])
+        lines.append('Delta: %ds' % curData['delta'])
         lines.append('Coordinates: %s' % (curData['coordinates']))
 
         lines.append('Roll: %.2f\xb0' % curData['roll'])

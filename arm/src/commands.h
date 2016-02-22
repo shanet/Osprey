@@ -1,15 +1,17 @@
 #ifndef COMMANDS_H
 #define COMMANDS_H
 
-#include "constants.h"
 #include "accelerometer.h"
 #include "barometer.h"
+#include "clock.h"
+#include "constants.h"
 #include "gps.h"
 #include "radio.h"
 #include "thermometer.h"
 
 extern Accelerometer accelerometer;
 extern Barometer barometer;
+extern Clock clock;
 extern GPS gps;
 extern Radio radio;
 extern Thermometer thermometer;

@@ -12,7 +12,7 @@ void Clock::reset() {
   rtc.setDate(1, 1, 16);
 }
 
-int Clock::seconds() {
+int Clock::getSeconds() {
   // If your flight is longer than 24 hours I want to talk with you
   int seconds = rtc.getSeconds();
   seconds += rtc.getMinutes() * 60;

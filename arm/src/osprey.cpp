@@ -68,10 +68,10 @@ void printJSON() {
   radio.send(radio.isLogging());
 
   radio.send(", \"battery\": ");
-  radio.send(battery.voltage(), 2);
+  radio.send(battery.getVoltage(), 2);
 
   radio.send(", \"delta\": ");
-  radio.send(clock.seconds());
+  radio.send(clock.getSeconds());
 
   radio.send("}");
   radio.send("\r\n");
@@ -91,6 +91,10 @@ void initSensors() {
 
   if(!barometer.init()) {
     printInitError("Failed to intialize barometer");
+  }
+
+  if(!battery.init()) {
+    printInitError("Failed to intialize battery");
   }
 
   if(!clock.init()) {

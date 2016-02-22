@@ -16,10 +16,9 @@ class Accelerometer : public virtual Sensor {
     int init();
     float getRoll();
     float getPitch();
-    float getYaw();
+    float getHeading();
     void getAccelOrientation(sensors_vec_t *orientation);
     void getMagOrientation(sensors_vec_t *orientation);
-    float getHeading();
 
   protected:
     static Adafruit_10DOF dof;

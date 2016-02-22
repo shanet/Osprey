@@ -12,7 +12,7 @@ class Battery : public virtual Sensor {
   public:
     Battery();
     int init();
-    float voltage();
+    float getVoltage();
 };
 
 #endif

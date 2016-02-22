@@ -61,8 +61,3 @@ char* GPS::getIso8601() {
   sprintf(iso8601, "20%d-%02d-%02dT%02d:%02d:%02d.%02dZ", gps.year, gps.month, gps.day, gps.hour, gps.minute, gps.seconds, gps.milliseconds);
   return iso8601;
 }
-
-Adafruit_GPS* GPS::getRawGPS() {
-  updateBuffers();
-  return &gps;
-}

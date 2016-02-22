@@ -26,9 +26,6 @@ class GPS : public virtual Sensor {
     int getQuality();
     char* getIso8601();
 
-    Adafruit_GPS* getRawGPS();
-    static void updateBuffers();
-
     static Uart GPSSerial;
     static Adafruit_GPS gps;
 

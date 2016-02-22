@@ -11,7 +11,7 @@ class Clock : public virtual Sensor {
     Clock();
     int init();
     void reset();
-    int seconds();
+    int getSeconds();
 
   protected:
     RTCZero rtc;

@@ -3,7 +3,7 @@
 Battery::Battery() {}
 int Battery::init() {}
 
-float Battery::voltage() {
+float Battery::getVoltage() {
   // https://learn.adafruit.com/adafruit-feather-m0-adalogger/power-management
   float voltage = analogRead(BATTERY_PIN);
 

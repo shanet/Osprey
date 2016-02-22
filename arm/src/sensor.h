@@ -8,7 +8,7 @@ using namespace std;
 class Sensor {
   public:
     Sensor();
-    int init();
+    virtual int init() = 0;
 };
 
 #endif

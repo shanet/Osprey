@@ -20,6 +20,7 @@ class Radio : public virtual Sensor {
     void send(float message, int precision=2);
     void send(int message);
     char* recv();
+    void clear();
     int enableLogging();
     int disableLogging();
     int isLogging();
@@ -33,12 +34,12 @@ class Radio : public virtual Sensor {
 
     static Uart *RadioSerial;
 
-    static volatile char message1[];
-    static volatile char message2[];
+    static char message1[];
+    static char message2[];
 
-    static volatile char *currentMessage;
-    static volatile char *previousMessage;
-    static volatile int messagePosition;
+    static char *currentMessage;
+    static char *previousMessage;
+    static int messagePosition;
 };
 
 #endif

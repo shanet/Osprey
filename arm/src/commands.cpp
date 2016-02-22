@@ -31,6 +31,9 @@ void processCommand() {
       commandStatus = COMMAND_ERR;
       break;
   }
+
+  // Clear the current command after we've processed it
+  radio.clear();
 }
 
 int startFlight(char *arg) {

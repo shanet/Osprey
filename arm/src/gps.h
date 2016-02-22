@@ -19,24 +19,21 @@ class GPS : public virtual Sensor {
     GPS();
     int init();
 
-    char* getIso8601();
     float getLatitude();
     float getLongitude();
     float getSpeed();
     float getAltitude();
     int getQuality();
+    char* getIso8601();
 
     Adafruit_GPS* getRawGPS();
-    void updateBuffers();
+    static void updateBuffers();
 
     static Uart GPSSerial;
     static Adafruit_GPS gps;
 
   protected:
-    void setInterrupt(bool useInterrupt);
-    void updateIso8601();
-
-    volatile char iso8601[];
+    char iso8601[];
 };
 
 #endif

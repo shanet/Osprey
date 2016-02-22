@@ -4,7 +4,7 @@ Uart GPS::GPSSerial(&sercom1, GPS_RX_PIN, GPS_TX_PIN, SERCOM_RX_PAD_0, UART_TX_P
 Adafruit_GPS GPS::gps = Adafruit_GPS(&GPS::GPSSerial);
 
 GPS::GPS() {
-  volatile char iso8601[ISO_8601_LENGTH];
+  char iso8601[ISO_8601_LENGTH];
 }
 
 int GPS::init() {
@@ -30,11 +30,11 @@ void SERCOM1_Handler() {
   // Call the interrupt handler for the serial object before trying to read from it
   GPS::GPSSerial.IrqHandler();
   GPS::gps.read();
-}
 
-char* GPS::getIso8601() {
-  updateBuffers();
-  return (char*)iso8601;
+  // After reading available data, if a new NMEA sentece is available, parse it
+  if(GPS::gps.newNMEAreceived()) {
+    GPS::gps.parse(GPS::gps.lastNMEA());
+  }
 }
 
 float GPS::getLatitude() {
@@ -57,17 +57,9 @@ int GPS::getQuality() {
   return gps.fixquality;
 }
 
-void GPS::updateBuffers() {
-  // If a new NMEA sentece is available, parse it
-  if(gps.newNMEAreceived() && !gps.parse(gps.lastNMEA())) {
-    return;
-  }
-
-  updateIso8601();
-}
-
-void GPS::updateIso8601() {
-  sprintf((char*)iso8601, "20%d-%02d-%02dT%02d:%02d:%02d.%02dZ", gps.year, gps.month, gps.day, gps.hour, gps.minute, gps.seconds, gps.milliseconds);
+char* GPS::getIso8601() {
+  sprintf(iso8601, "20%d-%02d-%02dT%02d:%02d:%02d.%02dZ", gps.year, gps.month, gps.day, gps.hour, gps.minute, gps.seconds, gps.milliseconds);
+  return iso8601;
 }
 
 Adafruit_GPS* GPS::getRawGPS() {

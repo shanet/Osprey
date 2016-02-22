@@ -2,12 +2,12 @@
 
 Uart *Radio::RadioSerial = &Serial1;
 
-volatile char Radio::message1[RADIO_MAX_LINE_LENGTH];
-volatile char Radio::message2[RADIO_MAX_LINE_LENGTH];
+char Radio::message1[RADIO_MAX_LINE_LENGTH];
+char Radio::message2[RADIO_MAX_LINE_LENGTH];
 
-volatile char* Radio::previousMessage = message1;
-volatile char* Radio::currentMessage = message2;
-volatile int Radio::messagePosition = 0;
+char* Radio::previousMessage = message1;
+char* Radio::currentMessage = message2;
+int Radio::messagePosition = 0;
 
 Radio::Radio() {
   logging = false;
@@ -50,6 +50,10 @@ void Radio::send(int message) {
 char* Radio::recv() {
   read();
   return (char*)previousMessage;
+}
+
+void Radio::clear() {
+  previousMessage[0] = '\0';
 }
 
 char Radio::read() {

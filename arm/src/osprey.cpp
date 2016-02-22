@@ -81,7 +81,6 @@ void heartbeat() {
   digitalWrite(HEARTBEAT_LED, HIGH);
   delay(HEARTBEAT_INTERVAL);
   digitalWrite(HEARTBEAT_LED, LOW);
-  delay(HEARTBEAT_INTERVAL);
 }
 
 void initSensors() {

@@ -4,11 +4,10 @@ import sys
 import signal
 import argparse
 
+import constants
+
 from ncurses import OspreyNcurses
 from qt import OspreyQt
-
-DEFAULT_BLOCK_DEVICE = '/dev/ttyUSB0'
-DEFAULT_BAUD_RATE = 9600
 
 ui = None
 
@@ -27,8 +26,8 @@ def main():
 def parseCmdLineArgs():
     argvParser = argparse.ArgumentParser()
 
-    argvParser.add_argument('-d', '--device', dest='device', nargs='?', type=str, default=DEFAULT_BLOCK_DEVICE, help='Block device to read from')
-    argvParser.add_argument('-b', '--baud', dest='baud', nargs='?', type=int, default=DEFAULT_BAUD_RATE, help='Baud rate to read from block device with')
+    argvParser.add_argument('-d', '--device', dest='device', nargs='?', type=str, default=constants.DEFAULT_BLOCK_DEVICE, help='Block device to read from')
+    argvParser.add_argument('-b', '--baud', dest='baud', nargs='?', type=int, default=constants.DEFAULT_BAUD_RATE, help='Baud rate to read from block device with')
     argvParser.add_argument('-n', '--ncurses', dest='ncurses', default=False, action='store_true', help='Use the Ncurses UI')
 
     args = argvParser.parse_args()

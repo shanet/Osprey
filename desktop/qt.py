@@ -46,5 +46,3 @@ class RadioThread(threading.Thread):
         self.window.updateDatasetSignal.emit(data)
       except exceptions.RadioReceiveError as exception:
         print(str(exception))
-      finally:
-        time.sleep(1)

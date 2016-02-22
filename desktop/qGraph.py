@@ -70,11 +70,11 @@ class QGraph(QWidget):
 
   def getAxisTime(self, dataset):
     # Use the first dataset as the start time
-    if not self.startTime and dataset['datetime']:
-      self.startTime = dataset['datetime']
+    if not self.startTime and dataset['delta']:
+      self.startTime = dataset['delta']
 
-    if dataset['datetime']:
-      return (dataset['datetime'] - self.startTime).total_seconds()
+    if dataset['delta']:
+      return (dataset['delta'] - self.startTime)
     else:
       return None
 

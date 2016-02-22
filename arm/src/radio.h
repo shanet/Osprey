@@ -7,7 +7,7 @@
 #include "sensor.h"
 #include "logger.h"
 
-#define RADIO_BAUD 9600
+#define RADIO_BAUD 115200
 #define RADIO_MAX_LINE_LENGTH 64
 
 using namespace std;

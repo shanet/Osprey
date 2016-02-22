@@ -17,9 +17,8 @@ class Radio(object):
 
     try:
       parsedData = json.loads(rawData)
-      self.parseTimestamp(parsedData)
-      self.addCoordinatesString(parsedData)
 
+      self.transformData(parsedData)
       self.writeLog('%s\n' % rawData)
       return parsedData
     except json.decoder.JSONDecodeError as exception:
@@ -27,16 +26,20 @@ class Radio(object):
       self.writeLog(message)
       raise exceptions.RadioReceiveError(message)
 
-  def parseTimestamp(self, data):
+  def parseTimestamp(self, dataset):
     try:
-      data['datetime'] = dateutil.parser.parse(data['iso8601'])
-      data['timestamp'] = data['datetime'].strftime('%b %d %Y %H.%M.%S:%f')[:-3]
+      dataset['datetime'] = dateutil.parser.parse(dataset['iso8601'])
+      dataset['timestamp'] = dataset['datetime'].strftime('%b %d %Y %H.%M.%S:%f')[:-3]
     except:
-      data['datetime'] = None
-      data['timestamp'] = data['iso8601']
+      dataset['datetime'] = None
+      dataset['timestamp'] = dataset['iso8601']
 
-  def addCoordinatesString(self, data):
-    data['coordinates'] = '%f, %f' % (data['latitude'], data['longitude'])
+  def transformData(self, dataset):
+    self.parseTimestamp(dataset)
+    self.addCoordinatesString(dataset)
+
+  def addCoordinatesString(self, dataset):
+    dataset['coordinates'] = '%f, %f' % (dataset['latitude'], dataset['longitude'])
 
   def send(self, command):
     self.serial.write(command.encode())

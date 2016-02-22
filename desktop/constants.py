@@ -1,7 +1,10 @@
+DEFAULT_BLOCK_DEVICE = '/dev/ttyUSB0'
+DEFAULT_BAUD_RATE = 115200
+
 DEFAULT_LABEL = 'N/A'
 NUMPY_ARRAY_SIZE = 1000
 
-RIGHT_DATA_DISPLAYS_PER_ROW = 2
+RIGHT_DATA_DISPLAYS_PER_ROW = 3
 GRAPHS_PER_ROW = 2
 
 DISPLAYS = {
@@ -77,6 +80,15 @@ DISPLAYS = {
     'label': 'Command Status',
     'field': 'command_status',
   },
+  'battery': {
+    'label': 'Battery',
+    'field': 'battery',
+    'units': 'V',
+  },
+  'logging': {
+    'label': 'Logging',
+    'field': 'logging',
+  },
 }
 
 LEFT_DATA_DISPLAYS = [
@@ -87,8 +99,10 @@ LEFT_DATA_DISPLAYS = [
 RIGHT_DATA_DISPLAYS = [
   DISPLAYS['pressure_setting'],
   DISPLAYS['gps_quality'],
+  DISPLAYS['battery'],
   DISPLAYS['command_status'],
   DISPLAYS['previous_command'],
+  DISPLAYS['logging'],
 ]
 
 GRAPHS = [

@@ -65,6 +65,7 @@ INCLUDE_DIRS := lib/ \
 	$(PACKAGE_DIR)/tools/CMSIS/4.0.0-atmel/Device/ATMEL/ \
 	$(SAMD_DIR)/cores/arduino \
 	$(SAMD_DIR)/variants/$(BOARD_BUILD_VARIANT) \
+	$(SAMD_DIR)/libraries/SPI \
 	$(SAMD_DIR)/libraries/Wire
 
 # Add the include flag before each include
@@ -85,6 +86,10 @@ FOUND_LIBRARIES += $(notdir $(wildcard lib/*))
 # Add the path to the found libraries
 LIBRARY_DIRS := $(foreach lib, $(FOUND_LIBRARIES), \
 	$(firstword $(wildcard $(addsuffix /$(lib), $(LIBRARY_SEARCH_PATHS)))))
+
+# Add each path again, but with its utility directory tacked onto the end
+LIBRARY_DIRS += $(foreach lib, $(FOUND_LIBRARIES), \
+	$(firstword $(wildcard $(addsuffix /utility, $(addsuffix /$(lib), $(LIBRARY_SEARCH_PATHS))))))
 
 # Platform Libraries
 # -------------------------------------------------------------------------------------------------------------

@@ -2,7 +2,7 @@
 
 void setup(void) {
   initSensors();
-  pinMode(13, OUTPUT);
+  pinMode(HEARTBEAT_LED, OUTPUT);
 }
 
 void loop(void) {
@@ -39,6 +39,9 @@ void printJSON() {
   radio.send(gps.getIso8601());
   radio.send("\"");
 
+  radio.send(", \"logging\": ");
+  radio.send(radio.isLogging());
+
   radio.send(", \"latitude\": ");
   radio.send(gps.getLatitude(), 6);
 
@@ -68,34 +71,11 @@ void printJSON() {
   radio.send("\r\n");
 }
 
-void processCommand() {
-  char *message = radio.recv();
-
-  // Message format: "[command][argument]"
-  // Subtract ASCII 0 as the poor man's char to int conversion
-  int command = message[0] - '0';
-  char *arg = message+1;
-
-  switch(command) {
-    case COMMAND_ZERO_SENSORS:
-      barometer.zero();
-      commandStatus = COMMAND_ACK;
-      break;
-    case COMMAND_SET_PRESSURE:
-      barometer.setPressureSetting(atof(arg));
-      commandStatus = COMMAND_ACK;
-      break;
-    default:
-      commandStatus = COMMAND_ERR;
-      break;
-  }
-}
-
 void heartbeat() {
-  digitalWrite(13, HIGH);
-  delay(100);
-  digitalWrite(13, LOW);
-  delay(100);
+  digitalWrite(HEARTBEAT_LED, HIGH);
+  delay(HEARTBEAT_INTERVAL);
+  digitalWrite(HEARTBEAT_LED, LOW);
+  delay(HEARTBEAT_INTERVAL);
 }
 
 void initSensors() {

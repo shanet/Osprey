@@ -5,6 +5,7 @@
 #include <avr/dtostrf.h>
 
 #include "sensor.h"
+#include "logger.h"
 
 #define RADIO_BAUD 9600
 #define RADIO_MAX_LINE_LENGTH 64
@@ -19,11 +20,17 @@ class Radio : public virtual Sensor {
     void send(float message, int precision=2);
     void send(int message);
     char* recv();
+    int enableLogging();
+    int disableLogging();
+    int isLogging();
 
     static void floatToString(float num, int precision, char *buffer);
     static char read();
 
   protected:
+    bool logging;
+    Logger logger;
+
     static Uart *RadioSerial;
 
     static volatile char message1[];

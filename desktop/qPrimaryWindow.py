@@ -13,7 +13,7 @@ from PySide.QtGui import QVBoxLayout
 
 import constants
 
-from command import Command, InvalidCommandError
+from command import Command
 from qGraphLayout import QGraphLayout
 from qBigDataDisplay import QBigDataDisplay
 from qSmallDataDisplay import QSmallDataDisplay
@@ -114,5 +114,5 @@ class QPrimaryWindow(QMainWindow):
       command = Command(self.commandInput.text())
       self.radio.send(command)
       self.commandInput.clear()
-    except InvalidCommandError as exception:
+    except exceptions.InvalidCommandError as exception:
       QMessageBox.warning(self, 'Invalid Command', str(exception))

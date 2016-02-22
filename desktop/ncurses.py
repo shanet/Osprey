@@ -4,9 +4,10 @@ import curses.textpad
 import signal
 import threading
 
+import constants
 import exceptions
 
-from command import Command, InvalidCommandError
+from command import Command
 from radio import Radio
 
 class OspreyNcurses(object):
@@ -51,13 +52,14 @@ class OspreyNcurses(object):
         lines.append('GPS Altitude: %.2fm' % curData['gps_altitude'])
         lines.append('Above Ground Level: %.2fm' % curData['agl'])
         lines.append('Pressure Setting: %.2f\" Hg' % curData['pressure_setting'])
+        lines.append('Logging: %d' % curData['logging'])
 
         lines.append('Temperature: %.2f\xb0C' % curData['temp'])
         lines.append('GPS Speed: %.2fkt' % curData['speed'])
         lines.append('GPS Quality: %d' % curData['gps_quality'])
 
         lines.append('Previous Command: %s' % curData['previous_command'])
-        lines.append('Command Status: %s' % ('ACK' if curData['command_status'] == Command.COMMAND_ACK else 'ERR'))
+        lines.append('Command Status: %s' % ('ACK' if curData['command_status'] == constants.COMMAND_ACK else 'ERR'))
 
         self.displayLines(lines)
       except exceptions.RadioReceiveError as exception:
@@ -89,7 +91,7 @@ class OspreyNcurses(object):
 
     # Set the freeze display flag and set an alarm to disable it
     if minTime:
-      Osprey.freezeDisplay = True
+      OspreyNcurses.freezeDisplay = True
       signal.alarm(minTime)
 
   def setColors(self):
@@ -151,7 +153,7 @@ class CursesSendThread(threading.Thread):
   def sendCommandToClient(self, input):
     try:
       self.curses.radio.send(Command(input))
-    except InvalidCommandError as exception:
+    except exceptions.InvalidCommandError as exception:
       self.curses.displayLines([str(exception)], minTime=3)
 
 def ncursesSignalHandler(signalNum, frame):

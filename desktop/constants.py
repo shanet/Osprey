@@ -124,3 +124,22 @@ GRAPHS = [
     'labels': {'left': ('Temperature', 'celsius'), 'bottom': ('Time', 'seconds')},
   },
 ]
+
+COMMAND_ZERO = {'name': 'zero', 'value': 0, 'arg': False}
+COMMAND_SET_PRESSURE = {'name': 'pressure', 'value': 1, 'arg': True}
+COMMAND_ENABLE_LOGGING = {'name': 'enable_logging', 'value': 2, 'arg': False}
+COMMAND_DISABLE_LOGGING = {'name': 'disable_logging', 'value': 3, 'arg': False}
+COMMAND_START_FLIGHT = {'name': 'start_flight', 'value': 4, 'arg': False}
+COMMAND_END_FLIGHT = {'name': 'end_flight', 'value': 5, 'arg': False}
+
+COMMANDS = [
+  COMMAND_ZERO,
+  COMMAND_SET_PRESSURE,
+  COMMAND_ENABLE_LOGGING,
+  COMMAND_DISABLE_LOGGING,
+  COMMAND_START_FLIGHT,
+  COMMAND_END_FLIGHT,
+]
+
+COMMAND_ERR = 0
+COMMAND_ACK = 1

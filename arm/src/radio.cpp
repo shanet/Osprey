@@ -9,10 +9,17 @@ volatile char* Radio::previousMessage = message1;
 volatile char* Radio::currentMessage = message2;
 volatile int Radio::messagePosition = 0;
 
-Radio::Radio() {}
+Radio::Radio() {
+  logging = false;
+}
 
 int Radio::init() {
   RadioSerial->begin(RADIO_BAUD);
+
+  if(!logger.init()) {
+   return 0;
+  }
+
   return 1;
 }
 
@@ -20,11 +27,16 @@ void Radio::send(const char* const message) {
   for(int i=0; message[i] != '\0'; i++) {
     RadioSerial->write(message[i]);
   }
+
+  if(isLogging()) {
+    logger.log(message);
+  }
 }
 
 void Radio::send(float message, int precision) {
   char buffer[RADIO_MAX_LINE_LENGTH];
   floatToString(message, precision, buffer);
+
   send(buffer);
 }
 
@@ -72,6 +84,31 @@ char Radio::read() {
   }
 
   return c;
+}
+
+int Radio::enableLogging() {
+  // If already logging, do nothing
+  if(isLogging()) return 1;
+
+  if(logger.open()) {
+    logging = true;
+    return 1;
+  }
+
+  return 0;
+}
+
+int Radio::disableLogging() {
+  // If not already logging, do nothing
+  if(!isLogging()) return 1;
+
+  logger.close();
+  logging = false;
+  return 1;
+}
+
+int Radio::isLogging() {
+  return (logging ? 1 : 0);
 }
 
 void Radio::floatToString(float num, int precision, char *buffer) {

@@ -39,9 +39,6 @@ void printJSON() {
   radio.send(gps.getIso8601());
   radio.send("\"");
 
-  radio.send(", \"logging\": ");
-  radio.send(radio.isLogging());
-
   radio.send(", \"latitude\": ");
   radio.send(gps.getLatitude(), 6);
 
@@ -66,6 +63,12 @@ void printJSON() {
 
   radio.send(", \"pressure_setting\": ");
   radio.send(barometer.getPressureSetting());
+
+  radio.send(", \"logging\": ");
+  radio.send(radio.isLogging());
+
+  radio.send(", \"battery\": ");
+  radio.send(battery.getVoltage(), 2);
 
   radio.send("}");
   radio.send("\r\n");

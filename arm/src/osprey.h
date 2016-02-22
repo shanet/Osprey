@@ -1,9 +1,10 @@
 #ifndef OSPREY_H
 #define OSPREY_H
 
-#include "constants.h"
 #include "accelerometer.h"
 #include "barometer.h"
+#include "battery.h"
+#include "constants.h"
 #include "gps.h"
 #include "radio.h"
 #include "thermometer.h"
@@ -13,6 +14,7 @@
 
 Accelerometer accelerometer;
 Barometer barometer;
+Battery battery;
 GPS gps;
 Radio radio;
 Thermometer thermometer;

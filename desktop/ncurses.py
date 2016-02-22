@@ -52,7 +52,6 @@ class OspreyNcurses(object):
         lines.append('GPS Altitude: %.2fm' % curData['gps_altitude'])
         lines.append('Above Ground Level: %.2fm' % curData['agl'])
         lines.append('Pressure Setting: %.2f\" Hg' % curData['pressure_setting'])
-        lines.append('Logging: %d' % curData['logging'])
 
         lines.append('Temperature: %.2f\xb0C' % curData['temp'])
         lines.append('GPS Speed: %.2fkt' % curData['speed'])
@@ -60,6 +59,9 @@ class OspreyNcurses(object):
 
         lines.append('Previous Command: %s' % curData['previous_command'])
         lines.append('Command Status: %s' % ('ACK' if curData['command_status'] == constants.COMMAND_ACK else 'ERR'))
+
+        lines.append('Logging: %d' % curData['logging'])
+        lines.append('Battery: %.2fV' % curData['battery'])
 
         self.displayLines(lines)
       except exceptions.RadioReceiveError as exception:

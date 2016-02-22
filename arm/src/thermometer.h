@@ -11,7 +11,7 @@ class Thermometer : public virtual Sensor {
   public:
     Thermometer();
     int init();
-    float getTemperature(void);
+    float getTemperature();
 
   protected:
     static Adafruit_BMP085_Unified thermometer;

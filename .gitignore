@@ -1,4 +1,8 @@
 arm/bin/*
-*.log
 
+*.log
 *.py[cod]
+
+android/.gradle
+android/local.properties
+android/build

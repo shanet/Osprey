@@ -16,3 +16,6 @@
 [submodule "arm/lib/Adafruit-GPS-Library"]
 	path = arm/lib/Adafruit-GPS-Library
 	url = git@github.com:adafruit/Adafruit-GPS-Library.git
+[submodule "android/usb-serial-for-android"]
+	path = android/usb-serial-for-android
+	url = git@github.com:mik3y/usb-serial-for-android.git

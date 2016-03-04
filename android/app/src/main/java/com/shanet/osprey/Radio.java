@@ -107,7 +107,6 @@ public class Radio {
 
   private void stopIoManager() {
     if(serialIoManager != null) {
-      Log.i("osprey", "stopping io manager");
       serialIoManager.stop();
       serialIoManager = null;
     }
@@ -117,7 +116,6 @@ public class Radio {
     if(port != null) {
       serialIoManager = new SerialInputOutputManager(port, listener);
       executor.submit(serialIoManager);
-      Log.i("osprey", "starting io manager");
     }
   }
 

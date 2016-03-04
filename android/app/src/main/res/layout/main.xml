@@ -26,11 +26,24 @@
     android:layout_height="wrap_content"
     android:layout_below="@id/separator" >
 
-      <TextView
-        android:id="@+id/consoleText"
-        android:textIsSelectable="true"
+      <LinearLayout
+        android:id="@+id/dataDisplays"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:typeface="monospace" />
+        android:orientation="vertical" >
+
+        <EditText
+          android:id="@+id/coordinates"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:editable="false" />
+
+        <TextView
+          android:id="@+id/consoleText"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:typeface="monospace" />
+
+      </LinearLayout>
   </ScrollView>
 </RelativeLayout>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:mapbox="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@android:id/empty"
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content"
+  android:layout_centerInParent="true"
+  android:orientation="vertical"
+  tools:context=".Main" >
+
+  <TextView android:id="@+id/coordinates_display"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp"
+    android:gravity="center"
+    android:textSize="22sp"
+    android:text="@string/default_coordinates" />
+
+  <com.mapbox.mapboxsdk.views.MapView
+    android:id="@+id/map"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    mapbox:access_token="@string/mapbox_api_key" />
+
+</LinearLayout>

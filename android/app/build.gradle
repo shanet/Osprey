@@ -1,6 +1,14 @@
 apply plugin: 'android'
 
+repositories {
+    mavenCentral()
+}
+
 dependencies {
+    compile 'com.android.support:support-v4:+'
+    compile ('com.mapbox.mapboxsdk:mapbox-android-sdk:3.2.0@aar') {
+        transitive=true
+    }
     compile project(':usb-serial-for-android:usbSerialForAndroid')
 }
 

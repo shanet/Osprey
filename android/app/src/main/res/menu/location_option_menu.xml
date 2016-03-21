@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+  <item android:id="@+id/map_style_option"
+    android:title="@string/menu_option_map_style"
+    android:icon="@drawable/ic_launcher"
+    android:showAsAction="never" />
+  <item android:id="@+id/map_follow_option"
+    android:title="@string/menu_option_map_follow"
+    android:icon="@drawable/ic_launcher"
+    android:showAsAction="never"
+    android:checkable="true" />
+</menu>

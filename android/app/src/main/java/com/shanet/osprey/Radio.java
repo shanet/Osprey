@@ -26,8 +26,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.List;
 
-import android.util.Log;
-
 public class Radio {
   private static final int BAUD_RATE = 115200;
 
@@ -41,7 +39,6 @@ public class Radio {
   private Context context;
   private SerialInputOutputManager serialIoManager;
   private UsbManager usbManager;
-
 
   public Radio(Context context) throws IOException {
     output = new PipedOutputStream();
@@ -120,15 +117,12 @@ public class Radio {
   }
 
   private final SerialInputOutputManager.Listener listener = new SerialInputOutputManager.Listener() {
-    public void onRunError(Exception e) {
-      Log.i("osprey", "listener run error");
-    }
-
     public void onNewData(final byte[] data) {
       try {
-        Log.i("osprey", new String(data));
         output.write(data);
       } catch(IOException err) {}
     }
+
+    public void onRunError(Exception err) {}
   };
 }

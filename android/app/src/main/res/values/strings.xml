@@ -1,4 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Main</string>
+    <string name="app_name">Osprey</string>
+    <string name="mapbox_api_key">pk.eyJ1Ijoic2hhbmV0IiwiYSI6ImNpbHF4azd4NjA4bnh2Nmx5Z3pldHNieTYifQ.m0aRNXoyHMYPAF8YmlMJAg</string>
+
+    <string name="page_title_location">Location</string>
+    <string name="page_title_orientation">Orientation</string>
+
+    <string name="default_coordinates">Waiting for location&#8230;</string>
+
+    <string name="okay">Okay</string>
+
+    <string name="dialog_title_disabled_gps">GPS Disabled</string>
+    <string name="dialog_disabled_gps">This device\'s GPS is disabled. For tracking to work, a GPS fix is required.</string>
+    <string name="dialog_title_radio_error">Failed to initialize radio</string>
+    <string name="dialog_radio_init">Is it plugged in?</string>
+    <string name="map_style_dialog_title">Map Style</string>
+
+    <string name="menu_option_map_style">Change map style</string>
+    <string name="menu_option_map_follow">Map following</string>
+
+    <array name="map_styles">
+      <item>Dark</item>
+      <item>Emerald</item>
+      <item>Light</item>
+      <item>Streets</item>
+      <item>Satellite</item>
+      <item>Streets &amp; Satellite</item>
+    </array>
 </resources>

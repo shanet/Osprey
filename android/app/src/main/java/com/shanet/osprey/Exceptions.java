@@ -7,13 +7,13 @@ public class Exceptions extends Exception {
 
   public static class NoUsbDriversException extends Exceptions {
     public NoUsbDriversException() {
-      super("No USB drivers found");
+      super("A USB device was detected, but no drivers are available for it.");
     }
   }
 
   public static class UnableToOpenUsbDeviceException extends Exceptions {
     public UnableToOpenUsbDeviceException() {
-      super("Unable to open USB device");
+      super("Unable to open USB device. This may be a permissions problem.");
     }
   }
 }

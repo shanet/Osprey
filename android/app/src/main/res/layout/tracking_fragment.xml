@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content"
+  android:layout_centerInParent="true"
+  android:orientation="vertical"
+  tools:context=".Main" >
+
+  <TextView android:id="@+id/rocket_coordinates_display"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:textSize="15sp"
+    android:text="@string/default_coordinates" />
+
+  <TextView android:id="@+id/user_coordinates_display"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:textSize="15sp"
+    android:text="@string/default_coordinates" />
+
+  <TextView android:id="@+id/distance_display"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:textSize="15sp"
+    android:text="@string/default_coordinates" />
+
+  <TextView android:id="@+id/relative_bearing_display"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:textSize="15sp"
+    android:text="@string/default_coordinates" />
+
+  <TextView android:id="@+id/heading_display"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:textSize="15sp"
+    android:text="@string/default_coordinates" />
+
+  <TextView android:id="@+id/magnetic_bearing_display"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:textSize="15sp"
+    android:text="@string/default_coordinates" />
+
+  <ImageView android:id="@+id/arrow"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:scaleType="center"
+    android:src="@drawable/arrow" />
+
+</LinearLayout>

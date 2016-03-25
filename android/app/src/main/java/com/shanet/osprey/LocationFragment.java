@@ -66,15 +66,15 @@ public class LocationFragment extends DatasetFragment implements LocationListene
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     layout = inflater.inflate(R.layout.location_fragment, null);
 
+    coordinatesDisplay = (TextView)layout.findViewById(R.id.coordinates_display);
+    mapView = (MapView)layout.findViewById(R.id.map);
+
     mapFollow = true;
     mapStyle = Style.SATELLITE_STREETS;
     mapPathPoints = new LinkedList<LatLng>();
 
     LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
     locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
-
-    coordinatesDisplay = (TextView)layout.findViewById(R.id.coordinates_display);
-    mapView = (MapView)layout.findViewById(R.id.map);
 
     initMapView(savedInstanceState);
 

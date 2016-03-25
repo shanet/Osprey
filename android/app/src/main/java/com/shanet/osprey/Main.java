@@ -25,7 +25,7 @@ import org.json.JSONObject;
 
 public class Main extends FragmentActivity {
   private static final int LOCATION_FRAGMENT = 0;
-  private static final int ORIENTATION_FRAGMENT = 1;
+  private static final int TRACKING_FRAGMENT = 1;
 
   private int curFragment;
   private HashMap<Integer, DatasetFragment> fragments;
@@ -48,7 +48,7 @@ public class Main extends FragmentActivity {
 
     fragments = new HashMap<Integer, DatasetFragment>();
     fragments.put(LOCATION_FRAGMENT, new LocationFragment());
-    fragments.put(ORIENTATION_FRAGMENT, new LocationFragment());
+    fragments.put(TRACKING_FRAGMENT, new TrackingFragment());
 
     updatePagerAdapter();
   }

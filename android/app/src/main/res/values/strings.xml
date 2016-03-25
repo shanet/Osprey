@@ -4,6 +4,7 @@
     <string name="mapbox_api_key">pk.eyJ1Ijoic2hhbmV0IiwiYSI6ImNpbHF4azd4NjA4bnh2Nmx5Z3pldHNieTYifQ.m0aRNXoyHMYPAF8YmlMJAg</string>
 
     <string name="page_title_location">Location</string>
+    <string name="page_title_tracking">Tracking</string>
     <string name="page_title_orientation">Orientation</string>
 
     <string name="default_coordinates">Waiting for location&#8230;</string>

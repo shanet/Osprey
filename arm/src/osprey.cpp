@@ -6,6 +6,7 @@ void setup(void) {
 }
 
 void loop(void) {
+  event.check();
   printJSON();
   processCommand();
   heartbeat();
@@ -73,6 +74,18 @@ void printJSON() {
   radio.send(", \"delta\": ");
   radio.send(clock.getSeconds());
 
+  for(int i=0; i<event.numEvents(); i++) {
+    char firedLabel[22];
+    char altLabel[20];
+    sprintf(firedLabel, ", \"event%d_fired\": ", i);
+    sprintf(altLabel, ", \"event%d_alt\": ", i);
+
+    radio.send(firedLabel);
+    radio.send(event.didFire(i));
+    radio.send(altLabel);
+    radio.send(event.altitude(i));
+  }
+
   radio.send("}");
   radio.send("\r\n");
 }
@@ -98,6 +111,10 @@ void initSensors() {
 
   if(!clock.init()) {
     printInitError("Failed to intialize clock");
+  }
+
+  if(!event.init()) {
+    printInitError("Failed to intialize events");
   }
 
   if(!gps.init()) {

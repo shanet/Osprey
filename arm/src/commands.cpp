@@ -8,7 +8,7 @@ void processCommand() {
 
   // Message format: "[command][argument]"
   // Subtract ASCII 0 as the poor man's char to int conversion
-  int command = message[0] - '0';
+  int command = *message - '0';
   char *arg = message+1;
 
   switch(command) {
@@ -29,6 +29,12 @@ void processCommand() {
       break;
     case COMMAND_DISABLE_LOGGING:
       disableLogging(arg);
+      break;
+    case COMMAND_SET_EVENT:
+      setEvent(arg);
+      break;
+    case COMMAND_FIRE_EVENT:
+      fireEvent(arg);
       break;
     default:
       commandStatus = COMMAND_ERR;
@@ -91,5 +97,22 @@ int disableLogging(char *arg) {
     commandStatus = COMMAND_ERR;
   }
 
+  return commandStatus;
+}
+
+int setEvent(char *arg) {
+  int eventNum = *arg - '0';
+  int altitude = atoi(arg+1);
+
+  event.set(eventNum, altitude);
+
+  commandStatus = COMMAND_ACK;
+  return commandStatus;
+}
+
+int fireEvent(char *arg) {
+  event.fire(*arg - '0');
+
+  commandStatus = COMMAND_ACK;
   return commandStatus;
 }

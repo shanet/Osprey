@@ -63,6 +63,10 @@ class OspreyNcurses(object):
 
         lines.append('Logging: %d' % curData['logging'])
         lines.append('Battery: %.2fV' % curData['battery'])
+        lines.append('Event 0 Fired: %d' % curData['event0_fired'])
+        lines.append('Event 1 Fired: %d' % curData['event1_fired'])
+        lines.append('Event 0 Altitude: %d' % curData['event0_alt'])
+        lines.append('Event 1 Altitude: %d' % curData['event1_alt'])
 
         self.displayLines(lines)
       except exceptions.RadioReceiveError as exception:

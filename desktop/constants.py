@@ -145,6 +145,8 @@ COMMAND_ENABLE_LOGGING = {'name': 'enable_logging', 'value': 2, 'arg': False}
 COMMAND_DISABLE_LOGGING = {'name': 'disable_logging', 'value': 3, 'arg': False}
 COMMAND_START_FLIGHT = {'name': 'start_flight', 'value': 4, 'arg': False}
 COMMAND_END_FLIGHT = {'name': 'end_flight', 'value': 5, 'arg': False}
+COMMAND_SET_EVENT = {'name': 'set_event', 'value': 6, 'arg': True}
+COMMAND_FIRE_EVENT = {'name': 'fire_event', 'value': 7, 'arg': True}
 
 COMMANDS = [
   COMMAND_ZERO,
@@ -153,6 +155,8 @@ COMMANDS = [
   COMMAND_DISABLE_LOGGING,
   COMMAND_START_FLIGHT,
   COMMAND_END_FLIGHT,
+  COMMAND_SET_EVENT,
+  COMMAND_FIRE_EVENT,
 ]
 
 COMMAND_ERR = 0

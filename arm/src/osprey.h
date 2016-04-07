@@ -6,6 +6,7 @@
 #include "battery.h"
 #include "clock.h"
 #include "constants.h"
+#include "event.h"
 #include "gps.h"
 #include "radio.h"
 #include "thermometer.h"
@@ -17,6 +18,7 @@ Accelerometer accelerometer;
 Barometer barometer;
 Battery battery;
 Clock clock;
+Event event;
 GPS gps;
 Radio radio;
 Thermometer thermometer;

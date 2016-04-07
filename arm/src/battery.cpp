@@ -1,7 +1,10 @@
 #include "battery.h"
 
 Battery::Battery() {}
-int Battery::init() {}
+
+int Battery::init() {
+  return 1;
+}
 
 float Battery::getVoltage() {
   // https://learn.adafruit.com/adafruit-feather-m0-adalogger/power-management

@@ -39,4 +39,13 @@ public class Dataset {
     Integer logging = (Integer)getField("logging");
     return (logging.intValue() == 1);
   }
+
+  public String toString() {
+    try {
+      return dataset.toString(2);
+    } catch(JSONException err) {
+      // If pretty printing fails, return an unformatted string
+      return dataset.toString();
+    }
+  }
 }

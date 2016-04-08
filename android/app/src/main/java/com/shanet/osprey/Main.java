@@ -27,6 +27,7 @@ public class Main extends FragmentActivity {
   private static final int LOCATION_FRAGMENT = 0;
   private static final int TRACKING_FRAGMENT = 1;
   private static final int ALTITUDE_FRAGMENT = 2;
+  private static final int ORIENTATION_FRAGMENT = 3;
 
   private int curFragment;
   private HashMap<Integer, DatasetFragment> fragments;
@@ -51,6 +52,7 @@ public class Main extends FragmentActivity {
     fragments.put(LOCATION_FRAGMENT, new LocationFragment());
     fragments.put(TRACKING_FRAGMENT, new TrackingFragment());
     fragments.put(ALTITUDE_FRAGMENT, new AltitudeFragment());
+    fragments.put(ORIENTATION_FRAGMENT, new OrientationFragment());
 
     updatePagerAdapter();
   }

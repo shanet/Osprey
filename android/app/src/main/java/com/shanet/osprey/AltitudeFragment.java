@@ -51,8 +51,4 @@ public class AltitudeFragment extends DatasetFragment {
   public String getTitle(Context context) {
     return context.getString(R.string.page_title_altitude);
   }
-
-  private void updateDisplay(TextView textView, Double value, int defaultString) {
-    textView.setText(value != null ? value.toString() : getString(defaultString));
-  }
 }

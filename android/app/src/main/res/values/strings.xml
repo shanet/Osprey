@@ -5,9 +5,10 @@
 
     <string name="page_title_location">Location</string>
     <string name="page_title_tracking">Tracking</string>
-    <string name="page_title_orientation">Orientation</string>
+    <string name="page_title_altitude">Altitude</string>
 
     <string name="default_coordinates">Waiting for location&#8230;</string>
+    <string name="default_altitude">Waiting for altitude&#8230;</string>
 
     <string name="okay">Okay</string>
 

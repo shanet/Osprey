@@ -21,23 +21,13 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 
-import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
-
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 
 public class TrackingFragment extends DatasetFragment implements LocationListener, SensorEventListener {
   private static final int EARTH_RADIUS = 6371009;
@@ -58,10 +48,9 @@ public class TrackingFragment extends DatasetFragment implements LocationListene
   private TextView relativeBearingDisplay;
   private TextView headingDisplay;
   private TextView magneticBearingDisplay;
-  private View layout;
 
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-    layout = inflater.inflate(R.layout.tracking_fragment, null);
+    View layout = inflater.inflate(R.layout.tracking_fragment, null);
 
     heading = 0;
 
@@ -94,6 +83,9 @@ public class TrackingFragment extends DatasetFragment implements LocationListene
   }
 
   public void updateDataset(Dataset dataset) {
+    // Don't update if the view has not been initalized yet
+    if(rocketCoordinatesDisplay == null) return;
+
     // Update the rocket coordinates label
     String coordinates = dataset.getCoordinates();
     rocketCoordinatesDisplay.setText(coordinates != null ? coordinates : getString(R.string.default_coordinates));

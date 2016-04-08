@@ -15,8 +15,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 
-import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -61,10 +59,9 @@ public class LocationFragment extends DatasetFragment implements LocationListene
 
   private String mapStyle;
   private TextView coordinatesDisplay;
-  private View layout;
 
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-    layout = inflater.inflate(R.layout.location_fragment, null);
+    View layout = inflater.inflate(R.layout.location_fragment, null);
 
     coordinatesDisplay = (TextView)layout.findViewById(R.id.coordinates_display);
     mapView = (MapView)layout.findViewById(R.id.map);
@@ -96,10 +93,13 @@ public class LocationFragment extends DatasetFragment implements LocationListene
   }
 
   public void updateDataset(Dataset dataset) {
+    // Don't update if the view has not been initalized yet
+    if(coordinatesDisplay == null) return;
+
     String coordinates = dataset.getCoordinates();
 
     // Update the coordinates label
-    coordinatesDisplay.setText(coordinates != null ? coordinates : getString(R.string.default_coordinates));
+    coordinatesDisplay.setText(coordinates != null ? coordinates : getActivity().getString(R.string.default_coordinates));
 
     Double latitude = (Double)dataset.getField("latitude");
     Double longitude = (Double)dataset.getField("longitude");
@@ -167,6 +167,9 @@ public class LocationFragment extends DatasetFragment implements LocationListene
   // Location listener methods
   // ---------------------------------------------------------------------------------------------------
   public void onLocationChanged(Location location) {
+    // If we don't know the rocket location yet, there's no line to plot
+    if(mapRocketMarker == null) return;
+
     double latitude = location.getLatitude();
     double longitude = location.getLongitude();
 

@@ -24,6 +24,7 @@ class Radio : public virtual Sensor {
     int enableLogging();
     int disableLogging();
     int isLogging();
+    char* getMostRecentMessage();
 
     static void floatToString(float num, int precision, char *buffer);
     static char read();
@@ -36,6 +37,7 @@ class Radio : public virtual Sensor {
 
     static char message1[];
     static char message2[];
+    static char mostRecentMessage[];
 
     static char *currentMessage;
     static char *previousMessage;

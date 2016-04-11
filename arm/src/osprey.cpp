@@ -58,7 +58,7 @@ void printJSON() {
   radio.send(commandStatus);
 
   radio.send(", \"previous_command\": \"");
-  radio.send(radio.recv());
+  radio.send(radio.getMostRecentMessage());
   radio.send("\"");
 
   radio.send(", \"pressure_setting\": ");

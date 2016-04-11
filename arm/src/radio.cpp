@@ -4,6 +4,7 @@ Uart *Radio::RadioSerial = &Serial1;
 
 char Radio::message1[RADIO_MAX_LINE_LENGTH];
 char Radio::message2[RADIO_MAX_LINE_LENGTH];
+char Radio::mostRecentMessage[RADIO_MAX_LINE_LENGTH];
 
 char* Radio::previousMessage = message1;
 char* Radio::currentMessage = message2;
@@ -53,6 +54,9 @@ char* Radio::recv() {
 }
 
 void Radio::clear() {
+  // Copy the previous message before clearing it so we can report the most recently processed message
+  strncpy(mostRecentMessage, previousMessage, RADIO_MAX_LINE_LENGTH);
+
   previousMessage[0] = '\0';
 }
 
@@ -132,4 +136,8 @@ void Radio::floatToString(float num, int precision, char *buffer) {
 
   // Combine the characteristic and mantissa in a string
   sprintf(buffer, "%d.%d", characteristic, mantissa);
+}
+
+char* Radio::getMostRecentMessage() {
+  return mostRecentMessage;
 }

@@ -3,6 +3,9 @@
 void processCommand() {
   char *message = radio.recv();
 
+  // If an empty string, do nothing
+  if(*message == '\0') return;
+
   // Message format: "[command][argument]"
   // Subtract ASCII 0 as the poor man's char to int conversion
   int command = message[0] - '0';

@@ -37,21 +37,22 @@ import com.mapbox.mapboxsdk.camera.CameraUpdate;
 import com.mapbox.mapboxsdk.camera.CameraUpdateFactory;
 import com.mapbox.mapboxsdk.constants.Style;
 import com.mapbox.mapboxsdk.geometry.LatLng;
-import com.mapbox.mapboxsdk.views.MapView;
+import com.mapbox.mapboxsdk.maps.MapboxMap;
+import com.mapbox.mapboxsdk.maps.MapView;
+import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-public class LocationFragment extends DatasetFragment implements LocationListener, MapView.OnScrollListener, MapStyleDialogFragment.MapStyleDialogListener {
-  private static final double DEFAULT_LATITUDE = 47.6097;
-  private static final double DEFAULT_LONGITUDE = -122.3331;
+public class LocationFragment extends DatasetFragment implements LocationListener, MapboxMap.OnScrollListener, MapStyleDialogFragment.MapStyleDialogListener {
   private static final int DEFAULT_ZOOM = 15;
   private static final int ORANGE = 0xFFFFAA00; // wtf? android has a constant for magenta but not orange?
 
   private boolean mapFollow;
   private LinkedList<LatLng> mapPathPoints;
 
+  private MapboxMap map;
   private MapView mapView;
   private Marker mapRocketMarker;
   private Polyline mapRocketPath;
@@ -64,7 +65,9 @@ public class LocationFragment extends DatasetFragment implements LocationListene
     View layout = inflater.inflate(R.layout.location_fragment, null);
 
     coordinatesDisplay = (TextView)layout.findViewById(R.id.coordinates_display);
-    mapView = (MapView)layout.findViewById(R.id.map);
+    mapView = ((MapView)layout.findViewById(R.id.map));
+    mapView.onCreate(savedInstanceState);
+    mapView.getMapAsync(onMapReady);
 
     mapFollow = true;
     mapStyle = Style.SATELLITE_STREETS;
@@ -73,23 +76,10 @@ public class LocationFragment extends DatasetFragment implements LocationListene
     LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
     locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
 
-    initMapView(savedInstanceState);
-
     // Tell Android this fragment has an options menu
     setHasOptionsMenu(true);
 
     return layout;
-  }
-
-  private void initMapView(Bundle savedInstanceState) {
-    updateMapCamera(DEFAULT_LATITUDE, DEFAULT_LONGITUDE, DEFAULT_ZOOM);
-
-    mapView.setStyleUrl(mapStyle);
-    mapView.setLogoVisibility(View.GONE);
-    mapView.setAttributionVisibility(View.GONE);
-    mapView.setMyLocationEnabled(true);
-    mapView.setOnScrollListener(this);
-    mapView.onCreate(savedInstanceState);
   }
 
   public void updateDataset(Dataset dataset) {
@@ -104,8 +94,8 @@ public class LocationFragment extends DatasetFragment implements LocationListene
     Double latitude = (Double)dataset.getField("latitude");
     Double longitude = (Double)dataset.getField("longitude");
 
-    // Only move the map if coordinates exist
-    if(latitude != null && longitude != null) {
+    // Only move the map if coordinates exist and the map has been initialized
+    if(map != null && latitude != null && longitude != null) {
       // Add a new point to the list of points and draw a new line
       mapPathPoints.push(new LatLng(latitude, longitude));
 
@@ -124,22 +114,31 @@ public class LocationFragment extends DatasetFragment implements LocationListene
 
   // Map methods
   // ---------------------------------------------------------------------------------------------------
+  private OnMapReadyCallback onMapReady = new OnMapReadyCallback() {
+    public void onMapReady(MapboxMap mapboxMap) {
+      map = mapboxMap;
+
+      map.setStyleUrl(mapStyle);
+      map.setMyLocationEnabled(true);
+      map.setOnScrollListener(LocationFragment.this);
+    };
+  };
+
   private void updateMapCamera(double latitude, double longitude, int zoom) {
     CameraPosition cameraPosition = new CameraPosition.Builder().target(new LatLng(latitude, longitude))
       .zoom(DEFAULT_ZOOM)
       .build();
 
     CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
-    mapView.easeCamera(cameraUpdate, 1000, null);
+    map.easeCamera(cameraUpdate, 1000);
   }
 
   private Marker updateMapMarker(Marker marker, double latitude, double longitude) {
-    // Version 4 of the MapBox SDK supports moving markers. Until then, remove and create a new one
     if(marker != null) {
       marker.remove();
     }
 
-    return mapView.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)));
+    return map.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)));
   }
 
   private Polyline updateMapPath(Polyline line, List<LatLng> points, int color) {
@@ -147,7 +146,7 @@ public class LocationFragment extends DatasetFragment implements LocationListene
       line.remove();
     }
 
-    return mapView.addPolyline(new PolylineOptions()
+    return map.addPolyline(new PolylineOptions()
       .width(3)
       .color(color)
       .alpha(.9f)
@@ -161,6 +160,16 @@ public class LocationFragment extends DatasetFragment implements LocationListene
 
     // Ensure that the map following menu option gets updated
     getActivity().invalidateOptionsMenu();
+  }
+
+  public void onResume() {
+    super.onResume();
+    mapView.onResume();
+  }
+
+  public void onPause() {
+    super.onPause();
+    mapView.onPause();
   }
   // ---------------------------------------------------------------------------------------------------
 
@@ -216,7 +225,7 @@ public class LocationFragment extends DatasetFragment implements LocationListene
 
   public void onMapStyleChanged(String style) {
     mapStyle = style;
-    mapView.setStyleUrl(style);
+    map.setStyleUrl(style);
   }
   // ---------------------------------------------------------------------------------------------------
 }

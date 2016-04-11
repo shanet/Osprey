@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Osprey</string>
-    <string name="mapbox_api_key">pk.eyJ1Ijoic2hhbmV0IiwiYSI6ImNpbHF4azd4NjA4bnh2Nmx5Z3pldHNieTYifQ.m0aRNXoyHMYPAF8YmlMJAg</string>
+    <string name="mapbox_api_key">pk.eyJ1Ijoic2hhbmV0IiwiYSI6ImNpbXZnbnBhMjAydDl3a2x1ejNoNWoydHMifQ.WIi_Jv4TO3hOzj-E120rYg</string>
 
     <string name="page_title_location">Location</string>
     <string name="page_title_tracking">Tracking</string>

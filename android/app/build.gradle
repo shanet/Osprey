@@ -6,7 +6,7 @@ repositories {
 
 dependencies {
     compile 'com.android.support:support-v4:+'
-    compile ('com.mapbox.mapboxsdk:mapbox-android-sdk:3.2.0@aar') {
+    compile ('com.mapbox.mapboxsdk:mapbox-android-sdk:4.0.0@aar') {
         transitive=true
     }
     compile project(':usb-serial-for-android:usbSerialForAndroid')

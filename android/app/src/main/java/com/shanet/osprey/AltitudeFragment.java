@@ -33,8 +33,8 @@ public class AltitudeFragment extends DatasetFragment {
   }
 
   public void updateDataset(Dataset dataset) {
-    // Don't update if the view has not been initalized yet
-    if(aglDisplay == null) return;
+    // Don't update if not added to an activity yet
+    if(!isAdded()) return;
 
     // Update the data displays
     Double agl = (Double)dataset.getField("agl");

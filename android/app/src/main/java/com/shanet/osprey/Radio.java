@@ -98,6 +98,12 @@ public class Radio {
     return reader.readLine();
   }
 
+  public void write(String message) {
+    if(serialIoManager != null) {
+      serialIoManager.writeAsync(message.getBytes());
+    }
+  }
+
   private List<UsbSerialDriver> getAvailableDrivers() {
     return UsbSerialProber.getDefaultProber().findAllDrivers(usbManager);
   }

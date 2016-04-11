@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content"
+  android:layout_centerInParent="true"
+  android:orientation="vertical"
+  tools:context=".Main" >
+
+  <TextView android:id="@+id/battery_display"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:textSize="15sp"
+    android:text="@string/default_raw" />
+
+  <TextView android:id="@+id/command_status_display"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:textSize="15sp"
+    android:text="@string/default_raw" />
+
+  <TextView android:id="@+id/previous_command_display"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:textSize="15sp"
+    android:text="@string/default_raw" />
+
+  <TextView android:id="@+id/logging_display"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:textSize="15sp"
+    android:text="@string/default_raw" />
+
+   <Button android:id="@+id/zero_sensors_button"
+     android:layout_height="wrap_content"
+     android:layout_width="wrap_content"
+     android:text="@string/zero_sensors" />
+
+  <Button android:id="@+id/set_pressure_setting_button"
+     android:layout_height="wrap_content"
+     android:layout_width="wrap_content"
+     android:text="@string/set_pressure_setting" />
+
+  <Button android:id="@+id/enable_logging_button"
+     android:layout_height="wrap_content"
+     android:layout_width="wrap_content"
+     android:text="@string/enable_logging" />
+
+  <Button android:id="@+id/disable_logging_button"
+     android:layout_height="wrap_content"
+     android:layout_width="wrap_content"
+     android:text="@string/disable_logging" />
+
+  <Button android:id="@+id/start_flight_button"
+     android:layout_height="wrap_content"
+     android:layout_width="wrap_content"
+     android:text="@string/start_flight" />
+
+  <Button android:id="@+id/end_flight_button"
+     android:layout_height="wrap_content"
+     android:layout_width="wrap_content"
+     android:text="@string/end_flight" />
+
+</LinearLayout>

@@ -14,10 +14,6 @@ public class Dataset {
     return dataset.opt(key);
   }
 
-  public void getTimestamp() {
-    // TODO
-  }
-
   public String getCoordinates() {
     Double latitude = (Double)getField("latitude");
     Double longitude = (Double)getField("longitude");

@@ -28,7 +28,8 @@ public class Main extends FragmentActivity {
   private static final int TRACKING_FRAGMENT = 1;
   private static final int ALTITUDE_FRAGMENT = 2;
   private static final int ORIENTATION_FRAGMENT = 3;
-  private static final int RAW_FRAGMENT = 4;
+  private static final int STATUS_FRAGMENT = 4;
+  private static final int RAW_FRAGMENT = 5;
 
   private int curFragment;
   private HashMap<Integer, DatasetFragment> fragments;
@@ -54,6 +55,7 @@ public class Main extends FragmentActivity {
     fragments.put(TRACKING_FRAGMENT, new TrackingFragment());
     fragments.put(ALTITUDE_FRAGMENT, new AltitudeFragment());
     fragments.put(ORIENTATION_FRAGMENT, new OrientationFragment());
+    fragments.put(STATUS_FRAGMENT, new StatusFragment());
     fragments.put(RAW_FRAGMENT, new RawFragment());
 
     updatePagerAdapter();
@@ -110,6 +112,10 @@ public class Main extends FragmentActivity {
         fragment.updateDataset(dataset);
       }
     } catch(JSONException err) {}
+  }
+
+  public void write(String message) {
+    radio.write(message);
   }
 
   // View pager methods

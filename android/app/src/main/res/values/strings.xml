@@ -7,6 +7,7 @@
     <string name="page_title_tracking">Tracking</string>
     <string name="page_title_altitude">Altitude</string>
     <string name="page_title_orientation">Orientation</string>
+    <string name="page_title_status">Status</string>
     <string name="page_title_raw">Raw</string>
 
     <string name="default_coordinates">Waiting for location&#8230;</string>
@@ -15,15 +16,24 @@
     <string name="default_raw">Waiting for data&#8230;</string>
 
     <string name="okay">Okay</string>
+    <string name="cancel">Cancel</string>
 
     <string name="dialog_title_disabled_gps">GPS Disabled</string>
     <string name="dialog_disabled_gps">This device\'s GPS is disabled. For tracking to work, a GPS fix is required.</string>
     <string name="dialog_title_radio_error">Failed to initialize radio</string>
     <string name="dialog_radio_init">Is it plugged in?</string>
     <string name="map_style_dialog_title">Map Style</string>
+    <string name="pressure_setting_dialog_title">Pressure Setting</string>
 
     <string name="menu_option_map_style">Change map style</string>
     <string name="menu_option_map_follow">Map following</string>
+
+    <string name="zero_sensors">Zero Sensors</string>
+    <string name="set_pressure_setting">Set Pressure Setting</string>
+    <string name="enable_logging">Enable Logging</string>
+    <string name="disable_logging">Disable Logging</string>
+    <string name="start_flight">Start Flight</string>
+    <string name="end_flight">End Flight</string>
 
     <array name="map_styles">
       <item>Dark</item>

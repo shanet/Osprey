@@ -93,8 +93,8 @@ public class LocationFragment extends DatasetFragment implements LocationListene
   }
 
   public void updateDataset(Dataset dataset) {
-    // Don't update if the view has not been initalized yet
-    if(coordinatesDisplay == null) return;
+    // Don't update if not added to an activity yet
+    if(!isAdded()) return;
 
     String coordinates = dataset.getCoordinates();
 

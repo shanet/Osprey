@@ -83,8 +83,8 @@ public class TrackingFragment extends DatasetFragment implements LocationListene
   }
 
   public void updateDataset(Dataset dataset) {
-    // Don't update if the view has not been initalized yet
-    if(rocketCoordinatesDisplay == null) return;
+    // Don't update if not added to an activity yet
+    if(!isAdded()) return;
 
     // Update the rocket coordinates label
     String coordinates = dataset.getCoordinates();

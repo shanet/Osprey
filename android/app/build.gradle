@@ -2,6 +2,7 @@ apply plugin: 'android'
 
 repositories {
     mavenCentral()
+    maven {url "https://jitpack.io"}
 }
 
 dependencies {
@@ -9,6 +10,7 @@ dependencies {
     compile ('com.mapbox.mapboxsdk:mapbox-android-sdk:4.0.0@aar') {
         transitive=true
     }
+    compile 'com.github.PhilJay:MPAndroidChart:v2.2.4'
     compile project(':usb-serial-for-android:usbSerialForAndroid')
 }
 

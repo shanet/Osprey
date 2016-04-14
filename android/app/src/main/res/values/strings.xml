@@ -35,6 +35,12 @@
     <string name="start_flight">Start Flight</string>
     <string name="end_flight">End Flight</string>
 
+    <string name="degrees">&#xb0;</string>
+
+    <string name="roll">Roll</string>
+    <string name="pitch">Pitch</string>
+    <string name="heading">Heading</string>
+
     <array name="map_styles">
       <item>Dark</item>
       <item>Emerald</item>

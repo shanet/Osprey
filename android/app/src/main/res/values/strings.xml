@@ -27,6 +27,7 @@
 
     <string name="menu_option_map_style">Change map style</string>
     <string name="menu_option_map_follow">Map following</string>
+    <string name="menu_option_clear_graph">Clear graph</string>
 
     <string name="zero_sensors">Zero Sensors</string>
     <string name="set_pressure_setting">Set Pressure Setting</string>
@@ -36,10 +37,14 @@
     <string name="end_flight">End Flight</string>
 
     <string name="degrees">&#xb0;</string>
+    <string name="meters">m</string>
 
     <string name="roll">Roll</string>
     <string name="pitch">Pitch</string>
     <string name="heading">Heading</string>
+
+    <string name="pressure_altitude">Pressure</string>
+    <string name="gps_altitude">GPS</string>
 
     <array name="map_styles">
       <item>Dark</item>

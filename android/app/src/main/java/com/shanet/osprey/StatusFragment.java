@@ -1,12 +1,7 @@
 package com.shanet.osprey;
 
 import android.content.Context;
-import android.content.Intent;
-
 import android.os.Bundle;
-
-import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +18,7 @@ public class StatusFragment extends DatasetFragment implements NumberInputDialog
   private TextView batteryDisplay;
   private TextView commandStatusDisplay;
   private TextView previousCommandDisplay;
+  private TextView pressureSettingDisplay;
   private TextView loggingDisplay;
 
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -33,6 +29,7 @@ public class StatusFragment extends DatasetFragment implements NumberInputDialog
     batteryDisplay = (TextView)layout.findViewById(R.id.battery_display);
     commandStatusDisplay = (TextView)layout.findViewById(R.id.command_status_display);
     previousCommandDisplay = (TextView)layout.findViewById(R.id.previous_command_display);
+    pressureSettingDisplay = (TextView)layout.findViewById(R.id.pressure_setting_display);
     loggingDisplay = (TextView)layout.findViewById(R.id.logging_display);
 
     ((Button)layout.findViewById(R.id.zero_sensors_button)).setOnClickListener(zeroSensors);
@@ -54,6 +51,7 @@ public class StatusFragment extends DatasetFragment implements NumberInputDialog
     currentPressureSetting = ((Double)dataset.getField("pressure_setting")).doubleValue();
 
     updateDisplay(batteryDisplay, battery, R.string.default_raw);
+    updateDisplay(pressureSettingDisplay, currentPressureSetting, R.string.default_raw);
     loggingDisplay.setText(dataset.isLogging() ? "Yes" : "No");
 
     if("".equals(previousCommand)) {

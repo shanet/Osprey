@@ -1,13 +1,11 @@
 package com.shanet.osprey;
 
 import android.content.Context;
-import android.content.Intent;
 
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.Matrix;
 
@@ -18,16 +16,12 @@ import android.hardware.SensorManager;
 
 import android.os.Bundle;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.AdapterView.AdapterContextMenuInfo;
 
 public class TrackingFragment extends DatasetFragment implements LocationListener, SensorEventListener {
   private static final int EARTH_RADIUS = 6371009;

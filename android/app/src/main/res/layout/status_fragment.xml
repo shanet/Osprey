@@ -27,6 +27,13 @@
     android:textSize="15sp"
     android:text="@string/default_raw" />
 
+  <TextView android:id="@+id/pressure_setting_display"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:textSize="15sp"
+    android:text="@string/default_raw" />
+
   <TextView android:id="@+id/logging_display"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"

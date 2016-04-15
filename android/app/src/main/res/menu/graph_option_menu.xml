@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+  <item android:id="@+id/clear_graph_option"
+    android:title="@string/menu_option_clear_graph"
+    android:showAsAction="never" />
+</menu>

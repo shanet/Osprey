@@ -1,35 +1,27 @@
 package com.shanet.osprey;
 
 import android.content.Context;
-import android.content.Intent;
-
 import android.graphics.Color;
 import android.os.Bundle;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.components.YAxis.AxisDependency;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-import com.github.mikephil.charting.utils.ColorTemplate;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+public class OrientationFragment extends GraphFragment {
+  private static final float Y_MAX = 360f;
+  private static final float Y_MIN = -180f;
 
-public class OrientationFragment extends DatasetFragment {
   private ILineDataSet rollDataset;
   private ILineDataSet pitchDataset;
   private ILineDataSet headingDataset;
@@ -48,15 +40,11 @@ public class OrientationFragment extends DatasetFragment {
     headingDisplay = (TextView)layout.findViewById(R.id.heading_display);
 
     graph = (LineChart)layout.findViewById(R.id.graph);
-    configureGraph(graph);
+    configureGraph(graph, Y_MAX, Y_MIN);
+    initGraphDatasets();
 
-    rollDataset = createGraphDataSet(android.R.color.holo_red_light);
-    pitchDataset = createGraphDataSet(android.R.color.holo_green_light);
-    headingDataset = createGraphDataSet(android.R.color.holo_blue_light);
-
-    graph.getData().addDataSet(rollDataset);
-    graph.getData().addDataSet(pitchDataset);
-    graph.getData().addDataSet(headingDataset);
+    // Tell Android this fragment has an options menu
+    setHasOptionsMenu(true);
 
     return layout;
   }
@@ -80,6 +68,12 @@ public class OrientationFragment extends DatasetFragment {
     updateGraphDataset(headingDataset, heading.floatValue(), -1);
   }
 
+  public String getTitle(Context context) {
+    return context.getString(R.string.page_title_orientation);
+  }
+
+  // Graph methods
+  // ---------------------------------------------------------------------------------------------------
   private void updateGraphDataset(ILineDataSet dataset, float y, int x) {
     LineData data = graph.getData();
 
@@ -99,7 +93,40 @@ public class OrientationFragment extends DatasetFragment {
     graph.moveViewToX(data.getXValCount());
   }
 
-  public String getTitle(Context context) {
-    return context.getString(R.string.page_title_orientation);
+  private void initGraphDatasets() {
+    LineData data = new LineData();
+    data.setValueTextColor(Color.WHITE);
+    graph.setData(data);
+
+    rollDataset = createGraphDataSet(android.R.color.holo_red_light);
+    pitchDataset = createGraphDataSet(android.R.color.holo_green_light);
+    headingDataset = createGraphDataSet(android.R.color.holo_blue_light);
+
+    graph.getData().addDataSet(rollDataset);
+    graph.getData().addDataSet(pitchDataset);
+    graph.getData().addDataSet(headingDataset);
   }
+
+  private void clearGraph() {
+    graph.clear();
+    initGraphDatasets();
+  }
+  // ---------------------------------------------------------------------------------------------------
+
+  // Options menu methods
+  // ---------------------------------------------------------------------------------------------------
+  public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    inflater.inflate(R.menu.graph_option_menu, menu);
+  }
+
+  public boolean onOptionsItemSelected(MenuItem item) {
+    switch(item.getItemId()) {
+      case R.id.clear_graph_option:
+        clearGraph();
+        return true;
+    }
+
+    return false;
+  }
+  // ---------------------------------------------------------------------------------------------------
 }

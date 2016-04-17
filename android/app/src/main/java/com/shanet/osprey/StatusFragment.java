@@ -69,44 +69,44 @@ public class StatusFragment extends DatasetFragment implements NumberInputDialog
 
   private View.OnClickListener zeroSensors = new View.OnClickListener() {
     public void onClick(View view) {
-      ((Main)getActivity()).write("0\n");
+      sendCommand("0");
     }
   };
 
   private View.OnClickListener setPressureSetting = new View.OnClickListener() {
     public void onClick(View view) {
       // Show a dialog to get a new pressure setting from the user
-      NumberInputDialogFragment dialog = new NumberInputDialogFragment(StatusFragment.this, R.string.pressure_setting_dialog_title, currentPressureSetting);
+      NumberInputDialogFragment dialog = new NumberInputDialogFragment(StatusFragment.this, R.string.pressure_setting_dialog_title, currentPressureSetting, 0);
       dialog.show(getActivity().getSupportFragmentManager(), "NumberInputDialog");
     }
   };
 
-  public void onNumberReceived(double number) {
+  public void onNumberReceived(double number, int which) {
     // Once the pressure setting is retrived from the user, send the set pressure command
-    ((Main)getActivity()).write(String.format("1%s\n", Double.toString(number)));
+    sendCommand(String.format("1%s", Double.toString(number)));
   }
 
   private View.OnClickListener enableLogging = new View.OnClickListener() {
     public void onClick(View view) {
-      ((Main)getActivity()).write("2\n");
+      sendCommand("2");
     }
   };
 
   private View.OnClickListener disableLogging = new View.OnClickListener() {
     public void onClick(View view) {
-      ((Main)getActivity()).write("3\n");
+      sendCommand("3");
     }
   };
 
   private View.OnClickListener startFlight = new View.OnClickListener() {
     public void onClick(View view) {
-      ((Main)getActivity()).write("4\n");
+      sendCommand("4");
     }
   };
 
   private View.OnClickListener endFlight = new View.OnClickListener() {
     public void onClick(View view) {
-      ((Main)getActivity()).write("5\n");
+      sendCommand("5");
     }
   };
 }

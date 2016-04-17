@@ -7,16 +7,20 @@
     <string name="page_title_tracking">Tracking</string>
     <string name="page_title_altitude">Altitude</string>
     <string name="page_title_orientation">Orientation</string>
+    <string name="page_title_events">Events</string>
     <string name="page_title_status">Status</string>
     <string name="page_title_raw">Raw</string>
 
     <string name="default_coordinates">Waiting for location&#8230;</string>
     <string name="default_altitude">Waiting for altitude&#8230;</string>
     <string name="default_orientation">Waiting for data&#8230;</string>
+    <string name="default_events">Waiting for data&#8230;</string>
     <string name="default_raw">Waiting for data&#8230;</string>
 
     <string name="okay">Okay</string>
     <string name="cancel">Cancel</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 
     <string name="dialog_title_disabled_gps">GPS Disabled</string>
     <string name="dialog_disabled_gps">This device\'s GPS is disabled. For tracking to work, a GPS fix is required.</string>
@@ -24,6 +28,7 @@
     <string name="dialog_radio_init">Is it plugged in?</string>
     <string name="map_style_dialog_title">Map Style</string>
     <string name="pressure_setting_dialog_title">Pressure Setting</string>
+    <string name="event_altitude_dialog_title">Event Altitude (ft)</string>
 
     <string name="menu_option_map_style">Change map style</string>
     <string name="menu_option_map_follow">Map following</string>
@@ -35,9 +40,14 @@
     <string name="disable_logging">Disable Logging</string>
     <string name="start_flight">Start Flight</string>
     <string name="end_flight">End Flight</string>
+    <string name="set_event_0">Set Event 0</string>
+    <string name="set_event_1">Set Event 1</string>
+    <string name="fire_event_0">Fire Event 0</string>
+    <string name="fire_event_1">Fire Event 1</string>
 
     <string name="degrees">&#xb0;</string>
     <string name="meters">m</string>
+    <string name="feet">ft</string>
 
     <string name="roll">Roll</string>
     <string name="pitch">Pitch</string>
@@ -45,6 +55,12 @@
 
     <string name="pressure_altitude">Pressure</string>
     <string name="gps_altitude">GPS</string>
+
+    <string name="event_0_altitude">Event 0</string>
+    <string name="event_1_altitude">Event 1</string>
+    <string name="event_fired_toast">Event %d fired</string>
+    <string name="event_0_fire_confirm_dialog_title">FIRE EVENT 0?</string>
+    <string name="event_1_fire_confirm_dialog_title">FIRE EVENT 1?</string>
 
     <array name="map_styles">
       <item>Dark</item>

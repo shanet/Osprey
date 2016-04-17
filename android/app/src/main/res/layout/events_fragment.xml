@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content"
+  android:orientation="vertical">
+
+  <TextView android:id="@+id/event_0_altitude_display"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:textSize="15sp"
+    android:text="@string/default_events" />
+
+  <TextView android:id="@+id/event_1_altitude_display"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:textSize="15sp"
+    android:text="@string/default_events" />
+
+  <TextView android:id="@+id/event_0_fired_display"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:textSize="15sp"
+    android:text="@string/default_events" />
+
+  <TextView android:id="@+id/event_1_fired_display"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:textSize="15sp"
+    android:text="@string/default_events" />
+
+  <Button android:id="@+id/set_event_0_button"
+     android:layout_height="wrap_content"
+     android:layout_width="wrap_content"
+     android:text="@string/set_event_0" />
+
+  <Button android:id="@+id/set_event_1_button"
+     android:layout_height="wrap_content"
+     android:layout_width="wrap_content"
+     android:text="@string/set_event_1" />
+
+  <Button android:id="@+id/fire_event_0_button"
+     android:layout_height="wrap_content"
+     android:layout_width="wrap_content"
+     android:text="@string/fire_event_0" />
+
+  <Button android:id="@+id/fire_event_1_button"
+     android:layout_height="wrap_content"
+     android:layout_width="wrap_content"
+     android:text="@string/fire_event_1" />
+
+</LinearLayout>

@@ -6,6 +6,8 @@ import android.support.v4.app.Fragment;
 import android.widget.TextView;
 
 public abstract class DatasetFragment extends Fragment {
+  private static final double FEET_TO_METERS = 3.2808399;
+
   public abstract void updateDataset(Dataset dataset);
   public abstract String getTitle(Context context);
 
@@ -29,5 +31,21 @@ public abstract class DatasetFragment extends Fragment {
     }
 
     textView.setText(text);
+  }
+
+  protected void sendCommand(String command) {
+    ((Main)getActivity()).write(command + "\n");
+  }
+
+  protected int ftToM(int feet) {
+    return (int)(feet * FEET_TO_METERS);
+  }
+
+  protected int mToFt(int meters) {
+    return (int)(meters / FEET_TO_METERS);
+  }
+
+  protected Integer mToFt(Integer meters) {
+    return new Integer(mToFt(meters.intValue()));
   }
 }

@@ -15,15 +15,17 @@ class NumberInputDialogFragment extends DialogFragment {
   NumberInputDialogListener listener;
   double number;
   int title;
+  int id;
 
-  public NumberInputDialogFragment(NumberInputDialogListener listener, int title, double currentNumber) {
+  public NumberInputDialogFragment(NumberInputDialogListener listener, int title, double currentNumber, int id) {
     this.listener = listener;
     this.title = title;
     this.number = currentNumber;
+    this.id = id;
   }
 
   public interface NumberInputDialogListener {
-    public void onNumberReceived(double number);
+    public void onNumberReceived(double number, int which);
   }
 
   public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -39,7 +41,7 @@ class NumberInputDialogFragment extends DialogFragment {
         public void onClick(DialogInterface dialog, int which) {
           number = Double.parseDouble(input.getText().toString());
           dialog.dismiss();
-          listener.onNumberReceived(number);
+          listener.onNumberReceived(number, id);
         }
       })
       .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {

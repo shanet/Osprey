@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:orientation="vertical">
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:orientation="horizontal">
+
+    <TextView android:id="@+id/acceleration_display"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:gravity="center"
+      android:textColor="@android:color/holo_red_light"
+      android:textSize="22sp"
+      android:text="@string/default_acceleration" />
+  </LinearLayout>
+
+  <com.github.mikephil.charting.charts.LineChart
+    android:id="@+id/graph"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" />
+</LinearLayout>

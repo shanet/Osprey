@@ -27,10 +27,11 @@ public class Main extends FragmentActivity {
   private static final int LOCATION_FRAGMENT = 0;
   private static final int TRACKING_FRAGMENT = 1;
   private static final int ALTITUDE_FRAGMENT = 2;
-  private static final int ORIENTATION_FRAGMENT = 3;
-  private static final int EVENTS_FRAGMENT = 4;
-  private static final int STATUS_FRAGMENT = 5;
-  private static final int RAW_FRAGMENT = 6;
+  private static final int ACCELERATION_FRAGMENT = 3;
+  private static final int ORIENTATION_FRAGMENT = 4;
+  private static final int EVENTS_FRAGMENT = 5;
+  private static final int STATUS_FRAGMENT = 6;
+  private static final int RAW_FRAGMENT = 7;
 
   private int curFragment;
   private HashMap<Integer, DatasetFragment> fragments;
@@ -55,6 +56,7 @@ public class Main extends FragmentActivity {
     fragments.put(LOCATION_FRAGMENT, new LocationFragment());
     fragments.put(TRACKING_FRAGMENT, new TrackingFragment());
     fragments.put(ALTITUDE_FRAGMENT, new AltitudeFragment());
+    fragments.put(ACCELERATION_FRAGMENT, new AccelerationFragment());
     fragments.put(ORIENTATION_FRAGMENT, new OrientationFragment());
     fragments.put(EVENTS_FRAGMENT, new EventsFragment());
     fragments.put(STATUS_FRAGMENT, new StatusFragment());

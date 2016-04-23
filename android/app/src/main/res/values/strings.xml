@@ -6,6 +6,7 @@
     <string name="page_title_location">Location</string>
     <string name="page_title_tracking">Tracking</string>
     <string name="page_title_altitude">Altitude</string>
+    <string name="page_title_acceleration">Acceleration</string>
     <string name="page_title_orientation">Orientation</string>
     <string name="page_title_events">Events</string>
     <string name="page_title_status">Status</string>
@@ -13,6 +14,7 @@
 
     <string name="default_coordinates">Waiting for location&#8230;</string>
     <string name="default_altitude">Waiting for altitude&#8230;</string>
+    <string name="default_acceleration">Waiting for data&#8230;</string>
     <string name="default_orientation">Waiting for data&#8230;</string>
     <string name="default_events">Waiting for data&#8230;</string>
     <string name="default_raw">Waiting for data&#8230;</string>
@@ -48,6 +50,7 @@
     <string name="degrees">&#xb0;</string>
     <string name="meters">m</string>
     <string name="feet">ft</string>
+    <string name="g">g</string>
 
     <string name="roll">Roll</string>
     <string name="pitch">Pitch</string>

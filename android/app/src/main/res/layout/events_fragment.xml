@@ -6,52 +6,40 @@
   android:layout_height="wrap_content"
   android:orientation="vertical">
 
-  <TextView android:id="@+id/event_0_altitude_display"
+  <TextView android:id="@+id/main_altitude_display"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginTop="10dp"
     android:textSize="15sp"
     android:text="@string/default_events" />
 
-  <TextView android:id="@+id/event_1_altitude_display"
+  <TextView android:id="@+id/apogee_fired_display"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginTop="10dp"
     android:textSize="15sp"
     android:text="@string/default_events" />
 
-  <TextView android:id="@+id/event_0_fired_display"
+  <TextView android:id="@+id/main_fired_display"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginTop="10dp"
     android:textSize="15sp"
     android:text="@string/default_events" />
 
-  <TextView android:id="@+id/event_1_fired_display"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="10dp"
-    android:textSize="15sp"
-    android:text="@string/default_events" />
-
-  <Button android:id="@+id/set_event_0_button"
+  <Button android:id="@+id/set_main_button"
      android:layout_height="wrap_content"
      android:layout_width="wrap_content"
-     android:text="@string/set_event_0" />
+     android:text="@string/set_main" />
 
-  <Button android:id="@+id/set_event_1_button"
+  <Button android:id="@+id/fire_apogee_button"
      android:layout_height="wrap_content"
      android:layout_width="wrap_content"
-     android:text="@string/set_event_1" />
+     android:text="@string/fire_apogee" />
 
-  <Button android:id="@+id/fire_event_0_button"
+  <Button android:id="@+id/fire_main_button"
      android:layout_height="wrap_content"
      android:layout_width="wrap_content"
-     android:text="@string/fire_event_0" />
-
-  <Button android:id="@+id/fire_event_1_button"
-     android:layout_height="wrap_content"
-     android:layout_width="wrap_content"
-     android:text="@string/fire_event_1" />
+     android:text="@string/fire_main" />
 
 </LinearLayout>

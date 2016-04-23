@@ -3,8 +3,9 @@
 Adafruit_BMP085_Unified Barometer::barometer = Adafruit_BMP085_Unified(18001);
 float Barometer::pressureSetting = DEFAULT_PRESSURE_SETTING;
 
-Barometer::Barometer() {
+Barometer::Barometer() : Sensor(KALMAN_PROCESS_NOISE, KALMAN_MEASUREMENT_NOISE, KALMAN_ERROR) {
   thermometer = Thermometer();
+  altitude = kalmanInit(0);
 }
 
 int Barometer::init() {
@@ -25,7 +26,8 @@ float Barometer::getPressure() {
     return NO_DATA;
   }
 
-  return event.pressure;
+  kalmanUpdate(&altitude, event.pressure);
+  return altitude.value;
 }
 
 float Barometer::getAltitudeAboveSeaLevel() {

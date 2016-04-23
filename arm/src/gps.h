@@ -12,6 +12,10 @@
 #define GPS_BAUD 9600
 #define ISO_8601_LENGTH 32
 
+#define KALMAN_PROCESS_NOISE 0.01
+#define KALMAN_MEASUREMENT_NOISE 0.25
+#define KALMAN_ERROR 1
+
 using namespace std;
 
 class GPS : public virtual Sensor {
@@ -31,6 +35,11 @@ class GPS : public virtual Sensor {
 
   protected:
     char iso8601[];
+
+    kalman_t latitude;
+    kalman_t longitude;
+    kalman_t speed;
+    kalman_t altitude;
 };
 
 #endif

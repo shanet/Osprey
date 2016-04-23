@@ -3,8 +3,13 @@
 Uart GPS::GPSSerial(&sercom1, GPS_RX_PIN, GPS_TX_PIN, SERCOM_RX_PAD_0, UART_TX_PAD_2);
 Adafruit_GPS GPS::gps = Adafruit_GPS(&GPS::GPSSerial);
 
-GPS::GPS() {
+GPS::GPS() : Sensor(KALMAN_PROCESS_NOISE, KALMAN_MEASUREMENT_NOISE, KALMAN_ERROR) {
   char iso8601[ISO_8601_LENGTH];
+
+  latitude = kalmanInit(0);
+  longitude = kalmanInit(0);
+  speed = kalmanInit(0);
+  altitude = kalmanInit(0);
 }
 
 int GPS::init() {
@@ -38,19 +43,23 @@ void SERCOM1_Handler() {
 }
 
 float GPS::getLatitude() {
-  return gps.latitudeDegrees;
+  kalmanUpdate(&latitude, gps.latitudeDegrees);
+  return latitude.value;
 }
 
 float GPS::getLongitude() {
-  return gps.longitudeDegrees;
+  kalmanUpdate(&longitude, gps.longitudeDegrees);
+  return longitude.value;
 }
 
 float GPS::getSpeed() {
-  return gps.speed;
+  kalmanUpdate(&speed, gps.speed);
+  return speed.value;
 }
 
 float GPS::getAltitude() {
-  return gps.altitude;
+  kalmanUpdate(&altitude, gps.altitude);
+  return altitude.value;
 }
 
 int GPS::getQuality() {

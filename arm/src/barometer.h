@@ -7,6 +7,10 @@
 #include "sensor.h"
 #include "thermometer.h"
 
+#define KALMAN_PROCESS_NOISE 0.01
+#define KALMAN_MEASUREMENT_NOISE 0.25
+#define KALMAN_ERROR 1
+
 using namespace std;
 
 class Barometer : public virtual Sensor {
@@ -26,6 +30,7 @@ class Barometer : public virtual Sensor {
 
     Thermometer thermometer;
     float groundLevel;
+    kalman_t altitude;
 
     float getPressureAltitude(float setting, float pressure, float temperature);
     void setGroundLevel();

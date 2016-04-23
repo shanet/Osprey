@@ -49,6 +49,7 @@ class OspreyNcurses(object):
         lines.append('Pitch: %.2f\xb0' % curData['pitch'])
         lines.append('Heading: %.2f\xb0' % curData['heading'])
         lines.append('Acceleration: %.2fg' % curData['acceleration'])
+        lines.append('Raw Acceleration: %.2fg' % curData['raw_acceleration'])
 
         lines.append('Pressure Altitude: %.2fm' % curData['pressure_altitude'])
         lines.append('GPS Altitude: %.2fm' % curData['gps_altitude'])

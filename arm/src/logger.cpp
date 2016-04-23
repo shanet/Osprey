@@ -29,6 +29,10 @@ void Logger::close() {
   file.close();
 }
 
+void Logger::flush() {
+  file.flush();
+}
+
 void Logger::log(const char* message) {
   file.write(message);
 }

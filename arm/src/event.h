@@ -4,6 +4,7 @@
 #include "accelerometer.h"
 #include "barometer.h"
 #include "constants.h"
+#include "radio.h"
 #include "sensor.h"
 
 #define NUM_EVENTS 2
@@ -37,7 +38,7 @@ using namespace std;
 
 class Event : public virtual Sensor {
   public:
-    Event(Accelerometer accelerometer, Barometer barometer);
+    Event(Accelerometer accelerometer, Barometer barometer, Radio radio);
     int init();
     void check();
     void fire(int eventNum);
@@ -48,11 +49,12 @@ class Event : public virtual Sensor {
     int getPhase();
 
   protected:
-    void checkPad(float acceleration);
-    void checkBoost(float acceleration);
-    void checkCoast(float acceleration, int eventNum);
-    void checkDrogue(float acceleration, float altitude, int eventNum);
-    void checkMain(float acceleration, int eventNum);
+    void phasePad(float acceleration);
+    void phaseBoost(float acceleration);
+    void phaseCoast(float acceleration, int eventNum);
+    void phaseDrogue(float acceleration, float altitude, int eventNum);
+    void phaseMain(float acceleration, int eventNum);
+    void phaseLanded();
     void atApogee(int eventNum);
 
     int phase;
@@ -60,6 +62,7 @@ class Event : public virtual Sensor {
 
     Accelerometer accelerometer;
     Barometer barometer;
+    Radio radio;
 };
 
 #endif

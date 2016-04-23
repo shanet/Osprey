@@ -119,6 +119,10 @@ int Radio::isLogging() {
   return (logging ? 1 : 0);
 }
 
+void Radio::flushLog() {
+  logger.flush();
+}
+
 void Radio::floatToString(float num, int precision, char *buffer) {
   // Get the whole part of the number
   int characteristic = num;

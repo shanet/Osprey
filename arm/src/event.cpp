@@ -1,6 +1,6 @@
 #include "event.h"
 
-Event::Event(Accelerometer accelerometer, Barometer barometer) {
+Event::Event(Accelerometer accelerometer, Barometer barometer, Radio radio) {
   phase = PAD;
 
   events[EVENT_APOGEE] = {APOGEE_PIN, APOGEE, 0};
@@ -8,6 +8,7 @@ Event::Event(Accelerometer accelerometer, Barometer barometer) {
 
   this->accelerometer = accelerometer;
   this->barometer = barometer;
+  this->radio = radio;
 }
 
 int Event::init() {
@@ -25,22 +26,22 @@ void Event::check() {
   for(int i=0; i<numEvents(); i++) {
     switch(phase) {
       case PAD:
-        checkPad(acceleration);
+        phasePad(acceleration);
         break;
       case BOOST:
-        checkBoost(acceleration);
+        phaseBoost(acceleration);
         break;
       case COAST:
-        checkCoast(acceleration, i);
+        phaseCoast(acceleration, i);
         break;
       case DROGUE:
-        checkDrogue(acceleration, altitude, i);
+        phaseDrogue(acceleration, altitude, i);
         break;
       case MAIN:
-        checkMain(acceleration, i);
+        phaseMain(acceleration, i);
         break;
       case LANDED:
-        // nop
+        phaseLanded();
         break;
       default:
         break;
@@ -48,7 +49,7 @@ void Event::check() {
   }
 }
 
-void Event::checkPad(float acceleration) {
+void Event::phasePad(float acceleration) {
   // Move to boost after motor ignition
   if(acceleration >= BOOST_ACCELERATION) {
     phase = BOOST;
@@ -62,13 +63,13 @@ void Event::checkPad(float acceleration) {
   }
 }
 
-void Event::checkBoost(float acceleration) {
+void Event::phaseBoost(float acceleration) {
   if(acceleration <= COAST_ACCELERATION) {
     phase = COAST;
   }
 }
 
-void Event::checkCoast(float acceleration, int eventNum) {
+void Event::phaseCoast(float acceleration, int eventNum) {
   static int countdown = APOGEE_COUNTDOWN * CYCLES_PER_SECOND;
   static int countdownRunning = 0;
 
@@ -106,7 +107,7 @@ void Event::checkCoast(float acceleration, int eventNum) {
   }
 }
 
-void Event::checkDrogue(float acceleration, float altitude, int eventNum) {
+void Event::phaseDrogue(float acceleration, float altitude, int eventNum) {
   event_t *event = &events[eventNum];
 
   // If the event altitude is reached (or we're falling too fast), fire it
@@ -116,9 +117,20 @@ void Event::checkDrogue(float acceleration, float altitude, int eventNum) {
   }
 }
 
-void Event::checkMain(float altitude, int eventNum) {
+void Event::phaseMain(float altitude, int eventNum) {
   if(altitude < LANDED_ALTITUDE) {
     phase = LANDED;
+  }
+}
+
+void Event::phaseLanded() {
+  // Flush the log so that all data is written to disk in case the end
+  // flight command is not sent and the log file isn't cleanly closed
+  static int flushed = 0;
+
+  if(flushed == 0) {
+    radio.flushLog();
+    flushed = 1;
   }
 }
 

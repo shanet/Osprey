@@ -18,10 +18,11 @@ Accelerometer accelerometer;
 Barometer barometer;
 Battery battery;
 Clock clock;
-Event event(accelerometer, barometer);
 GPS gps;
 Radio radio;
 Thermometer thermometer;
+
+Event event(accelerometer, barometer, radio);
 
 extern int commandStatus;
 

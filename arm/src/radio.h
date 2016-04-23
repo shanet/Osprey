@@ -24,6 +24,7 @@ class Radio : public virtual Sensor {
     int enableLogging();
     int disableLogging();
     int isLogging();
+    void flushLog();
     char* getMostRecentMessage();
 
     static void floatToString(float num, int precision, char *buffer);

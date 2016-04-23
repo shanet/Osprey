@@ -2,6 +2,7 @@
 #define GPS_H
 
 #include <Adafruit-GPS-Library/Adafruit_GPS.h>
+#include <stdlib.h>
 #include <wiring_private.h>
 #include <Wire.h>
 
@@ -34,10 +35,12 @@ class GPS : public virtual Sensor {
     static Adafruit_GPS gps;
 
   protected:
-    char iso8601[];
+    int validCoordinate(float previous, float next);
 
-    kalman_t latitude;
-    kalman_t longitude;
+    char iso8601[ISO_8601_LENGTH];
+
+    float latitude;
+    float longitude;
     kalman_t speed;
     kalman_t altitude;
 };

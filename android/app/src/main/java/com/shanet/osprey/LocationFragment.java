@@ -96,7 +96,7 @@ public class LocationFragment extends DatasetFragment implements LocationListene
         updateMapCamera(latitude.doubleValue(), longitude.doubleValue(), DEFAULT_ZOOM);
       }
 
-      mapRocketMarker = updateMapMarker(mapRocketMarker, latitude.doubleValue(), longitude.doubleValue());
+      updateMapMarker(latitude.doubleValue(), longitude.doubleValue());
       mapRocketPath = updateMapPath(mapRocketPath, mapPathPoints, ORANGE);
     }
   }
@@ -126,12 +126,15 @@ public class LocationFragment extends DatasetFragment implements LocationListene
     map.easeCamera(cameraUpdate, 1000);
   }
 
-  private Marker updateMapMarker(Marker marker, double latitude, double longitude) {
-    if(marker != null) {
-      marker.remove();
-    }
+  private void updateMapMarker(double latitude, double longitude) {
+    LatLng position = new LatLng(latitude, longitude);
 
-    return map.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)));
+    // Make a new marker if one doesn't exist yet. Otherwise, update the position of the existing one
+    if(mapRocketMarker == null) {
+      mapRocketMarker = map.addMarker(new MarkerOptions().position(position));
+    } else {
+      mapRocketMarker.setPosition(position);
+    }
   }
 
   private Polyline updateMapPath(Polyline line, List<LatLng> points, int color) {

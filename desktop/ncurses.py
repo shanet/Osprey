@@ -48,6 +48,7 @@ class OspreyNcurses(object):
         lines.append('Roll: %.2f\xb0' % curData['roll'])
         lines.append('Pitch: %.2f\xb0' % curData['pitch'])
         lines.append('Heading: %.2f\xb0' % curData['heading'])
+        lines.append('Acceleration: %.2fg' % curData['acceleration'])
 
         lines.append('Pressure Altitude: %.2fm' % curData['pressure_altitude'])
         lines.append('GPS Altitude: %.2fm' % curData['gps_altitude'])
@@ -63,10 +64,9 @@ class OspreyNcurses(object):
 
         lines.append('Logging: %d' % curData['logging'])
         lines.append('Battery: %.2fV' % curData['battery'])
-        lines.append('Event 0 Fired: %d' % curData['event0_fired'])
-        lines.append('Event 1 Fired: %d' % curData['event1_fired'])
-        lines.append('Event 0 Altitude: %d' % curData['event0_alt'])
-        lines.append('Event 1 Altitude: %d' % curData['event1_alt'])
+        lines.append('Apogee Fired: %d' % curData['apogee_fired'])
+        lines.append('Main Fired: %d' % curData['main_fired'])
+        lines.append('Main Altitude: %d' % curData['main_alt'])
 
         self.displayLines(lines)
       except exceptions.RadioReceiveError as exception:

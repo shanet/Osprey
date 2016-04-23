@@ -27,6 +27,12 @@ void printJSON() {
   radio.send(", \"heading\": ");
   radio.send(accelerometer.getHeading());
 
+  radio.send(", \"acceleration\": ");
+  radio.send(accelerometer.getAcceleration());
+
+  radio.send(", \"raw_acceleration\": ");
+  radio.send(accelerometer.getRawAcceleration());
+
   radio.send(", \"pressure_altitude\": ");
   radio.send(barometer.getAltitudeAboveSeaLevel());
 
@@ -74,17 +80,17 @@ void printJSON() {
   radio.send(", \"delta\": ");
   radio.send(clock.getSeconds());
 
-  for(int i=0; i<event.numEvents(); i++) {
-    char firedLabel[22];
-    char altLabel[20];
-    sprintf(firedLabel, ", \"event%d_fired\": ", i);
-    sprintf(altLabel, ", \"event%d_alt\": ", i);
+  radio.send(", \"phase\": ");
+  radio.send(event.getPhase());
 
-    radio.send(firedLabel);
-    radio.send(event.didFire(i));
-    radio.send(altLabel);
-    radio.send(event.altitude(i));
-  }
+  radio.send(", \"apogee_fired\": ");
+  radio.send(event.didFire(EVENT_APOGEE));
+
+  radio.send(", \"main_fired\": ");
+  radio.send(event.didFire(EVENT_MAIN));
+
+  radio.send(", \"main_alt\": ");
+  radio.send(event.altitude(EVENT_MAIN));
 
   radio.send("}");
   radio.send("\r\n");

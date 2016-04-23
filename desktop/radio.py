@@ -32,7 +32,7 @@ class Radio(object):
       dataset['timestamp'] = dataset['datetime'].strftime('%b %d %Y %H.%M.%S:%f')[:-3]
     except:
       dataset['datetime'] = None
-      dataset['timestamp'] = dataset['iso8601']
+      dataset['timestamp'] = dataset['iso8601'] if 'iso8601' in dataset else ''
 
   def transformData(self, dataset):
     self.parseTimestamp(dataset)

@@ -18,7 +18,7 @@ Accelerometer accelerometer;
 Barometer barometer;
 Battery battery;
 Clock clock;
-Event event;
+Event event(accelerometer, barometer);
 GPS gps;
 Radio radio;
 Thermometer thermometer;

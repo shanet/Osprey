@@ -34,6 +34,7 @@
 
     <string name="menu_option_map_style">Change map style</string>
     <string name="menu_option_map_follow">Map following</string>
+    <string name="menu_option_clear_ground_track">Clear ground track</string>
     <string name="menu_option_clear_graph">Clear graph</string>
 
     <string name="zero_sensors">Zero Sensors</string>

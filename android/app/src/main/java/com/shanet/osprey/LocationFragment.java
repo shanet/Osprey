@@ -211,6 +211,10 @@ public class LocationFragment extends DatasetFragment implements LocationListene
         item.setChecked(!item.isChecked());
         mapFollow = item.isChecked();
         return true;
+      case R.id.clear_ground_track_option:
+        mapPathPoints.clear();
+        mapRocketPath.remove();
+        return true;
     }
 
     return false;

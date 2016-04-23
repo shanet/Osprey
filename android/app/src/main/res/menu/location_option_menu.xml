@@ -8,4 +8,7 @@
     android:title="@string/menu_option_map_follow"
     android:showAsAction="never"
     android:checkable="true" />
+  <item android:id="@+id/clear_ground_track_option"
+    android:title="@string/menu_option_clear_ground_track"
+    android:showAsAction="never" />
 </menu>

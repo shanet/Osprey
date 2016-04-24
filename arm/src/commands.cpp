@@ -64,10 +64,8 @@ int startFlight(char *arg) {
     return commandStatus;
   }
 
-  // Reset the status of if the igniters fired or not for the new flight
-  // This is only used for reporting and does not affect the behavior of
-  // the firing of igniters once they are armed
-  event.resetFiredStatus();
+  // Reset the events for another flight
+  event.reset();
 
   return commandStatus;
 }

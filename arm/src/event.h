@@ -50,7 +50,7 @@ class Event : public virtual Sensor {
     void arm();
     void disarm();
     int isArmed();
-    void resetFiredStatus();
+    void reset();
 
   protected:
     void phasePad(float acceleration);

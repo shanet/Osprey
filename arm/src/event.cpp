@@ -189,7 +189,10 @@ int Event::isArmed() {
   return armed;
 }
 
-void Event::resetFiredStatus() {
+void Event::reset() {
+  // Reset the events for another flight
+  phase = PAD;
+
   for(int i=0; i<numEvents(); i++) {
     events[i].fired = 0;
   }

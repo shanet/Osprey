@@ -42,11 +42,11 @@ public abstract class DatasetFragment extends Fragment {
   }
 
   protected int ftToM(int feet) {
-    return (int)(feet * FEET_TO_METERS);
+    return (int)(feet / FEET_TO_METERS);
   }
 
   protected int mToFt(int meters) {
-    return (int)(meters / FEET_TO_METERS);
+    return (int)(meters * FEET_TO_METERS);
   }
 
   protected Integer mToFt(Integer meters) {

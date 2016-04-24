@@ -17,6 +17,7 @@ public class StatusFragment extends DatasetFragment implements NumberInputDialog
 
   private TextView batteryDisplay;
   private TextView commandStatusDisplay;
+  private TextView phaseDisplay;
   private TextView previousCommandDisplay;
   private TextView pressureSettingDisplay;
   private TextView loggingDisplay;
@@ -28,6 +29,7 @@ public class StatusFragment extends DatasetFragment implements NumberInputDialog
 
     batteryDisplay = (TextView)layout.findViewById(R.id.battery_display);
     commandStatusDisplay = (TextView)layout.findViewById(R.id.command_status_display);
+    phaseDisplay = (TextView)layout.findViewById(R.id.phase_display);
     previousCommandDisplay = (TextView)layout.findViewById(R.id.previous_command_display);
     pressureSettingDisplay = (TextView)layout.findViewById(R.id.pressure_setting_display);
     loggingDisplay = (TextView)layout.findViewById(R.id.logging_display);
@@ -47,19 +49,23 @@ public class StatusFragment extends DatasetFragment implements NumberInputDialog
     if(!isAdded()) return;
 
     Double battery = (Double)dataset.getField("battery");
+    Integer phase = (Integer)dataset.getField("phase");
     String previousCommand = (String)dataset.getField("previous_command");
     currentPressureSetting = ((Double)dataset.getField("pressure_setting")).doubleValue();
 
-    updateDisplay(batteryDisplay, battery, R.string.default_raw);
-    updateDisplay(pressureSettingDisplay, currentPressureSetting, R.string.default_raw);
-    loggingDisplay.setText(dataset.isLogging() ? "Yes" : "No");
+    String phaseString = getResources().obtainTypedArray(R.array.phases).getString(phase.intValue());
+
+    updateDisplay(batteryDisplay, battery, R.string.default_raw, R.string.battery);
+    updateDisplay(phaseDisplay, phaseString, R.string.default_raw, R.string.phase);
+    updateDisplay(pressureSettingDisplay, currentPressureSetting, R.string.default_raw, R.string.pressure_setting);
+    updateDisplay(loggingDisplay, (dataset.isLogging() ? "Yes" : "No"), 0, R.string.logging);
 
     if("".equals(previousCommand)) {
-      previousCommandDisplay.setText("No previous command");
-      commandStatusDisplay.setText("No previous command");
+      updateDisplay(previousCommandDisplay, "None", 0, R.string.previous_command);
+      updateDisplay(commandStatusDisplay, getString(R.string.no_previous_command), 0, R.string.command_status);
     } else {
-      previousCommandDisplay.setText(previousCommand);
-      commandStatusDisplay.setText(dataset.wasCommandSuccessful() ? "Success" : "Failure");
+      updateDisplay(previousCommandDisplay, getString(R.string.no_previous_command), R.string.no_previous_command, R.string.previous_command);
+      updateDisplay(commandStatusDisplay, (dataset.wasCommandSuccessful() ? "Success" : "Failure"), 0, R.string.command_status);
     }
   }
 

@@ -44,6 +44,8 @@
     <string name="start_flight">Start Flight</string>
     <string name="end_flight">End Flight</string>
     <string name="set_main">Set Main Altitude</string>
+    <string name="arm_igniter">Arm Igniter</string>
+    <string name="disarm_igniter">Disarm Igniter</string>
     <string name="fire_apogee">Fire Apogee</string>
     <string name="fire_main">Fire Main</string>
 
@@ -59,11 +61,20 @@
     <string name="pressure_altitude">Pressure</string>
     <string name="gps_altitude">GPS</string>
 
+    <string name="armed">Armed</string>
     <string name="main_altitude">Main deployment</string>
-    <string name="apogee_fired_toast">Apogee fired</string>
-    <string name="main_fired_toast">Main fired</string>
+    <string name="apogee_fired">Apogee fired</string>
+    <string name="main_fired">Main fired</string>
     <string name="apogee_fire_confirm_dialog_title">FIRE APOGEE?</string>
     <string name="main_fire_confirm_dialog_title">FIRE MAIN?</string>
+
+    <string name="battery">Battery</string>
+    <string name="phase">Phase</string>
+    <string name="pressure_setting">Pressure Setting</string>
+    <string name="logging">Logging</string>
+    <string name="previous_command">Previous Command</string>
+    <string name="no_previous_command">No previous command</string>
+    <string name="command_status">Command Status</string>
 
     <array name="map_styles">
       <item>Dark</item>
@@ -72,5 +83,14 @@
       <item>Streets</item>
       <item>Satellite</item>
       <item>Streets &amp; Satellite</item>
+    </array>
+
+    <array name="phases">
+      <item>Pad</item>
+      <item>Boost</item>
+      <item>Coast</item>
+      <item>Drogue</item>
+      <item>Main</item>
+      <item>Landed</item>
     </array>
 </resources>

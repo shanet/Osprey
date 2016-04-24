@@ -15,9 +15,9 @@ public class EventsFragment extends DatasetFragment implements ConfirmDialogFrag
   private static final int APOGEE = 0;
   private static final int MAIN = 1;
 
-  private TextView mainAltitudeDisplay;
-
   private TextView apogeeFiredDisplay;
+  private TextView armedDisplay;
+  private TextView mainAltitudeDisplay;
   private TextView mainFiredDisplay;
 
   private Integer mainAltitude;
@@ -31,8 +31,13 @@ public class EventsFragment extends DatasetFragment implements ConfirmDialogFrag
     apogeeFiredDisplay = (TextView)layout.findViewById(R.id.apogee_fired_display);
     mainFiredDisplay = (TextView)layout.findViewById(R.id.main_fired_display);
 
+    armedDisplay = (TextView)layout.findViewById(R.id.armed_display);
+
     mainAltitudeDisplay = (TextView)layout.findViewById(R.id.main_altitude_display);
     ((Button)layout.findViewById(R.id.set_main_button)).setOnClickListener(setMainAltitude);
+
+    ((Button)layout.findViewById(R.id.arm_igniter_button)).setOnClickListener(armIgniter);
+    ((Button)layout.findViewById(R.id.disarm_igniter_button)).setOnClickListener(disarmIgniter);
 
     ((Button)layout.findViewById(R.id.fire_apogee_button)).setOnClickListener(fireApogee);
     ((Button)layout.findViewById(R.id.fire_main_button)).setOnClickListener(fireMain);
@@ -45,18 +50,20 @@ public class EventsFragment extends DatasetFragment implements ConfirmDialogFrag
     if(!isAdded()) return;
 
     // Show a toast if the event just now fired
-    showFiredToast(apogeeFired, (Integer)dataset.getField("apogee_fired"), R.string.apogee_fired_toast);
-    showFiredToast(mainFired, (Integer)dataset.getField("main_fired"), R.string.main_fired_toast);
+    showFiredToast(apogeeFired, (Integer)dataset.getField("apogee_fired"), R.string.apogee_fired);
+    showFiredToast(mainFired, (Integer)dataset.getField("main_fired"), R.string.main_fired);
 
+    Integer armed = (Integer)dataset.getField("armed");
     mainAltitude = mToFt((Integer)dataset.getField("main_alt"));
 
     apogeeFired = (Integer)dataset.getField("apogee_fired");
     mainFired = (Integer)dataset.getField("main_fired");
 
+    updateDisplay(armedDisplay, armed, R.string.default_events, R.string.armed);
     updateDisplay(mainAltitudeDisplay, mainAltitude, R.string.default_events, R.string.main_altitude, R.string.feet);
 
-    updateDisplay(apogeeFiredDisplay, apogeeFired, R.string.default_events);
-    updateDisplay(mainFiredDisplay, mainFired, R.string.default_events);
+    updateDisplay(apogeeFiredDisplay, apogeeFired, R.string.default_events, R.string.apogee_fired);
+    updateDisplay(mainFiredDisplay, mainFired, R.string.default_events, R.string.main_fired);
   }
 
   private void showFiredToast(Integer current, Integer upcoming, int string) {
@@ -80,6 +87,18 @@ public class EventsFragment extends DatasetFragment implements ConfirmDialogFrag
   public void onNumberReceived(double number, int which) {
     sendCommand(String.format("6%d%d", which, ftToM((int)number)));
   }
+
+  private View.OnClickListener armIgniter = new View.OnClickListener() {
+    public void onClick(View view) {
+      sendCommand("8");
+    }
+  };
+
+  private View.OnClickListener disarmIgniter = new View.OnClickListener() {
+    public void onClick(View view) {
+      sendCommand("9");
+    }
+  };
 
   private View.OnClickListener fireApogee = new View.OnClickListener() {
     public void onClick(View view) {

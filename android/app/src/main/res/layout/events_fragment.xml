@@ -6,6 +6,13 @@
   android:layout_height="wrap_content"
   android:orientation="vertical">
 
+  <TextView android:id="@+id/armed_display"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:textSize="15sp"
+    android:text="@string/default_events" />
+
   <TextView android:id="@+id/main_altitude_display"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -28,18 +35,28 @@
     android:text="@string/default_events" />
 
   <Button android:id="@+id/set_main_button"
-     android:layout_height="wrap_content"
-     android:layout_width="wrap_content"
-     android:text="@string/set_main" />
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    android:text="@string/set_main" />
+
+  <Button android:id="@+id/arm_igniter_button"
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    android:text="@string/arm_igniter" />
+
+  <Button android:id="@+id/disarm_igniter_button"
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    android:text="@string/disarm_igniter" />
 
   <Button android:id="@+id/fire_apogee_button"
-     android:layout_height="wrap_content"
-     android:layout_width="wrap_content"
-     android:text="@string/fire_apogee" />
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    android:text="@string/fire_apogee" />
 
   <Button android:id="@+id/fire_main_button"
-     android:layout_height="wrap_content"
-     android:layout_width="wrap_content"
-     android:text="@string/fire_main" />
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    android:text="@string/fire_main" />
 
 </LinearLayout>

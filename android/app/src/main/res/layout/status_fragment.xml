@@ -6,6 +6,13 @@
   android:layout_height="wrap_content"
   android:orientation="vertical">
 
+  <TextView android:id="@+id/phase_display"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:textSize="15sp"
+    android:text="@string/default_raw" />
+
   <TextView android:id="@+id/battery_display"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"

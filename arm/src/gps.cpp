@@ -69,6 +69,9 @@ float GPS::getLongitude() {
 }
 
 int GPS::validCoordinate(float previous, float next) {
+  // Disable this for now
+  return 1;
+
   // Ignore 0.00 coordinates (obviously doesn't work if within 1 degree of the equator or meridian, but oh well)
   if(next < 1 && next > -1) {
     return 0;

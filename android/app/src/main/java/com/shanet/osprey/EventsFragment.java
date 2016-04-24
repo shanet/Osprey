@@ -42,6 +42,10 @@ public class EventsFragment extends DatasetFragment implements ConfirmDialogFrag
     ((Button)layout.findViewById(R.id.fire_apogee_button)).setOnClickListener(fireApogee);
     ((Button)layout.findViewById(R.id.fire_main_button)).setOnClickListener(fireMain);
 
+    // TODO: this just sets the background color to solid red. it could be done better.
+    ((Button)layout.findViewById(R.id.fire_apogee_button)).setBackgroundColor(getResources().getColor(android.R.color.holo_red_light));
+    ((Button)layout.findViewById(R.id.fire_main_button)).setBackgroundColor(getResources().getColor(android.R.color.holo_red_light));
+
     return layout;
   }
 

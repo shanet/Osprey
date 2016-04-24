@@ -1,96 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Osprey</string>
-    <string name="mapbox_api_key">pk.eyJ1Ijoic2hhbmV0IiwiYSI6ImNpbXZnbnBhMjAydDl3a2x1ejNoNWoydHMifQ.WIi_Jv4TO3hOzj-E120rYg</string>
+  <string name="app_name">Osprey</string>
+  <string name="mapbox_api_key">pk.eyJ1Ijoic2hhbmV0IiwiYSI6ImNpbXZnbnBhMjAydDl3a2x1ejNoNWoydHMifQ.WIi_Jv4TO3hOzj-E120rYg</string>
 
-    <string name="page_title_location">Location</string>
-    <string name="page_title_tracking">Tracking</string>
-    <string name="page_title_altitude">Altitude</string>
-    <string name="page_title_acceleration">Acceleration</string>
-    <string name="page_title_orientation">Orientation</string>
-    <string name="page_title_events">Events</string>
-    <string name="page_title_status">Status</string>
-    <string name="page_title_raw">Raw</string>
+  <string name="page_title_location">Location</string>
+  <string name="page_title_tracking">Tracking</string>
+  <string name="page_title_altitude">Altitude</string>
+  <string name="page_title_acceleration">Acceleration</string>
+  <string name="page_title_orientation">Orientation</string>
+  <string name="page_title_events">Events</string>
+  <string name="page_title_status">Status</string>
+  <string name="page_title_raw">Raw</string>
 
-    <string name="default_coordinates">Waiting for location&#8230;</string>
-    <string name="default_altitude">Waiting for altitude&#8230;</string>
-    <string name="default_acceleration">Waiting for data&#8230;</string>
-    <string name="default_orientation">Waiting for data&#8230;</string>
-    <string name="default_events">Waiting for data&#8230;</string>
-    <string name="default_raw">Waiting for data&#8230;</string>
+  <string name="default_coordinates">Waiting for location&#8230;</string>
+  <string name="default_altitude">Waiting for altitude&#8230;</string>
+  <string name="default_acceleration">Waiting for data&#8230;</string>
+  <string name="default_orientation">Waiting for data&#8230;</string>
+  <string name="default_events">Waiting for data&#8230;</string>
+  <string name="default_raw">Waiting for data&#8230;</string>
 
-    <string name="okay">Okay</string>
-    <string name="cancel">Cancel</string>
-    <string name="yes">Yes</string>
-    <string name="no">No</string>
+  <string name="okay">Okay</string>
+  <string name="cancel">Cancel</string>
+  <string name="yes">Yes</string>
+  <string name="no">No</string>
 
-    <string name="dialog_title_disabled_gps">GPS Disabled</string>
-    <string name="dialog_disabled_gps">This device\'s GPS is disabled. For tracking to work, a GPS fix is required.</string>
-    <string name="dialog_title_radio_error">Failed to initialize radio</string>
-    <string name="dialog_radio_init">Is it plugged in?</string>
-    <string name="map_style_dialog_title">Map Style</string>
-    <string name="pressure_setting_dialog_title">Pressure Setting</string>
-    <string name="event_altitude_dialog_title">Event Altitude (ft)</string>
+  <string name="dialog_title_disabled_gps">GPS Disabled</string>
+  <string name="dialog_disabled_gps">This device\'s GPS is disabled. For tracking to work, a GPS fix is required.</string>
+  <string name="dialog_title_radio_error">Failed to initialize radio</string>
+  <string name="dialog_radio_init">Is it plugged in?</string>
+  <string name="map_style_dialog_title">Map Style</string>
+  <string name="pressure_setting_dialog_title">Pressure Setting</string>
+  <string name="event_altitude_dialog_title">Event Altitude (ft)</string>
 
-    <string name="menu_option_map_style">Change map style</string>
-    <string name="menu_option_map_follow">Map following</string>
-    <string name="menu_option_clear_ground_track">Clear ground track</string>
-    <string name="menu_option_clear_graph">Clear graph</string>
+  <string name="menu_option_map_style">Change map style</string>
+  <string name="menu_option_map_follow">Map following</string>
+  <string name="menu_option_clear_ground_track">Clear ground track</string>
+  <string name="menu_option_clear_graph">Clear graph</string>
 
-    <string name="zero_sensors">Zero Sensors</string>
-    <string name="set_pressure_setting">Set Pressure Setting</string>
-    <string name="enable_logging">Enable Logging</string>
-    <string name="disable_logging">Disable Logging</string>
-    <string name="start_flight">Start Flight</string>
-    <string name="end_flight">End Flight</string>
-    <string name="set_main">Set Main Altitude</string>
-    <string name="arm_igniter">Arm Igniter</string>
-    <string name="disarm_igniter">Disarm Igniter</string>
-    <string name="fire_apogee">Fire Apogee</string>
-    <string name="fire_main">Fire Main</string>
+  <string name="zero_sensors">Zero Sensors</string>
+  <string name="set_pressure_setting">Set Pressure Setting</string>
+  <string name="enable_logging">Enable Logging</string>
+  <string name="disable_logging">Disable Logging</string>
+  <string name="start_flight">Start Flight</string>
+  <string name="end_flight">End Flight</string>
+  <string name="set_main">Set Main Altitude</string>
+  <string name="arm_igniter">Arm Igniter</string>
+  <string name="disarm_igniter">Disarm Igniter</string>
+  <string name="fire_apogee">Fire Apogee</string>
+  <string name="fire_main">Fire Main</string>
 
-    <string name="degrees">&#xb0;</string>
-    <string name="meters">m</string>
-    <string name="feet">ft</string>
-    <string name="g">g</string>
+  <string name="degrees">&#xb0;</string>
+  <string name="meters">m</string>
+  <string name="feet">ft</string>
+  <string name="g">g</string>
 
-    <string name="roll">Roll</string>
-    <string name="pitch">Pitch</string>
-    <string name="heading">Heading</string>
+  <string name="roll">Roll</string>
+  <string name="pitch">Pitch</string>
+  <string name="heading">Heading</string>
 
-    <string name="pressure_altitude">Pressure</string>
-    <string name="gps_altitude">GPS</string>
+  <string name="pressure_altitude">Pressure</string>
+  <string name="gps_altitude">GPS</string>
 
-    <string name="armed">Armed</string>
-    <string name="main_altitude">Main deployment</string>
-    <string name="apogee_fired">Apogee fired</string>
-    <string name="main_fired">Main fired</string>
-    <string name="apogee_fire_confirm_dialog_title">FIRE APOGEE?</string>
-    <string name="main_fire_confirm_dialog_title">FIRE MAIN?</string>
+  <string name="armed">Armed</string>
+  <string name="main_altitude">Main deployment</string>
+  <string name="apogee_fired">Apogee fired</string>
+  <string name="main_fired">Main fired</string>
+  <string name="apogee_fire_confirm_dialog_title">FIRE APOGEE?</string>
+  <string name="main_fire_confirm_dialog_title">FIRE MAIN?</string>
 
-    <string name="battery">Battery</string>
-    <string name="phase">Phase</string>
-    <string name="pressure_setting">Pressure Setting</string>
-    <string name="logging">Logging</string>
-    <string name="previous_command">Previous Command</string>
-    <string name="no_previous_command">No previous command</string>
-    <string name="command_status">Command Status</string>
+  <string name="battery">Battery</string>
+  <string name="phase">Phase</string>
+  <string name="pressure_setting">Pressure Setting</string>
+  <string name="logging">Logging</string>
+  <string name="previous_command">Previous Command</string>
+  <string name="no_previous_command">No previous command</string>
+  <string name="command_status">Command Status</string>
 
-    <array name="map_styles">
-      <item>Dark</item>
-      <item>Emerald</item>
-      <item>Light</item>
-      <item>Streets</item>
-      <item>Satellite</item>
-      <item>Streets &amp; Satellite</item>
-    </array>
+  <array name="map_styles">
+    <item>Dark</item>
+    <item>Emerald</item>
+    <item>Light</item>
+    <item>Streets</item>
+    <item>Satellite</item>
+    <item>Streets &amp; Satellite</item>
+  </array>
 
-    <array name="phases">
-      <item>Pad</item>
-      <item>Boost</item>
-      <item>Coast</item>
-      <item>Drogue</item>
-      <item>Main</item>
-      <item>Landed</item>
-    </array>
+  <array name="phases">
+    <item>Pad</item>
+    <item>Boost</item>
+    <item>Coast</item>
+    <item>Drogue</item>
+    <item>Main</item>
+    <item>Landed</item>
+  </array>
 </resources>

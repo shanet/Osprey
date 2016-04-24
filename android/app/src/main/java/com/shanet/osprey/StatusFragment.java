@@ -64,7 +64,7 @@ public class StatusFragment extends DatasetFragment implements NumberInputDialog
       updateDisplay(previousCommandDisplay, "None", 0, R.string.previous_command);
       updateDisplay(commandStatusDisplay, getString(R.string.no_previous_command), 0, R.string.command_status);
     } else {
-      updateDisplay(previousCommandDisplay, getString(R.string.no_previous_command), R.string.no_previous_command, R.string.previous_command);
+      updateDisplay(previousCommandDisplay, previousCommand, R.string.no_previous_command, R.string.previous_command);
       updateDisplay(commandStatusDisplay, (dataset.wasCommandSuccessful() ? "Success" : "Failure"), 0, R.string.command_status);
     }
   }

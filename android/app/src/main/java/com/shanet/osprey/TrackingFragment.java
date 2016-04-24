@@ -82,7 +82,7 @@ public class TrackingFragment extends DatasetFragment implements LocationListene
 
     // Update the rocket coordinates label
     String coordinates = dataset.getCoordinates();
-    rocketCoordinatesDisplay.setText(coordinates != null ? coordinates : getString(R.string.default_coordinates));
+    updateDisplay(rocketCoordinatesDisplay, coordinates, R.string.default_coordinates, R.string.rocket_coordinates);
 
     Double latitude = (Double)dataset.getField("latitude");
     Double longitude = (Double)dataset.getField("longitude");
@@ -103,11 +103,14 @@ public class TrackingFragment extends DatasetFragment implements LocationListene
   // Location listener methods
   // ---------------------------------------------------------------------------------------------------
   public void onLocationChanged(Location location) {
+    // Don't update if not added to an activity yet
+    if(!isAdded()) return;
+
     userLatitude = location.getLatitude();
     userLongitude = location.getLongitude();
 
     // Update the user coordinates label
-    userCoordinatesDisplay.setText(String.format("%f, %f", userLatitude, userLongitude));
+    updateDisplay(userCoordinatesDisplay, String.format("%f, %f", userLatitude, userLongitude), 0, R.string.user_coordinates);
 
     updateDistance();
     updateBearing();
@@ -143,7 +146,7 @@ public class TrackingFragment extends DatasetFragment implements LocationListene
 
     double distance = 2 * EARTH_RADIUS * Math.asin(Math.sqrt(intermediate));
 
-    distanceDisplay.setText(String.format("%.2fm", distance));
+    updateDisplay(distanceDisplay, String.format("%.2f", distance), 0, R.string.distance, R.string.meters);
   }
 
   private void updateBearing() {
@@ -160,9 +163,9 @@ public class TrackingFragment extends DatasetFragment implements LocationListene
     // RB = MB - MH
     double relativeBearing = magneticBearing - heading;
 
-    relativeBearingDisplay.setText(String.format("Relative bearing: %.0f\u00b0", relativeBearing));
-    headingDisplay.setText(String.format("Heading: %.0f\u00b0", heading));
-    magneticBearingDisplay.setText(String.format("Magnetic bearing: %.0f\u00b0", magneticBearing));
+    updateDisplay(relativeBearingDisplay, String.format("%.0f", relativeBearing), 0, R.string.relative_bearing, R.string.degrees);
+    updateDisplay(headingDisplay, String.format("%.0f", heading), 0, R.string.heading, R.string.degrees);
+    updateDisplay(magneticBearingDisplay, String.format("%.0f", magneticBearing), 0, R.string.magnetic_bearing, R.string.degrees);
 
     // Rotate the arrow
     Matrix matrix = new Matrix();

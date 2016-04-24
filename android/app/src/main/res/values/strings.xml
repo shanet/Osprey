@@ -54,6 +54,12 @@
   <string name="feet">ft</string>
   <string name="g">g</string>
 
+  <string name="rocket_coordinates">Rocket Location</string>
+  <string name="user_coordinates">Device Location</string>
+  <string name="distance">Distance</string>
+  <string name="relative_bearing">Relative Bearing</string>
+  <string name="magnetic_bearing">Magnetic Bearing</string>
+
   <string name="roll">Roll</string>
   <string name="pitch">Pitch</string>
   <string name="heading">Heading</string>

@@ -9,13 +9,7 @@ Barometer::Barometer() : Sensor(KALMAN_PROCESS_NOISE, KALMAN_MEASUREMENT_NOISE, 
 }
 
 int Barometer::init() {
-  int initResult = barometer.begin();
-
-  if(initResult) {
-    setGroundLevel();
-  }
-
-  return initResult;
+  return barometer.begin();
 }
 
 float Barometer::getPressure() {

@@ -65,6 +65,9 @@ class OspreyNcurses(object):
 
         lines.append('Logging: %d' % curData['logging'])
         lines.append('Battery: %.2fV' % curData['battery'])
+        lines.append('Phase: %d' % curData['phase'])
+        lines.append('Armed: %d' % curData['armed'])
+
         lines.append('Apogee Fired: %d' % curData['apogee_fired'])
         lines.append('Main Fired: %d' % curData['main_fired'])
         lines.append('Main Altitude: %d' % curData['main_alt'])

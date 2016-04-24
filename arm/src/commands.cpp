@@ -36,6 +36,12 @@ void processCommand() {
     case COMMAND_FIRE_EVENT:
       fireEvent(arg);
       break;
+    case COMMAND_ARM_IGNITER:
+      armIgniter(arg);
+      break;
+    case COMMAND_DISARM_IGNITER:
+      disarmIgniter(arg);
+      break;
     default:
       commandStatus = COMMAND_ERR;
       break;
@@ -50,14 +56,27 @@ int startFlight(char *arg) {
     return commandStatus;
   }
 
+  if(armIgniter(arg) == COMMAND_ERR) {
+    return commandStatus;
+  }
+
   if(enableLogging(arg) == COMMAND_ERR) {
     return commandStatus;
   }
+
+  // Reset the status of if the igniters fired or not for the new flight
+  // This is only used for reporting and does not affect the behavior of
+  // the firing of igniters once they are armed
+  event.resetFiredStatus();
 
   return commandStatus;
 }
 
 int endFlight(char *arg) {
+  if(disarmIgniter(arg) == COMMAND_ERR) {
+    return commandStatus;
+  }
+
   if(disableLogging(arg) == COMMAND_ERR) {
     return commandStatus;
   }
@@ -111,7 +130,27 @@ int setEvent(char *arg) {
 }
 
 int fireEvent(char *arg) {
+  // We can't fire if not armed
+  if(event.isArmed() == 0) {
+    commandStatus = COMMAND_ERR;
+    return commandStatus;
+  }
+
   event.fire(*arg - '0');
+
+  commandStatus = COMMAND_ACK;
+  return commandStatus;
+}
+
+int armIgniter(char *arg) {
+  event.arm();
+
+  commandStatus = COMMAND_ACK;
+  return commandStatus;
+}
+
+int disarmIgniter(char *arg) {
+  event.disarm();
 
   commandStatus = COMMAND_ACK;
   return commandStatus;

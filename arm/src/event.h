@@ -47,6 +47,10 @@ class Event : public virtual Sensor {
     int altitude(int eventNum);
     int numEvents();
     int getPhase();
+    void arm();
+    void disarm();
+    int isArmed();
+    void resetFiredStatus();
 
   protected:
     void phasePad(float acceleration);
@@ -57,6 +61,7 @@ class Event : public virtual Sensor {
     void phaseLanded();
     void atApogee(int eventNum);
 
+    int armed;
     int phase;
     event_t events[NUM_EVENTS];
 

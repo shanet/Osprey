@@ -2,6 +2,7 @@
 
 Event::Event(Accelerometer accelerometer, Barometer barometer, Radio radio) {
   phase = PAD;
+  armed = 0;
 
   events[EVENT_APOGEE] = {APOGEE_PIN, APOGEE, 0};
   events[EVENT_MAIN] = {MAIN_PIN, DEFAULT_ALTITUDE, 0};
@@ -144,6 +145,9 @@ void Event::atApogee(int eventNum) {
 }
 
 void Event::fire(int eventNum) {
+  // Don't fire if not armed
+  if(armed != 1) return;
+
   event_t *event = &events[eventNum];
 
   digitalWrite(event->pin, HIGH);
@@ -171,4 +175,22 @@ int Event::numEvents() {
 
 int Event::getPhase() {
   return phase;
+}
+
+void Event::arm() {
+  armed = 1;
+}
+
+void Event::disarm() {
+  armed = 0;
+}
+
+int Event::isArmed() {
+  return armed;
+}
+
+void Event::resetFiredStatus() {
+  for(int i=0; i<numEvents(); i++) {
+    events[i].fired = 0;
+  }
 }

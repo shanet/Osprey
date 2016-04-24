@@ -83,6 +83,9 @@ void printJSON() {
   radio.send(", \"phase\": ");
   radio.send(event.getPhase());
 
+  radio.send(", \"armed\": ");
+  radio.send(event.isArmed());
+
   radio.send(", \"apogee_fired\": ");
   radio.send(event.didFire(EVENT_APOGEE));
 

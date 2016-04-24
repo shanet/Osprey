@@ -147,6 +147,8 @@ COMMAND_START_FLIGHT = {'name': 'start_flight', 'value': 4, 'arg': False}
 COMMAND_END_FLIGHT = {'name': 'end_flight', 'value': 5, 'arg': False}
 COMMAND_SET_EVENT = {'name': 'set_event', 'value': 6, 'arg': True}
 COMMAND_FIRE_EVENT = {'name': 'fire_event', 'value': 7, 'arg': True}
+COMMAND_ARM_IGNITER = {'name': 'arm', 'value': 8, 'arg': False}
+COMMAND_DISARM_IGNITER = {'name': 'disarm', 'value': 9, 'arg': False}
 
 COMMANDS = [
   COMMAND_ZERO,
@@ -157,6 +159,8 @@ COMMANDS = [
   COMMAND_END_FLIGHT,
   COMMAND_SET_EVENT,
   COMMAND_FIRE_EVENT,
+  COMMAND_ARM_IGNITER,
+  COMMAND_DISARM_IGNITER,
 ]
 
 COMMAND_ERR = 0

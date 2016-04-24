@@ -29,5 +29,7 @@ int enableLogging(char *arg);
 int disableLogging(char *arg);
 int setEvent(char *arg);
 int fireEvent(char *arg);
+int armIgniter(char *arg);
+int disarmIgniter(char *arg);
 
 #endif

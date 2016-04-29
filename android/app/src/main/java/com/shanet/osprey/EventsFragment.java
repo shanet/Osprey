@@ -4,6 +4,9 @@ import android.content.Context;
 import android.os.Bundle;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -15,36 +18,36 @@ public class EventsFragment extends DatasetFragment implements ConfirmDialogFrag
   private static final int APOGEE = 0;
   private static final int MAIN = 1;
 
+  private Integer apogeeFired;
+  private Integer armed;
+  private Integer mainAltitude;
+  private Integer mainFired;
+
   private TextView apogeeFiredDisplay;
   private TextView armedDisplay;
   private TextView mainAltitudeDisplay;
   private TextView mainFiredDisplay;
 
-  private Integer mainAltitude;
-
-  private Integer apogeeFired;
-  private Integer mainFired;
+  private View apogeeIndicator;
+  private View mainIndicator;
 
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View layout = inflater.inflate(R.layout.events_fragment, null);
+
+    apogeeIndicator = layout.findViewById(R.id.apogee_indicator);
+    mainIndicator = layout.findViewById(R.id.main_indicator);
 
     apogeeFiredDisplay = (TextView)layout.findViewById(R.id.apogee_fired_display);
     mainFiredDisplay = (TextView)layout.findViewById(R.id.main_fired_display);
 
     armedDisplay = (TextView)layout.findViewById(R.id.armed_display);
-
     mainAltitudeDisplay = (TextView)layout.findViewById(R.id.main_altitude_display);
-    ((Button)layout.findViewById(R.id.set_main_button)).setOnClickListener(setMainAltitude);
-
-    ((Button)layout.findViewById(R.id.arm_igniter_button)).setOnClickListener(armIgniter);
-    ((Button)layout.findViewById(R.id.disarm_igniter_button)).setOnClickListener(disarmIgniter);
 
     ((Button)layout.findViewById(R.id.fire_apogee_button)).setOnClickListener(fireApogee);
     ((Button)layout.findViewById(R.id.fire_main_button)).setOnClickListener(fireMain);
 
-    // TODO: this just sets the background color to solid red. it could be done better.
-    ((Button)layout.findViewById(R.id.fire_apogee_button)).setBackgroundColor(getResources().getColor(android.R.color.holo_red_light));
-    ((Button)layout.findViewById(R.id.fire_main_button)).setBackgroundColor(getResources().getColor(android.R.color.holo_red_light));
+    // Tell Android this fragment has an options menu
+    setHasOptionsMenu(true);
 
     return layout;
   }
@@ -57,55 +60,51 @@ public class EventsFragment extends DatasetFragment implements ConfirmDialogFrag
     showFiredToast(apogeeFired, (Integer)dataset.getField("apogee_fired"), R.string.apogee_fired);
     showFiredToast(mainFired, (Integer)dataset.getField("main_fired"), R.string.main_fired);
 
-    Integer armed = (Integer)dataset.getField("armed");
+    armed = (Integer)dataset.getField("armed");
     mainAltitude = mToFt((Integer)dataset.getField("main_alt"));
 
     apogeeFired = (Integer)dataset.getField("apogee_fired");
     mainFired = (Integer)dataset.getField("main_fired");
 
-    updateDisplay(armedDisplay, armed, R.string.default_events, R.string.armed);
-    updateDisplay(mainAltitudeDisplay, mainAltitude, R.string.default_events, R.string.main_altitude, R.string.feet);
+    updatedFiredIndicator(apogeeIndicator, apogeeFired);
+    updatedFiredIndicator(mainIndicator, mainFired);
 
-    updateDisplay(apogeeFiredDisplay, apogeeFired, R.string.default_events, R.string.apogee_fired);
-    updateDisplay(mainFiredDisplay, mainFired, R.string.default_events, R.string.main_fired);
+    updateDisplay(apogeeFiredDisplay, (apogeeFired.intValue() == 1 ? R.string.yes : R.string.no), R.string.default_events, R.string.apogee_fired);
+    updateDisplay(mainFiredDisplay, (mainFired.intValue() == 1 ? R.string.yes : R.string.no), R.string.default_events, R.string.main_fired);
+
+    updateDisplay(armedDisplay, (armed.intValue() == 1 ? R.string.yes : R.string.no), R.string.default_events, R.string.armed);
+    updateDisplay(mainAltitudeDisplay, mainAltitude, R.string.default_events, R.string.main_altitude, R.string.feet);
   }
 
   private void showFiredToast(Integer current, Integer upcoming, int string) {
     if(current != null && current.intValue() == 0 && upcoming.intValue() == 1) {
-      Toast.makeText(getActivity(), getString(string), Toast.LENGTH_SHORT).show();
+      Toast.makeText(getActivity(), string, Toast.LENGTH_SHORT).show();
     }
+  }
+
+  private void updatedFiredIndicator(View indicator, Integer fired) {
+    int drawable;
+
+    if(fired.intValue() == 1) {
+      drawable = R.drawable.green_circle;
+    } else {
+      drawable = R.drawable.red_circle;
+    }
+
+    indicator.setBackgroundDrawable(getResources().getDrawable(drawable));
   }
 
   public String getTitle(Context context) {
     return context.getString(R.string.page_title_events);
   }
 
-  private View.OnClickListener setMainAltitude = new View.OnClickListener() {
-    public void onClick(View view) {
-      // Show a dialog to get a new altitude from the user
-      NumberInputDialogFragment dialog = new NumberInputDialogFragment(EventsFragment.this, R.string.event_altitude_dialog_title, mainAltitude.intValue(), MAIN);
-      dialog.show(getActivity().getSupportFragmentManager(), "NumberInputDialog");
-    }
-  };
-
-  public void onNumberReceived(double number, int which) {
-    sendCommand(String.format("6%d%d", which, ftToM((int)number)));
-  }
-
-  private View.OnClickListener armIgniter = new View.OnClickListener() {
-    public void onClick(View view) {
-      sendCommand("8");
-    }
-  };
-
-  private View.OnClickListener disarmIgniter = new View.OnClickListener() {
-    public void onClick(View view) {
-      sendCommand("9");
-    }
-  };
+  // On-click methods
+  // ---------------------------------------------------------------------------------------------------
 
   private View.OnClickListener fireApogee = new View.OnClickListener() {
     public void onClick(View view) {
+      showNotArmedToast();
+
       // Make sure the user wants to fire this event
       ConfirmDialogFragment dialog = new ConfirmDialogFragment(EventsFragment.this, R.string.apogee_fire_confirm_dialog_title, APOGEE);
       dialog.show(getActivity().getSupportFragmentManager(), "EventFireConfirmDialog");
@@ -114,6 +113,8 @@ public class EventsFragment extends DatasetFragment implements ConfirmDialogFrag
 
   private View.OnClickListener fireMain = new View.OnClickListener() {
     public void onClick(View view) {
+      showNotArmedToast();
+
       // Make sure the user wants to fire this event
       ConfirmDialogFragment dialog = new ConfirmDialogFragment(EventsFragment.this, R.string.main_fire_confirm_dialog_title, MAIN);
       dialog.show(getActivity().getSupportFragmentManager(), "EventFireConfirmDialog");
@@ -123,4 +124,39 @@ public class EventsFragment extends DatasetFragment implements ConfirmDialogFrag
   public void onConfirmation(int which) {
     sendCommand(String.format("7%d", which));
   }
+
+  private void showNotArmedToast() {
+    if(armed.intValue() != 1) {
+      Toast.makeText(getActivity(), R.string.not_armed, Toast.LENGTH_SHORT).show();
+    }
+  }
+
+  // Options menu methods
+  // ---------------------------------------------------------------------------------------------------
+  public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    inflater.inflate(R.menu.events_option_menu, menu);
+  }
+
+  public boolean onOptionsItemSelected(MenuItem item) {
+    switch(item.getItemId()) {
+      case R.id.arm_igniter_option:
+        sendCommand("8");
+        return true;
+      case R.id.disarm_igniter_option:
+        sendCommand("9");
+        return true;
+      case R.id.set_main_altitude_option:
+        // Show a dialog to get a new altitude from the user
+        NumberInputDialogFragment dialog = new NumberInputDialogFragment(EventsFragment.this, R.string.event_altitude_dialog_title, mainAltitude.intValue(), MAIN);
+        dialog.show(getActivity().getSupportFragmentManager(), "NumberInputDialog");
+        return true;
+    }
+
+    return false;
+  }
+
+  public void onNumberReceived(double number, int which) {
+    sendCommand(String.format("6%d%d", which, ftToM((int)number)));
+  }
+  // ---------------------------------------------------------------------------------------------------
 }

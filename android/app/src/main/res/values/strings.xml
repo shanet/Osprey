@@ -36,6 +36,9 @@
   <string name="menu_option_map_follow">Map following</string>
   <string name="menu_option_clear_ground_track">Clear ground track</string>
   <string name="menu_option_clear_graph">Clear graph</string>
+  <string name="menu_option_set_main_altitude">Set Main Altitude</string>
+  <string name="menu_option_arm_igniter">Arm Igniter</string>
+  <string name="menu_option_disarm_igniter">Disarm Igniter</string>
 
   <string name="zero_sensors">Zero Sensors</string>
   <string name="set_pressure_setting">Set Pressure Setting</string>
@@ -43,9 +46,6 @@
   <string name="disable_logging">Disable Logging</string>
   <string name="start_flight">Start Flight</string>
   <string name="end_flight">End Flight</string>
-  <string name="set_main">Set Main Altitude</string>
-  <string name="arm_igniter">Arm Igniter</string>
-  <string name="disarm_igniter">Disarm Igniter</string>
   <string name="fire_apogee">Fire Apogee</string>
   <string name="fire_main">Fire Main</string>
 
@@ -73,6 +73,7 @@
   <string name="main_fired">Main fired</string>
   <string name="apogee_fire_confirm_dialog_title">FIRE APOGEE?</string>
   <string name="main_fire_confirm_dialog_title">FIRE MAIN?</string>
+  <string name="not_armed">WARNING: Igniter is not armed</string>
 
   <string name="battery">Battery</string>
   <string name="phase">Phase</string>

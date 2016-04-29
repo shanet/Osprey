@@ -19,6 +19,10 @@ public abstract class DatasetFragment extends Fragment {
     updateDisplay(textView, value, defaultString, label, 0);
   }
 
+  protected void updateDisplay(TextView textView, int value, int defaultString, int label) {
+    updateDisplay(textView, getString(value), defaultString, label, 0);
+  }
+
   protected void updateDisplay(TextView textView, Object value, int defaultString, int label, int units) {
     String text;
 

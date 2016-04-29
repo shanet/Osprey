@@ -1,66 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:tools="http://schemas.android.com/tools"
-  android:layout_width="wrap_content"
-  android:layout_height="wrap_content"
-  android:orientation="vertical">
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:padding="10dp">
 
-  <TextView android:id="@+id/armed_display"
+  <RelativeLayout android:id="@+id/apogee_layout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <View android:id="@+id/apogee_indicator"
+      android:layout_width="45dp"
+      android:layout_height="45dp"
+      android:background="@drawable/red_circle" />
+
+    <TextView android:id="@+id/apogee_fired_display"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_toRightOf="@id/apogee_indicator"
+      android:layout_centerInParent="true"
+      android:layout_marginLeft="10dp"
+      android:textSize="15sp"
+      android:text="@string/default_events" />
+  </RelativeLayout>
+
+  <RelativeLayout android:id="@+id/main_layout"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginTop="10dp"
-    android:textSize="15sp"
-    android:text="@string/default_events" />
+    android:layout_below="@id/apogee_layout">
 
-  <TextView android:id="@+id/main_altitude_display"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="10dp"
-    android:textSize="15sp"
-    android:text="@string/default_events" />
+    <View android:id="@+id/main_indicator"
+      android:layout_width="45dp"
+      android:layout_height="45dp"
+      android:layout_marginTop="10dp"
+      android:background="@drawable/red_circle" />
 
-  <TextView android:id="@+id/apogee_fired_display"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="10dp"
-    android:textSize="15sp"
-    android:text="@string/default_events" />
+    <TextView android:id="@+id/main_fired_display"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_toRightOf="@id/main_indicator"
+      android:layout_centerInParent="true"
+      android:layout_marginLeft="10dp"
+      android:textSize="15sp"
+      android:text="@string/default_events" />
+  </RelativeLayout>
 
-  <TextView android:id="@+id/main_fired_display"
-    android:layout_width="wrap_content"
+  <LinearLayout
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="10dp"
-    android:textSize="15sp"
-    android:text="@string/default_events" />
+    android:layout_below="@id/main_layout"
+    android:layout_marginTop="15dp"
+    android:orientation="vertical">
 
-  <Button android:id="@+id/set_main_button"
-    android:layout_height="wrap_content"
-    android:layout_width="wrap_content"
-    android:text="@string/set_main" />
+    <!-- Horizontal rule -->
+    <View
+      android:layout_width="match_parent"
+      android:layout_height="2dip"
+      android:background="#FF999999" />
 
-  <Button android:id="@+id/arm_igniter_button"
-    android:layout_height="wrap_content"
-    android:layout_width="wrap_content"
-    android:text="@string/arm_igniter" />
+    <TextView android:id="@+id/armed_display"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="10dp"
+      android:textSize="15sp"
+      android:text="@string/default_events" />
 
-  <Button android:id="@+id/disarm_igniter_button"
-    android:layout_height="wrap_content"
-    android:layout_width="wrap_content"
-    android:text="@string/disarm_igniter" />
+    <TextView android:id="@+id/main_altitude_display"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="10dp"
+      android:textSize="15sp"
+      android:text="@string/default_events" />
+  </LinearLayout>
 
   <Button android:id="@+id/fire_apogee_button"
     android:layout_height="wrap_content"
     android:layout_width="wrap_content"
-    android:layout_marginTop="10dp"
-    android:layout_marginLeft="10dp"
+    android:layout_alignParentBottom="true"
+    android:background="@drawable/fire_button"
     android:text="@string/fire_apogee" />
 
   <Button android:id="@+id/fire_main_button"
     android:layout_height="wrap_content"
     android:layout_width="wrap_content"
-    android:layout_marginTop="10dp"
-    android:layout_marginLeft="10dp"
+    android:layout_alignParentBottom="true"
+    android:layout_alignParentRight="true"
+    android:background="@drawable/fire_button"
     android:text="@string/fire_main" />
 
-</LinearLayout>
+</RelativeLayout>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+  <item android:id="@+id/arm_igniter_option"
+    android:title="@string/menu_option_arm_igniter"
+    android:showAsAction="never" />
+  <item android:id="@+id/disarm_igniter_option"
+    android:title="@string/menu_option_disarm_igniter"
+    android:showAsAction="never" />
+  <item android:id="@+id/set_main_altitude_option"
+    android:title="@string/menu_option_set_main_altitude"
+    android:showAsAction="never" />
+</menu>

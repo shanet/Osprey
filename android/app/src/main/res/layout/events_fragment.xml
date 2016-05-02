@@ -78,7 +78,7 @@
     android:layout_height="wrap_content"
     android:layout_width="wrap_content"
     android:layout_alignParentBottom="true"
-    android:background="@drawable/fire_button"
+    android:background="@drawable/red_button"
     android:text="@string/fire_apogee" />
 
   <Button android:id="@+id/fire_main_button"
@@ -86,7 +86,7 @@
     android:layout_width="wrap_content"
     android:layout_alignParentBottom="true"
     android:layout_alignParentRight="true"
-    android:background="@drawable/fire_button"
+    android:background="@drawable/red_button"
     android:text="@string/fire_main" />
 
 </RelativeLayout>

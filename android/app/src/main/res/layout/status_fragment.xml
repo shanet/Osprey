@@ -1,81 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="wrap_content"
   android:layout_height="wrap_content"
-  android:orientation="vertical">
+  android:padding="10dp">
+
+  <TextView android:id="@+id/phase_label"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textSize="15sp"
+    android:text="@string/phase" />
 
   <TextView android:id="@+id/phase_display"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginTop="10dp"
-    android:textSize="15sp"
+    android:layout_marginTop="5dp"
+    android:layout_below="@id/phase_label"
+    android:textSize="20sp"
     android:text="@string/default_raw" />
 
   <TextView android:id="@+id/battery_display"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginTop="10dp"
+    android:layout_alignParentRight="true"
     android:textSize="15sp"
     android:text="@string/default_raw" />
 
-  <TextView android:id="@+id/command_status_display"
-    android:layout_width="match_parent"
+  <TextView android:id="@+id/logging_display"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginTop="10dp"
+    android:layout_alignParentRight="true"
+    android:layout_alignBottom="@id/phase_display"
     android:textSize="15sp"
     android:text="@string/default_raw" />
 
   <TextView android:id="@+id/previous_command_display"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_below="@id/phase_display"
     android:layout_marginTop="10dp"
     android:textSize="15sp"
     android:text="@string/default_raw" />
 
-  <TextView android:id="@+id/pressure_setting_display"
+  <!-- Horizontal rule -->
+  <View android:id="@+id/status_horizontal_rule"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="10dp"
-    android:textSize="15sp"
-    android:text="@string/default_raw" />
-
-  <TextView android:id="@+id/logging_display"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="10dp"
-    android:textSize="15sp"
-    android:text="@string/default_raw" />
-
-   <Button android:id="@+id/zero_sensors_button"
-     android:layout_height="wrap_content"
-     android:layout_width="wrap_content"
-     android:text="@string/zero_sensors" />
-
-  <Button android:id="@+id/set_pressure_setting_button"
-     android:layout_height="wrap_content"
-     android:layout_width="wrap_content"
-     android:text="@string/set_pressure_setting" />
-
-  <Button android:id="@+id/enable_logging_button"
-     android:layout_height="wrap_content"
-     android:layout_width="wrap_content"
-     android:text="@string/enable_logging" />
-
-  <Button android:id="@+id/disable_logging_button"
-     android:layout_height="wrap_content"
-     android:layout_width="wrap_content"
-     android:text="@string/disable_logging" />
+    android:layout_height="2dip"
+    android:layout_below="@id/previous_command_display"
+    android:layout_marginTop="20dp"
+    android:background="#FF999999" />
 
   <Button android:id="@+id/start_flight_button"
-     android:layout_height="wrap_content"
-     android:layout_width="wrap_content"
-     android:text="@string/start_flight" />
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    android:layout_below="@id/status_horizontal_rule"
+    android:layout_marginTop="20dp"
+    android:background="@drawable/green_button"
+    android:text="@string/start_flight" />
 
   <Button android:id="@+id/end_flight_button"
-     android:layout_height="wrap_content"
-     android:layout_width="wrap_content"
-     android:text="@string/end_flight" />
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    android:layout_below="@id/status_horizontal_rule"
+    android:layout_alignParentRight="true"
+    android:layout_marginTop="20dp"
+    android:background="@drawable/red_button"
+    android:text="@string/end_flight" />
 
-</LinearLayout>
+</RelativeLayout>

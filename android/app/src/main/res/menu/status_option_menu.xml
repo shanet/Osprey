@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+  <item android:id="@+id/zero_sensors_option"
+    android:title="@string/menu_option_zero_sensors"
+    android:showAsAction="never" />
+  <item android:id="@+id/enable_logging_option"
+    android:title="@string/menu_option_enable_logging"
+    android:showAsAction="never" />
+  <item android:id="@+id/disable_logging_option"
+    android:title="@string/menu_option_disable_logging"
+    android:showAsAction="never" />
+</menu>

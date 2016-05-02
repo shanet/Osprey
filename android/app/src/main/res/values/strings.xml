@@ -28,22 +28,24 @@
   <string name="dialog_disabled_gps">This device\'s GPS is disabled. For tracking to work, a GPS fix is required.</string>
   <string name="dialog_title_radio_error">Failed to initialize radio</string>
   <string name="dialog_radio_init">Is it plugged in?</string>
-  <string name="map_style_dialog_title">Map Style</string>
-  <string name="pressure_setting_dialog_title">Pressure Setting</string>
-  <string name="event_altitude_dialog_title">Event Altitude (ft)</string>
+  <string name="dialog_title_map_style">Map Style</string>
+  <string name="dialog_title_pressure_setting">Pressure Setting</string>
+  <string name="dialog_title_event_altitude">Event Altitude (ft)</string>
+  <string name="dialog_title_apogee_fire_confirm">FIRE APOGEE?</string>
+  <string name="dialog_title_main_fire_confirm">FIRE MAIN?</string>
 
   <string name="menu_option_map_style">Change map style</string>
   <string name="menu_option_map_follow">Map following</string>
   <string name="menu_option_clear_ground_track">Clear ground track</string>
   <string name="menu_option_clear_graph">Clear graph</string>
-  <string name="menu_option_set_main_altitude">Set Main Altitude</string>
-  <string name="menu_option_arm_igniter">Arm Igniter</string>
-  <string name="menu_option_disarm_igniter">Disarm Igniter</string>
+  <string name="menu_option_set_main_altitude">Set main altitude</string>
+  <string name="menu_option_arm_igniter">Arm igniter</string>
+  <string name="menu_option_disarm_igniter">Disarm igniter</string>
+  <string name="menu_option_zero_sensors">Zero sensors</string>
+  <string name="menu_option_enable_logging">Enable logging</string>
+  <string name="menu_option_disable_logging">Disable logging</string>
+  <string name="menu_option_set_pressure_setting">Set pressure setting</string>
 
-  <string name="zero_sensors">Zero Sensors</string>
-  <string name="set_pressure_setting">Set Pressure Setting</string>
-  <string name="enable_logging">Enable Logging</string>
-  <string name="disable_logging">Disable Logging</string>
   <string name="start_flight">Start Flight</string>
   <string name="end_flight">End Flight</string>
   <string name="fire_apogee">Fire Apogee</string>
@@ -53,6 +55,7 @@
   <string name="meters">m</string>
   <string name="feet">ft</string>
   <string name="g">g</string>
+  <string name="inches_mercury">\" Hg</string>
 
   <string name="rocket_coordinates">Rocket Location</string>
   <string name="user_coordinates">Device Location</string>
@@ -71,17 +74,13 @@
   <string name="main_altitude">Main deployment</string>
   <string name="apogee_fired">Apogee fired</string>
   <string name="main_fired">Main fired</string>
-  <string name="apogee_fire_confirm_dialog_title">FIRE APOGEE?</string>
-  <string name="main_fire_confirm_dialog_title">FIRE MAIN?</string>
   <string name="not_armed">WARNING: Igniter is not armed</string>
 
   <string name="battery">Battery</string>
-  <string name="phase">Phase</string>
-  <string name="pressure_setting">Pressure Setting</string>
+  <string name="phase">Phase:</string>
   <string name="logging">Logging</string>
   <string name="previous_command">Previous Command</string>
   <string name="no_previous_command">No previous command</string>
-  <string name="command_status">Command Status</string>
 
   <array name="map_styles">
     <item>Dark</item>

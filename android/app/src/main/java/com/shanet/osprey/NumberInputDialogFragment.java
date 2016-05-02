@@ -11,6 +11,8 @@ import android.support.v4.app.DialogFragment;
 import android.text.InputType;
 import android.widget.EditText;
 
+import java.text.DecimalFormat;
+
 class NumberInputDialogFragment extends DialogFragment {
   NumberInputDialogListener listener;
   double number;
@@ -29,9 +31,11 @@ class NumberInputDialogFragment extends DialogFragment {
   }
 
   public Dialog onCreateDialog(Bundle savedInstanceState) {
+    DecimalFormat format = new DecimalFormat("#.##");
+
     final EditText input = new EditText(getActivity());
     input.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
-    input.setText(Double.toString(number));
+    input.setText(format.format(number));
     input.selectAll();
 
     return new AlertDialog.Builder(getActivity())

@@ -106,7 +106,7 @@ public class EventsFragment extends DatasetFragment implements ConfirmDialogFrag
       showNotArmedToast();
 
       // Make sure the user wants to fire this event
-      ConfirmDialogFragment dialog = new ConfirmDialogFragment(EventsFragment.this, R.string.apogee_fire_confirm_dialog_title, APOGEE);
+      ConfirmDialogFragment dialog = new ConfirmDialogFragment(EventsFragment.this, R.string.dialog_title_apogee_fire_confirm, APOGEE);
       dialog.show(getActivity().getSupportFragmentManager(), "EventFireConfirmDialog");
     }
   };
@@ -116,7 +116,7 @@ public class EventsFragment extends DatasetFragment implements ConfirmDialogFrag
       showNotArmedToast();
 
       // Make sure the user wants to fire this event
-      ConfirmDialogFragment dialog = new ConfirmDialogFragment(EventsFragment.this, R.string.main_fire_confirm_dialog_title, MAIN);
+      ConfirmDialogFragment dialog = new ConfirmDialogFragment(EventsFragment.this, R.string.dialog_title_main_fire_confirm, MAIN);
       dialog.show(getActivity().getSupportFragmentManager(), "EventFireConfirmDialog");
     }
   };
@@ -130,6 +130,7 @@ public class EventsFragment extends DatasetFragment implements ConfirmDialogFrag
       Toast.makeText(getActivity(), R.string.not_armed, Toast.LENGTH_SHORT).show();
     }
   }
+  // ---------------------------------------------------------------------------------------------------
 
   // Options menu methods
   // ---------------------------------------------------------------------------------------------------
@@ -147,7 +148,7 @@ public class EventsFragment extends DatasetFragment implements ConfirmDialogFrag
         return true;
       case R.id.set_main_altitude_option:
         // Show a dialog to get a new altitude from the user
-        NumberInputDialogFragment dialog = new NumberInputDialogFragment(EventsFragment.this, R.string.event_altitude_dialog_title, mainAltitude.intValue(), MAIN);
+        NumberInputDialogFragment dialog = new NumberInputDialogFragment(this, R.string.dialog_title_event_altitude, mainAltitude.intValue(), MAIN);
         dialog.show(getActivity().getSupportFragmentManager(), "NumberInputDialog");
         return true;
     }

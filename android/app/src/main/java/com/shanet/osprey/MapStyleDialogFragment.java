@@ -41,7 +41,7 @@ class MapStyleDialogFragment extends DialogFragment {
 
   public Dialog onCreateDialog(Bundle savedInstanceState) {
     return new AlertDialog.Builder(getActivity())
-      .setTitle(R.string.map_style_dialog_title)
+      .setTitle(R.string.dialog_title_map_style)
 
       .setSingleChoiceItems(R.array.map_styles, currentStyle, new DialogInterface.OnClickListener() {
         public void onClick(DialogInterface dialog, int which) {

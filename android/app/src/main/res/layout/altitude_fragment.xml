@@ -1,24 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
-  android:layout_height="wrap_content"
-  android:orientation="vertical">
+  android:layout_height="wrap_content">
 
   <TextView android:id="@+id/agl_display"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginTop="10dp"
-    android:gravity="center"
+    android:layout_centerHorizontal="true"
     android:textColor="@android:color/holo_red_light"
     android:textSize="22sp"
     android:text="@string/default_altitude" />
 
-  <RelativeLayout
+  <TextView android:id="@+id/pressure_setting_display"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:layout_alignParentRight="true"
+    android:textSize="13sp" />
+
+  <RelativeLayout android:id="@+id/absolute_altitudes_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="10dp"
+    android:layout_below="@id/agl_display"
     android:orientation="horizontal">
 
     <TextView android:id="@+id/pressure_altitude_display"
@@ -43,5 +50,7 @@
   <com.github.mikephil.charting.charts.LineChart
     android:id="@+id/graph"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" />
-</LinearLayout>
+    android:layout_height="match_parent"
+    android:layout_below="@id/absolute_altitudes_layout" />
+
+</RelativeLayout>

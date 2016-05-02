@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+  <item android:id="@+id/clear_graph_option"
+    android:title="@string/menu_option_clear_graph"
+    android:showAsAction="never" />
+  <item android:id="@+id/set_pressure_setting_option"
+    android:title="@string/menu_option_set_pressure_setting"
+    android:showAsAction="never" />
+</menu>

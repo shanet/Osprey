@@ -90,7 +90,7 @@ public class AccelerationFragment extends GraphFragment {
     graph.getData().addDataSet(accelerationDataset);
   }
 
-  private void clearGraph() {
+  public void clearGraph() {
     graph.clear();
     initGraphDatasets();
   }

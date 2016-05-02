@@ -47,14 +47,14 @@ public class StatusFragment extends DatasetFragment {
     String phaseString = getResources().obtainTypedArray(R.array.phases).getString(phase.intValue());
 
     updateDisplay(phaseDisplay, phaseString, R.string.default_raw);
-    updateDisplay(batteryDisplay, battery, R.string.default_raw, R.string.battery);
+    updateDisplay(batteryDisplay, battery, R.string.default_raw, R.string.battery, R.string.volts);
     updateDisplay(loggingDisplay, (dataset.isLogging() ? "Yes" : "No"), 0, R.string.logging);
 
     if("".equals(previousCommand)) {
       updateDisplay(previousCommandDisplay, "None", 0, R.string.previous_command);
     } else {
       String command = String.format("%s (%s)", previousCommand, (dataset.wasCommandSuccessful() ? "Success" : "Failure"));
-      updateDisplay(previousCommandDisplay, previousCommand, R.string.no_previous_command, R.string.previous_command);
+      updateDisplay(previousCommandDisplay, command, R.string.no_previous_command, R.string.previous_command);
     }
   }
 
@@ -67,6 +67,9 @@ public class StatusFragment extends DatasetFragment {
   private View.OnClickListener startFlight = new View.OnClickListener() {
     public void onClick(View view) {
       sendCommand("4");
+
+      // Clear the graphs for the new flight
+      ((Main)getActivity()).clearGraphs();
     }
   };
 

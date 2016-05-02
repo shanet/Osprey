@@ -55,6 +55,7 @@
   <string name="meters">m</string>
   <string name="feet">ft</string>
   <string name="g">g</string>
+  <string name="volts">V</string>
   <string name="inches_mercury">\" Hg</string>
 
   <string name="rocket_coordinates">Rocket Location</string>

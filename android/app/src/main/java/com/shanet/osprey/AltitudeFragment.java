@@ -128,7 +128,7 @@ public class AltitudeFragment extends GraphFragment implements NumberInputDialog
     graph.getData().addDataSet(gpsAltitudeDataset);
   }
 
-  private void clearGraph() {
+  public void clearGraph() {
     graph.clear();
     initGraphDatasets();
   }

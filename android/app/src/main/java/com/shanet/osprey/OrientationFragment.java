@@ -107,7 +107,7 @@ public class OrientationFragment extends GraphFragment {
     graph.getData().addDataSet(headingDataset);
   }
 
-  private void clearGraph() {
+  public void clearGraph() {
     graph.clear();
     initGraphDatasets();
   }

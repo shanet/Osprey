@@ -10,6 +10,8 @@ import com.github.mikephil.charting.components.YAxis.AxisDependency;
 import com.github.mikephil.charting.data.LineDataSet;
 
 public abstract class GraphFragment extends DatasetFragment {
+  public abstract void clearGraph();
+
   protected void configureGraph(LineChart graph, float yMax, float yMin) {
     graph.setDescription("");
     graph.setNoDataTextDescription(getString(R.string.default_raw));
@@ -43,10 +45,13 @@ public abstract class GraphFragment extends DatasetFragment {
     LineDataSet dataset = new LineDataSet(null, "");
 
     dataset.setAxisDependency(AxisDependency.LEFT);
-    dataset.setDrawCircles(false);
-    dataset.setColor(ContextCompat.getColor(getActivity(), color));
     dataset.setLineWidth(2f);
+    dataset.setDrawCircles(false);
     dataset.setDrawValues(false);
+
+    if(isAdded()) {
+      dataset.setColor(ContextCompat.getColor(getActivity(), color));
+    }
 
     return dataset;
   }

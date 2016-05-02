@@ -122,6 +122,14 @@ public class Main extends FragmentActivity {
     radio.write(message);
   }
 
+  public void clearGraphs() {
+    for(DatasetFragment fragment : fragments.values()) {
+      if(fragment instanceof GraphFragment) {
+        ((GraphFragment)fragment).clearGraph();
+      }
+    }
+  }
+
   // View pager methods
   // ---------------------------------------------------------------------------------------------------
   private void updatePagerAdapter() {

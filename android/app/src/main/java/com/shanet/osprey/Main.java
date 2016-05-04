@@ -24,7 +24,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Main extends FragmentActivity {
-  private static final int LOCATION_FRAGMENT = 0;
+  private static final int MAP_FRAGMENT = 0;
   private static final int TRACKING_FRAGMENT = 1;
   private static final int ALTITUDE_FRAGMENT = 2;
   private static final int ACCELERATION_FRAGMENT = 3;
@@ -53,7 +53,7 @@ public class Main extends FragmentActivity {
     }
 
     fragments = new HashMap<Integer, DatasetFragment>();
-    fragments.put(LOCATION_FRAGMENT, new LocationFragment());
+    fragments.put(MAP_FRAGMENT, new MapFragment());
     fragments.put(TRACKING_FRAGMENT, new TrackingFragment());
     fragments.put(ALTITUDE_FRAGMENT, new AltitudeFragment());
     fragments.put(ACCELERATION_FRAGMENT, new AccelerationFragment());

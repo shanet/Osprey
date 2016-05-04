@@ -11,4 +11,7 @@
   <item android:id="@+id/clear_ground_track_option"
     android:title="@string/menu_option_clear_ground_track"
     android:showAsAction="never" />
+  <item android:id="@+id/show_last_known_location_option"
+    android:title="@string/menu_option_show_last_known_location"
+    android:showAsAction="never" />
 </menu>

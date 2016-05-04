@@ -17,13 +17,18 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class TrackingFragment extends DatasetFragment implements LocationListener, SensorEventListener {
+import java.util.Map;
+
+public class TrackingFragment extends LocationFragment implements SensorEventListener {
   private static final int EARTH_RADIUS = 6371009;
 
   private Double rocketLatitude;
@@ -61,6 +66,9 @@ public class TrackingFragment extends DatasetFragment implements LocationListene
 
     sensorManager = (SensorManager)getActivity().getSystemService(Context.SENSOR_SERVICE);
     orientationSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION);
+
+    // Tell Android this fragment has an options menu
+    setHasOptionsMenu(true);
 
     return layout;
   }
@@ -103,10 +111,6 @@ public class TrackingFragment extends DatasetFragment implements LocationListene
       updateImage(arrowDisplay, relativeBearing);
     }
   }
-
-  public void onProviderEnabled(String provider) {}
-  public void onProviderDisabled(String provider) {}
-  public void onStatusChanged(String provider, int status, Bundle extras) {}
   // ---------------------------------------------------------------------------------------------------
 
   // Sensor listener methods
@@ -176,4 +180,38 @@ public class TrackingFragment extends DatasetFragment implements LocationListene
     image.setScaleType(ImageView.ScaleType.MATRIX);
     image.setImageMatrix(matrix);
   }
+
+  // Options menu methods
+  // ---------------------------------------------------------------------------------------------------
+  public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    inflater.inflate(R.menu.tracking_option_menu, menu);
+  }
+
+  public boolean onOptionsItemSelected(MenuItem item) {
+    switch(item.getItemId()) {
+      case R.id.show_last_known_location_option:
+        showLastKnownLocation();
+        return true;
+    }
+
+    return false;
+  }
+
+  protected void showLastKnownLocation() {
+    Map<String, Double> lastKnownLocation = getLastKnownLocation();
+
+    if(lastKnownLocation == null) {
+      showNoLastKnownLocationToast();
+      return;
+    }
+
+    rocketLatitude = lastKnownLocation.get("latitude").doubleValue();
+    rocketLongitude = lastKnownLocation.get("longitude").doubleValue();
+
+    updateDistance();
+    updateRelativeBearing();
+    updateVector();
+    updateImage(arrowDisplay, relativeBearing);
+  }
+  // ---------------------------------------------------------------------------------------------------
 }

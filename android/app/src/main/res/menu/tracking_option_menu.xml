@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+  <item android:id="@+id/show_last_known_location_option"
+    android:title="@string/menu_option_show_last_known_location"
+    android:showAsAction="never" />
+</menu>

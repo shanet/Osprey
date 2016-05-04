@@ -24,7 +24,7 @@ public class RawFragment extends DatasetFragment {
     // Don't update if not added to an activity yet
     if(!isAdded()) return;
 
-    rawDisplay.setText(dataset.toString());
+    rawDisplay.setText(dataset.toString() + "\n");
   }
 
   public String getTitle(Context context) {

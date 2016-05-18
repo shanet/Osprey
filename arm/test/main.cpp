@@ -80,12 +80,20 @@ TEST_CASE("should fire main event when sent fire command") {
 
 TEST_CASE("should not fire apogee when disarmed and sent fire command") {
   setup();
-  event.disarm();
   Serial1.insert("70\n");
 
   REQUIRE(event.didFire(0) == 0);
   step();
   REQUIRE(event.didFire(0) == 0);
+}
+
+TEST_CASE("should arm igniter when sent start flight command") {
+  setup();
+  Serial1.insert("4\n");
+
+  REQUIRE(event.isArmed() == 0);
+  step();
+  REQUIRE(event.isArmed() == 1);
 }
 
 void setupTestForFixture(char *fixture) {

@@ -52,6 +52,9 @@ void Osprey::processCommand() {
 }
 
 int Osprey::startFlight(char *arg) {
+  // Reset the events for another flight
+  event.reset();
+
   if(zeroSensors(arg) == COMMAND_ERR) {
     return commandStatus;
   }
@@ -63,9 +66,6 @@ int Osprey::startFlight(char *arg) {
   if(enableLogging(arg) == COMMAND_ERR) {
     return commandStatus;
   }
-
-  // Reset the events for another flight
-  event.reset();
 
   return commandStatus;
 }

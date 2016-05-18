@@ -1,18 +1,17 @@
 #include "event.h"
 
-Event::Event(Accelerometer accelerometer, Barometer barometer, Radio radio) {
-  phase = PAD;
-  armed = 0;
+using namespace Osprey;
 
+Event::Event() {
   events[EVENT_APOGEE] = {APOGEE_PIN, APOGEE, 0};
   events[EVENT_MAIN] = {MAIN_PIN, DEFAULT_ALTITUDE, 0};
 
-  this->accelerometer = accelerometer;
-  this->barometer = barometer;
-  this->radio = radio;
+  reset();
 }
 
 int Event::init() {
+  reset();
+
   for(int i=0; i<numEvents(); i++) {
     pinMode(events[i].pin, OUTPUT);
   }
@@ -24,29 +23,27 @@ void Event::check() {
   float acceleration = accelerometer.getAcceleration();
   float altitude = barometer.getAltitudeAboveGround();
 
-  for(int i=0; i<numEvents(); i++) {
-    switch(phase) {
-      case PAD:
-        phasePad(acceleration);
-        break;
-      case BOOST:
-        phaseBoost(acceleration);
-        break;
-      case COAST:
-        phaseCoast(acceleration, i);
-        break;
-      case DROGUE:
-        phaseDrogue(acceleration, altitude, i);
-        break;
-      case MAIN:
-        phaseMain(acceleration, i);
-        break;
-      case LANDED:
-        phaseLanded();
-        break;
-      default:
-        break;
-    }
+  switch(phase) {
+    case PAD:
+      phasePad(acceleration);
+      break;
+    case BOOST:
+      phaseBoost(acceleration);
+      break;
+    case COAST:
+      phaseCoast(acceleration, altitude);
+      break;
+    case DROGUE:
+      phaseDrogue(acceleration, altitude);
+      break;
+    case MAIN:
+      phaseMain(altitude);
+      break;
+    case LANDED:
+      phaseLanded();
+      break;
+    default:
+      break;
   }
 }
 
@@ -70,55 +67,59 @@ void Event::phaseBoost(float acceleration) {
   }
 }
 
-void Event::phaseCoast(float acceleration, int eventNum) {
-  static int countdown = APOGEE_COUNTDOWN * CYCLES_PER_SECOND;
-  static int countdownRunning = 0;
+void Event::phaseCoast(float acceleration, float altitude) {
+  updateApogeeCountdowns();
 
-  if(countdownRunning) {
-    countdown--;
+  // If apogee is pending, as soon as the altitude decreases, fire it
+  if(pendingApogee) {
+    if(previousAltitude > altitude) {
+      atApogee(APOGEE_CAUSE_ALTITUDE);
+    } else {
+      previousAltitude = altitude;
+    }
   }
 
-  // Anything less than .25g can be considered at apogee
+  // If the apogee countdown is finished, fire it
+  if(checkApogeeCountdowns()) {
+    atApogee((apogeeCountdown <= 0 ? APOGEE_CAUSE_COUNTDOWN : APOGEE_CAUSE_SAFETY_COUNTDOWN));
+    return;
+  }
+
+  // Anything less than .25g means we're basically at apogee, but should start paying attention to altitude to get as close as possible
   if(acceleration < APOGEE_IDEAL) {
-    atApogee(eventNum);
-    phase = DROGUE;
+    pendingApogee = 1;
+    apogeeCountdownRunning = 1;
     return;
   }
 
   // Anything less than .5g is /probably/ apogee, but wait to see if we
   // can get closer and if not, the timer will expire causing an apogee event
   if(acceleration < APOGEE_OKAY) {
-    countdownRunning = 1;
+    safetyApogeeCountdownRunning = 1;
     return;
   }
 
-  // If the apogee countdown is finished, fire it
-  if(countdownRunning && countdown <= 0) {
-    atApogee(eventNum);
-    phase = DROGUE;
-    countdownRunning = 0;
-    return;
-  }
-
-  // If the acceleration is back to 1, we're falling but without a drogue chute (uh oh)
+  // If the acceleration is back to 1 then we're falling but without a drogue chute (uh oh)
   if(acceleration > 1) {
-    atApogee(eventNum);
+    atApogee(APOGEE_CAUSE_FREE_FALL);
     phase = DROGUE;
     return;
   }
 }
 
-void Event::phaseDrogue(float acceleration, float altitude, int eventNum) {
-  event_t *event = &events[eventNum];
+void Event::phaseDrogue(float acceleration, float altitude) {
+  // If the event altitude is reached fire it
+  for(int i=0; i<numEvents(); i++) {
+    event_t *event = &events[i];
 
-  // If the event altitude is reached (or we're falling too fast), fire it
-  if((event->altitude > 0 && altitude < event->altitude) || acceleration > BOOST_ACCELERATION) {
-    fire(eventNum);
-    phase = MAIN;
+    if(event->altitude > 0 && altitude < event->altitude) {
+      fire(i);
+      phase = MAIN;
+    }
   }
 }
 
-void Event::phaseMain(float altitude, int eventNum) {
+void Event::phaseMain(float altitude) {
   if(altitude < LANDED_ALTITUDE) {
     phase = LANDED;
   }
@@ -135,12 +136,18 @@ void Event::phaseLanded() {
   }
 }
 
-void Event::atApogee(int eventNum) {
-  event_t *event = &events[eventNum];
+void Event::atApogee(int apogeeCause) {
+  phase = DROGUE;
+  this->apogeeCause = apogeeCause;
+  disableApogeeCountdowns();
 
-  // Only fire the given event if it's set to fire at apogee
-  if(event->altitude == APOGEE) {
-    fire(eventNum);
+  // Fire any events configured to fire at apogee
+  for(int i=0; i<numEvents(); i++) {
+    event_t *event = &events[i];
+
+    if(event->altitude == APOGEE) {
+      fire(i);
+    }
   }
 }
 
@@ -157,7 +164,38 @@ void Event::fire(int eventNum) {
   event->fired = 1;
 }
 
-void Event::set(int eventNum, int altitude) {
+void Event::updateApogeeCountdowns() {
+  // Decrement the countdowns if running
+  if(safetyApogeeCountdownRunning) {
+    safetyApogeeCountdown--;
+  }
+
+  if(apogeeCountdownRunning) {
+    apogeeCountdown--;
+  }
+}
+
+int Event::checkApogeeCountdowns() {
+  // If the apogee countdown is finished, fire it
+  if(apogeeCountdownRunning && apogeeCountdown <= 0) {
+    return 1;
+  }
+
+  // If the safety apogee countdown is finished, fire it
+  if(safetyApogeeCountdownRunning && safetyApogeeCountdown <= 0) {
+    return 1;
+  }
+
+  return 0;
+}
+
+void Event::disableApogeeCountdowns() {
+  apogeeCountdownRunning = 0;
+  safetyApogeeCountdownRunning = 0;
+  pendingApogee = 0;
+}
+
+void Event::set(int eventNum, float altitude) {
   events[eventNum].altitude = altitude;
 }
 
@@ -177,6 +215,10 @@ int Event::getPhase() {
   return phase;
 }
 
+int Event::getApogeeCause() {
+  return apogeeCause;
+}
+
 void Event::arm() {
   armed = 1;
 }
@@ -190,8 +232,17 @@ int Event::isArmed() {
 }
 
 void Event::reset() {
-  // Reset the events for another flight
   phase = PAD;
+  armed = 0;
+  previousAltitude = 0;
+  pendingApogee = 0;
+  apogeeCause = APOGEE_CAUSE_NONE;
+
+  apogeeCountdown = APOGEE_COUNTDOWN * CYCLES_PER_SECOND;
+  safetyApogeeCountdown = SAFETY_APOGEE_COUNTDOWN * CYCLES_PER_SECOND;
+
+  apogeeCountdownRunning = 0;
+  safetyApogeeCountdownRunning = 0;
 
   for(int i=0; i<numEvents(); i++) {
     events[i].fired = 0;

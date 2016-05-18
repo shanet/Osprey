@@ -18,10 +18,17 @@
 #define EVENT_APOGEE 0
 #define EVENT_MAIN 1
 
+#define APOGEE_CAUSE_NONE 0
+#define APOGEE_CAUSE_ALTITUDE 1
+#define APOGEE_CAUSE_COUNTDOWN 2
+#define APOGEE_CAUSE_SAFETY_COUNTDOWN 3
+#define APOGEE_CAUSE_FREE_FALL 4
+
 // A crude approximation of the number of loop() cycles we go through in one second
 #define CYCLES_PER_SECOND 4
 
-#define APOGEE_COUNTDOWN 15 // seconds
+#define APOGEE_COUNTDOWN 3 // seconds
+#define SAFETY_APOGEE_COUNTDOWN 15 // seconds
 #define BOOST_ACCELERATION 1.25 // g
 #define COAST_ACCELERATION 0.75 // g
 #define APOGEE_IDEAL 0.25 // g
@@ -30,23 +37,28 @@
 
 typedef struct event_t {
   int pin;
-  int altitude;
+  float altitude;
   int fired;
 } event_t;
 
-using namespace std;
+namespace Osprey {
+  extern Accelerometer accelerometer;
+  extern Barometer barometer;
+  extern Radio radio;
+}
 
 class Event : public virtual Sensor {
   public:
-    Event(Accelerometer accelerometer, Barometer barometer, Radio radio);
+    Event();
     int init();
     void check();
     void fire(int eventNum);
-    void set(int eventNum, int altitude);
+    void set(int eventNum, float altitude);
     int didFire(int eventNum);
     int altitude(int eventNum);
     int numEvents();
     int getPhase();
+    int getApogeeCause();
     void arm();
     void disarm();
     int isArmed();
@@ -55,19 +67,29 @@ class Event : public virtual Sensor {
   protected:
     void phasePad(float acceleration);
     void phaseBoost(float acceleration);
-    void phaseCoast(float acceleration, int eventNum);
-    void phaseDrogue(float acceleration, float altitude, int eventNum);
-    void phaseMain(float acceleration, int eventNum);
+    void phaseCoast(float acceleration, float altitude);
+    void phaseDrogue(float acceleration, float altitude);
+    void phaseMain(float acceleration);
     void phaseLanded();
-    void atApogee(int eventNum);
+    void atApogee(int apogeeCause);
+
+    void updateApogeeCountdowns();
+    int checkApogeeCountdowns();
+    void disableApogeeCountdowns();
 
     int armed;
     int phase;
     event_t events[NUM_EVENTS];
 
-    Accelerometer accelerometer;
-    Barometer barometer;
-    Radio radio;
+    int apogeeCountdown;
+    int safetyApogeeCountdown;
+
+    int apogeeCountdownRunning;
+    int safetyApogeeCountdownRunning;
+
+    int pendingApogee;
+    int apogeeCause;
+    float previousAltitude;
 };
 
 #endif

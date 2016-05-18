@@ -19,3 +19,9 @@
 [submodule "android/usb-serial-for-android"]
 	path = android/usb-serial-for-android
 	url = git@github.com:mik3y/usb-serial-for-android.git
+[submodule "arm/test/json"]
+	path = arm/test/json
+	url = git@github.com:nlohmann/json.git
+[submodule "arm/test/catch"]
+	path = arm/test/catch
+	url = git@github.com:philsquared/Catch.git

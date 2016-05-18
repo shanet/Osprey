@@ -1,0 +1,30 @@
+// Pad
+{"acceleration": 1.0, "pressure_altitude": 100, "expected_phase": 0, "expected_apogee_cause": 4}
+
+// Boost
+{"acceleration": 2.5, "pressure_altitude": 1000, "expected_phase": 1}
+{"acceleration": 2.0, "pressure_altitude": 1000, "expected_phase": 1}
+{"acceleration": 1.5, "pressure_altitude": 1000, "expected_phase": 1}
+{"acceleration": 1.0, "pressure_altitude": 1000, "expected_phase": 1}
+{"acceleration": 0.75, "pressure_altitude": 1000, "expected_phase": 1}
+
+// Coast
+{"acceleration": 0.74, "pressure_altitude": 2000, "expected_phase": 2}
+
+// Apogee (okay -- starts safety countdown)
+{"acceleration": 0.4, "pressure_altitude": 2100, "expected_phase": 2}
+
+// Apogee (ideal)
+{"acceleration": 0.2, "pressure_altitude": 2200, "expected_phase": 2}
+
+// Accelerating again (not good!)
+{"acceleration": 1.2, "pressure_altitude": 2100, "expected_phase": 3}
+
+// Drogue
+{"acceleration": 1.0, "pressure_altitude": 1000, "expected_phase": 3}
+
+// Main
+{"acceleration": 1.0, "pressure_altitude": 250, "expected_phase": 4}
+
+// Landed
+{"acceleration": 1.0, "pressure_altitude": 109, "expected_phase": 5}

@@ -1,4 +1,5 @@
-arm/bin/*
+arm/bin/deploy
+arm/bin/test
 
 *.log
 *.py[cod]

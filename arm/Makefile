@@ -8,7 +8,7 @@ SAMD_DIR := $(PACKAGE_DIR)/hardware/samd/1.0.4
 
 SOURCES := $(wildcard $(addprefix src/, *.c *.cpp))
 HEADERS :=  $(wildcard $(addprefix src/, *.h))
-OUTPUT := bin
+OUTPUT := bin/deploy
 
 # Tools
 # -------------------------------------------------------------------------------------------------------------
@@ -105,7 +105,7 @@ CORE_LIB_OBJECTS := $(foreach dir, $(ARDUINOCOREDIR) $(LIBRARY_DIRS), \
 # Recipes
 # -------------------------------------------------------------------------------------------------------------
 
-.PHONY:	all target upload size clean
+.PHONY:	all target upload size clean test
 
 all: target
 
@@ -127,6 +127,7 @@ $(TARGET).elf: $(CORE_LIB) $(OBJECTS)
 
 # Build the source files
 # -------------------------------------------------------------------------------------------------------------
+
 %.o: %.c
 	mkdir -p $(OUTPUT)$(dir $<)
 	$(CC) $(CFLAGS) $(DEFINES) $(INCLUDES) -o $(OUTPUT)/$@ $<
@@ -137,6 +138,7 @@ $(TARGET).elf: $(CORE_LIB) $(OBJECTS)
 
 # Build the core library files
 # -------------------------------------------------------------------------------------------------------------
+
 $(CORE_LIB): $(CORE_LIB_OBJECTS)
 	$(AR) rcs $@ $?
 
@@ -156,3 +158,13 @@ clean:
 	rm -f $(COMPILED_OBJECTS)
 	rm -f $(OUTPUT)/$(TARGET).elf $(OUTPUT)/$(TARGET).bin $(CORE_LIB) $(OUTPUT)/$(TARGET).map
 	rm -rf $(OUTPUT)/src $(OUTPUT)/lib
+
+# Build/run the tests
+# -------------------------------------------------------------------------------------------------------------
+
+test:
+	make -f Makefile.test
+	make -f Makefile.test run
+
+run_test:
+	make -f Makefile.test run

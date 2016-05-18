@@ -1,0 +1,38 @@
+CPPC := g++
+SOURCES := $(wildcard $(addprefix src/, *.c *.cpp)) $(wildcard $(addprefix test/, *.c *.cpp))
+OUTPUT := bin/test
+TARGET := osprey_test
+
+LIBRARIES := test/Adafruit_BMP085_Unified/Adafruit_BMP085_U.cpp \
+	test/Adafruit_LSM303DLHC/Adafruit_LSM303_U.cpp \
+	test/Adafruit_L3GD20_U/Adafruit_L3GD20_U.cpp \
+	test/Adafruit_10DOF/Adafruit_10DOF.cpp \
+	test/Adafruit-GPS-Library/Adafruit_GPS.cpp \
+	test/SD/File.cpp \
+	test/SD/SD.cpp \
+	test/RTC/RTCZero.cpp
+
+CPPFLAGS := -Wall -std=gnu++11 -c -ggdb
+INCLUDES := -Isrc/ -Itest/ -Itest/arduino/
+DEFINES := -DTEST
+
+SOURCES_AND_LIBRARIES := $(SOURCES) $(LIBRARIES)
+OBJECTS := $(addsuffix .o, $(basename $(subst ../,,$(SOURCES_AND_LIBRARIES))))
+COMPILED_OBJECTS := $(addprefix $(OUTPUT)/, $(addsuffix .o, $(basename $(SOURCES_AND_LIBRARIES))))
+
+.PHONY:	all run clean
+
+all: $(OBJECTS)
+	$(CPPC) -o $(OUTPUT)/$(TARGET) $(COMPILED_OBJECTS)
+
+	# $(CPPC) $(BIN) $(CPPFLAGS) $(INCLUDES) $(DEFINES) $(SOURCES) $(LIBRARIES)
+
+%.o: %.cpp
+	mkdir -p $(OUTPUT)/$(dir $<)
+	$(CPPC) $(CPPFLAGS) $(DEFINES) $(INCLUDES) -o $(OUTPUT)/$@ $<
+
+run:
+	$(OUTPUT)/$(TARGET)
+
+clean:
+	rm $(OUTPUT)/$(TARGET)

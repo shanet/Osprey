@@ -1,5 +1,7 @@
 #include "osprey.h"
 
+using namespace Osprey;
+
 void setup(void) {
   initSensors();
   pinMode(HEARTBEAT_LED, OUTPUT);
@@ -12,7 +14,7 @@ void loop(void) {
   heartbeat();
 }
 
-void printJSON() {
+void Osprey::printJSON() {
   // The JSON structure is simple enough. Rather than bringing in another
   // library to do a bunch of heavylifting, just construct the string manually.
 
@@ -78,10 +80,13 @@ void printJSON() {
   radio.send(battery.getVoltage(), 2);
 
   radio.send(", \"delta\": ");
-  radio.send(clock.getSeconds());
+  radio.send(Osprey::clock.getSeconds());
 
   radio.send(", \"phase\": ");
   radio.send(event.getPhase());
+
+  radio.send(", \"apogee_cause\": ");
+  radio.send(event.getApogeeCause());
 
   radio.send(", \"armed\": ");
   radio.send(event.isArmed());
@@ -99,13 +104,13 @@ void printJSON() {
   radio.send("\r\n");
 }
 
-void heartbeat() {
+void Osprey::heartbeat() {
   digitalWrite(HEARTBEAT_LED, HIGH);
   delay(HEARTBEAT_INTERVAL);
   digitalWrite(HEARTBEAT_LED, LOW);
 }
 
-void initSensors() {
+void Osprey::initSensors() {
   if(!accelerometer.init()) {
     printInitError("Failed to intialize accelerometer");
   }
@@ -118,7 +123,7 @@ void initSensors() {
     printInitError("Failed to intialize battery");
   }
 
-  if(!clock.init()) {
+  if(!Osprey::clock.init()) {
     printInitError("Failed to intialize clock");
   }
 
@@ -139,7 +144,7 @@ void initSensors() {
   }
 }
 
-void printInitError(const char* const message) {
+void Osprey::printInitError(const char* const message) {
   while(1) {
     radio.send(message);
     radio.send("\r\n");

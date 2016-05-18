@@ -1,6 +1,6 @@
 #include "commands.h"
 
-void processCommand() {
+void Osprey::processCommand() {
   char *message = radio.recv();
 
   // If an empty string, do nothing
@@ -51,7 +51,7 @@ void processCommand() {
   radio.clear();
 }
 
-int startFlight(char *arg) {
+int Osprey::startFlight(char *arg) {
   if(zeroSensors(arg) == COMMAND_ERR) {
     return commandStatus;
   }
@@ -70,7 +70,7 @@ int startFlight(char *arg) {
   return commandStatus;
 }
 
-int endFlight(char *arg) {
+int Osprey::endFlight(char *arg) {
   if(disarmIgniter(arg) == COMMAND_ERR) {
     return commandStatus;
   }
@@ -82,22 +82,22 @@ int endFlight(char *arg) {
   return commandStatus;
 }
 
-int zeroSensors(char *arg) {
+int Osprey::zeroSensors(char *arg) {
   barometer.zero();
-  clock.reset();
+  Osprey::clock.reset();
 
   commandStatus = COMMAND_ACK;
   return commandStatus;
 }
 
-int setPressure(char *arg) {
+int Osprey::setPressure(char *arg) {
   barometer.setPressureSetting(atof(arg));
 
   commandStatus = COMMAND_ACK;
   return commandStatus;
 }
 
-int enableLogging(char *arg) {
+int Osprey::enableLogging(char *arg) {
   if(radio.enableLogging()) {
     commandStatus = COMMAND_ACK;
   } else {
@@ -107,7 +107,7 @@ int enableLogging(char *arg) {
   return commandStatus;
 }
 
-int disableLogging(char *arg) {
+int Osprey::disableLogging(char *arg) {
   if(radio.disableLogging()) {
     commandStatus = COMMAND_ACK;
   } else {
@@ -117,9 +117,9 @@ int disableLogging(char *arg) {
   return commandStatus;
 }
 
-int setEvent(char *arg) {
+int Osprey::setEvent(char *arg) {
   int eventNum = *arg - '0';
-  int altitude = atoi(arg+1);
+  int altitude = atof(arg+1);
 
   event.set(eventNum, altitude);
 
@@ -127,7 +127,7 @@ int setEvent(char *arg) {
   return commandStatus;
 }
 
-int fireEvent(char *arg) {
+int Osprey::fireEvent(char *arg) {
   // We can't fire if not armed
   if(event.isArmed() == 0) {
     commandStatus = COMMAND_ERR;
@@ -140,14 +140,14 @@ int fireEvent(char *arg) {
   return commandStatus;
 }
 
-int armIgniter(char *arg) {
+int Osprey::armIgniter(char *arg) {
   event.arm();
 
   commandStatus = COMMAND_ACK;
   return commandStatus;
 }
 
-int disarmIgniter(char *arg) {
+int Osprey::disarmIgniter(char *arg) {
   event.disarm();
 
   commandStatus = COMMAND_ACK;

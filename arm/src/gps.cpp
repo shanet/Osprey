@@ -41,8 +41,6 @@ void SERCOM1_Handler() {
 }
 
 float GPS::getLatitude() {
-  Serial.println(latitude);
-
   float newLatitude = gps.latitudeDegrees;
 
   // Return the previous coordinate if the next one isn't valid
@@ -55,8 +53,6 @@ float GPS::getLatitude() {
 }
 
 float GPS::getLongitude() {
-  Serial.println(longitude);
-
   float newLongitude = gps.longitudeDegrees;
 
   // Return the previous coordinate if the next one isn't valid

@@ -14,23 +14,23 @@
 #define HEARTBEAT_LED 8
 #define HEARTBEAT_INTERVAL 25
 
-Accelerometer accelerometer;
-Barometer barometer;
-Battery battery;
-Clock clock;
-GPS gps;
-Radio radio;
-Thermometer thermometer;
+namespace Osprey {
+  Accelerometer accelerometer;
+  Barometer barometer;
+  Battery battery;
+  Event event;
+  Osprey::Clock clock;
+  GPS gps;
+  Radio radio;
+  Thermometer thermometer;
 
-Event event(accelerometer, barometer, radio);
+  extern int commandStatus;
 
-extern int commandStatus;
-
-void printJSON();
-void heartbeat();
-void initSensors();
-void printInitError(const char* const message);
-
-extern void processCommand();
+  void printJSON();
+  void heartbeat();
+  void initSensors();
+  void printInitError(const char* const message);
+  extern void processCommand();
+}
 
 #endif

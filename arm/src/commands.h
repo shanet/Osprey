@@ -10,26 +10,28 @@
 #include "radio.h"
 #include "thermometer.h"
 
-extern Accelerometer accelerometer;
-extern Barometer barometer;
-extern Clock clock;
-extern Event event;
-extern GPS gps;
-extern Radio radio;
-extern Thermometer thermometer;
+namespace Osprey {
+  extern Accelerometer accelerometer;
+  extern Barometer barometer;
+  extern Osprey::Clock clock;
+  extern Event event;
+  extern GPS gps;
+  extern Radio radio;
+  extern Thermometer thermometer;
 
-int commandStatus;
+  int commandStatus;
 
-void processCommand();
-int startFlight(char *arg);
-int endFlight(char *arg);
-int zeroSensors(char *arg);
-int setPressure(char *arg);
-int enableLogging(char *arg);
-int disableLogging(char *arg);
-int setEvent(char *arg);
-int fireEvent(char *arg);
-int armIgniter(char *arg);
-int disarmIgniter(char *arg);
+  void processCommand();
+  int startFlight(char *arg);
+  int endFlight(char *arg);
+  int zeroSensors(char *arg);
+  int setPressure(char *arg);
+  int enableLogging(char *arg);
+  int disableLogging(char *arg);
+  int setEvent(char *arg);
+  int fireEvent(char *arg);
+  int armIgniter(char *arg);
+  int disarmIgniter(char *arg);
+}
 
 #endif

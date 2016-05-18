@@ -17,8 +17,6 @@
 #define KALMAN_MEASUREMENT_NOISE 0.25
 #define KALMAN_ERROR 1
 
-using namespace std;
-
 class GPS : public virtual Sensor {
   public:
     GPS();

@@ -5,12 +5,10 @@
 #define FILENAME_FORMAT "%d.log" // https://en.wikipedia.org/wiki/8.3_filename
 
 #include <SPI.h>
-#include <SD.h>
+#include <SD/SD.h>
 
 #include "constants.h"
 #include "sensor.h"
-
-using namespace std;
 
 class Logger : public virtual Sensor {
   public:

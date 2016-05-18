@@ -5,8 +5,6 @@
 #include "constants.h"
 #include "sensor.h"
 
-using namespace std;
-
 class Thermometer : public virtual Sensor {
   public:
     Thermometer();

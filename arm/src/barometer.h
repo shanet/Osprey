@@ -11,8 +11,6 @@
 #define KALMAN_MEASUREMENT_NOISE 0.25
 #define KALMAN_ERROR 1
 
-using namespace std;
-
 class Barometer : public virtual Sensor {
   public:
     Barometer();

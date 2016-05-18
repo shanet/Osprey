@@ -10,8 +10,6 @@
 #define RADIO_BAUD 115200
 #define RADIO_MAX_LINE_LENGTH 64
 
-using namespace std;
-
 class Radio : public virtual Sensor {
   public:
     Radio();
@@ -28,7 +26,7 @@ class Radio : public virtual Sensor {
     char* getMostRecentMessage();
 
     static void floatToString(float num, int precision, char *buffer);
-    static char read();
+    static void read();
 
   protected:
     bool logging;

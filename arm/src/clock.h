@@ -4,17 +4,17 @@
 #include "sensor.h"
 #include <RTC/RTCZero.h>
 
-using namespace std;
+namespace Osprey {
+  class Clock : public virtual Sensor {
+    public:
+      Clock();
+      int init();
+      void reset();
+      int getSeconds();
 
-class Clock : public virtual Sensor {
-  public:
-    Clock();
-    int init();
-    void reset();
-    int getSeconds();
-
-  protected:
-    RTCZero rtc;
-};
+    protected:
+      RTCZero rtc;
+  };
+}
 
 #endif

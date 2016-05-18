@@ -2,10 +2,13 @@
 #define SENSOR_H
 
 #include <Adafruit_Sensor/Adafruit_Sensor.h>
+#include <Arduino.h>
 
 #include "kalman.h"
 
-using namespace std;
+#ifdef TEST
+  #include "uart.h"
+#endif
 
 class Sensor {
   public:

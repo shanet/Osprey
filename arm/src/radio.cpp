@@ -60,9 +60,9 @@ void Radio::clear() {
   previousMessage[0] = '\0';
 }
 
-char Radio::read() {
+void Radio::read() {
   if(!RadioSerial->available()) {
-    return 0;
+    return;
   }
 
   char c = RadioSerial->read();
@@ -91,7 +91,8 @@ char Radio::read() {
     messagePosition--;
   }
 
-  return c;
+  // Keep reading until there is no more data to read
+  return read();
 }
 
 int Radio::enableLogging() {

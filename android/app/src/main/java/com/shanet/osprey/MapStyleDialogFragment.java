@@ -15,6 +15,7 @@ class MapStyleDialogFragment extends DialogFragment {
     Style.DARK,
     Style.EMERALD,
     Style.LIGHT,
+    "mapbox://styles/mapbox/outdoors-v9",
     Style.MAPBOX_STREETS,
     Style.SATELLITE,
     Style.SATELLITE_STREETS,

@@ -64,7 +64,7 @@ public class MapFragment extends LocationFragment implements MapboxMap.OnScrollL
     mapView.getMapAsync(onMapReady);
 
     mapFollow = true;
-    mapStyle = Style.SATELLITE_STREETS;
+    mapStyle = "mapbox://styles/mapbox/outdoors-v9";
     mapPathPoints = new LinkedList<LatLng>();
 
     LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);

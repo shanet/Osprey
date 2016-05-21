@@ -7,7 +7,7 @@ repositories {
 
 dependencies {
     compile 'com.android.support:support-v4:+'
-    compile ('com.mapbox.mapboxsdk:mapbox-android-sdk:4.0.0@aar') {
+    compile ('com.mapbox.mapboxsdk:mapbox-android-sdk:4.0.1@aar') {
         transitive=true
     }
     compile 'com.github.PhilJay:MPAndroidChart:v2.2.4'

@@ -1,6 +1,8 @@
 package com.shanet.osprey;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 
 import android.location.Location;
 import android.location.LocationListener;
@@ -64,7 +66,7 @@ public class MapFragment extends LocationFragment implements MapboxMap.OnScrollL
     mapView.getMapAsync(onMapReady);
 
     mapFollow = true;
-    mapStyle = "mapbox://styles/mapbox/outdoors-v9";
+    mapStyle = getMapStyle();
     mapPathPoints = new LinkedList<LatLng>();
 
     LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
@@ -229,6 +231,7 @@ public class MapFragment extends LocationFragment implements MapboxMap.OnScrollL
   public void onMapStyleChanged(String style) {
     mapStyle = style;
     map.setStyleUrl(style);
+    updateMapStyle();
   }
 
   protected void showLastKnownLocation() {
@@ -244,6 +247,22 @@ public class MapFragment extends LocationFragment implements MapboxMap.OnScrollL
 
     updateMapCamera(latitude, longitude, DEFAULT_ZOOM);
     updateMapMarker(latitude, longitude);
+  }
+
+  // Shared prefs
+  // ---------------------------------------------------------------------------------------------------
+  protected void updateMapStyle() {
+    SharedPreferences preferences = getActivity().getPreferences(Context.MODE_PRIVATE);
+    SharedPreferences.Editor editor = preferences.edit();
+
+    editor.putString(getString(R.string.map_style), mapStyle);
+
+    editor.commit();
+  }
+
+  protected String getMapStyle() {
+    SharedPreferences preferences = getActivity().getPreferences(Context.MODE_PRIVATE);
+    return preferences.getString(getString(R.string.map_style), "mapbox://styles/mapbox/outdoors-v9");
   }
   // ---------------------------------------------------------------------------------------------------
 }

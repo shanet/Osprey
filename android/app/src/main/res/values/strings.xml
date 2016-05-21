@@ -6,6 +6,7 @@
   <string name="last_known_latitude">latitude</string>
   <string name="last_known_longitude">longitude</string>
   <string name="no_last_known_location">Unknown last location</string>
+  <string name="map_style">map_style</string>
 
   <string name="page_title_map">Location</string>
   <string name="page_title_tracking">Tracking</string>

@@ -143,6 +143,9 @@ public class Main extends FragmentActivity {
     // Set the pager to the current fragment
     pager.setCurrentItem(curFragment);
 
+    // Keep all fragments in the pager alive
+    pager.setOffscreenPageLimit(fragments.size());
+
     // Listen for pager changes to keep track of the currently displayed fragment so the state can restored when this function is called
     pager.setOnPageChangeListener(new OnPageChangeListener() {
       public void onPageSelected(int position) {

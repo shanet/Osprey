@@ -12,7 +12,6 @@
 
 class Radio : public virtual Sensor {
   public:
-    Radio();
     int init();
     void send(const char* const message);
     void send(float message, int precision=2);

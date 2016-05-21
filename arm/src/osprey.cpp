@@ -98,7 +98,7 @@ void Osprey::printJSON() {
   radio.send(event.didFire(EVENT_MAIN));
 
   radio.send(", \"main_alt\": ");
-  radio.send(event.altitude(EVENT_MAIN));
+  radio.send(event.getAltitude(EVENT_MAIN));
 
   radio.send("}");
   radio.send("\r\n");

@@ -4,7 +4,7 @@ using namespace Osprey;
 
 Event::Event() {
   events[EVENT_APOGEE] = {APOGEE_PIN, APOGEE, 0};
-  events[EVENT_MAIN] = {MAIN_PIN, DEFAULT_ALTITUDE, 0};
+  events[EVENT_MAIN] = {MAIN_PIN, DEFAULT_MAIN_ALTITUDE, 0};
 
   reset();
 }
@@ -195,16 +195,19 @@ void Event::disableApogeeCountdowns() {
   pendingApogee = 0;
 }
 
-void Event::set(int eventNum, float altitude) {
-  events[eventNum].altitude = altitude;
-}
-
 int Event::didFire(int eventNum) {
   return events[eventNum].fired;
 }
 
-int Event::altitude(int eventNum) {
+float Event::getAltitude(int eventNum) {
   return events[eventNum].altitude;
+}
+
+int Event::setAltitude(int eventNum, float altitude) {
+  if(eventNum >= numEvents()) return 0;
+
+  events[eventNum].altitude = altitude;
+  return 1;
 }
 
 int Event::numEvents() {

@@ -1,6 +1,6 @@
 #define NO_DATA -1
 #define MERCURY_TO_HPA_CONVERSION 33.8638866667
-#define DEFAULT_PRESSURE_SETTING 29.92 // inches of mercury
+#define DEFAULT_PRESSURE_SETTING 29.92f // inches of mercury
 #define MS2_TO_G 0.101971621
 
 #define COMMAND_ZERO_SENSORS 0

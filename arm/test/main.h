@@ -8,11 +8,17 @@
 
 #define STABILIZE_ITERATIONS 5
 
+#define DEFAULT_TEST_ACCELERATION 1
+#define DEFAULT_TEST_ALTITUDE 100
+
 namespace Osprey {
   extern Accelerometer accelerometer;
   extern Barometer barometer;
   extern Event event;
+  extern Radio radio;
   Stub stub;
+
+  extern int commandStatus;
 }
 
 using namespace Osprey;

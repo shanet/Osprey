@@ -44,6 +44,7 @@ TEST_CASE("should arm igniter when sent arm igniter command") {
   REQUIRE(event.isArmed() == 0);
   step();
   REQUIRE(event.isArmed() == 1);
+  REQUIRE(commandStatus == COMMAND_ACK);
 }
 
 TEST_CASE("should disarm igniter when sent disarm igniter command") {
@@ -56,6 +57,7 @@ TEST_CASE("should disarm igniter when sent disarm igniter command") {
   REQUIRE(event.isArmed() == 1);
   step();
   REQUIRE(event.isArmed() == 0);
+  REQUIRE(commandStatus == COMMAND_ACK);
 }
 
 TEST_CASE("should firm apogee event when sent fire command") {
@@ -66,6 +68,7 @@ TEST_CASE("should firm apogee event when sent fire command") {
   REQUIRE(event.didFire(0) == 0);
   step();
   REQUIRE(event.didFire(0) == 1);
+  REQUIRE(commandStatus == COMMAND_ACK);
 }
 
 TEST_CASE("should fire main event when sent fire command") {
@@ -76,6 +79,7 @@ TEST_CASE("should fire main event when sent fire command") {
   REQUIRE(event.didFire(1) == 0);
   step();
   REQUIRE(event.didFire(1) == 1);
+  REQUIRE(commandStatus == COMMAND_ACK);
 }
 
 TEST_CASE("should not fire apogee when disarmed and sent fire command") {
@@ -85,15 +89,63 @@ TEST_CASE("should not fire apogee when disarmed and sent fire command") {
   REQUIRE(event.didFire(0) == 0);
   step();
   REQUIRE(event.didFire(0) == 0);
+  REQUIRE(commandStatus == COMMAND_ERR);
 }
 
-TEST_CASE("should arm igniter when sent start flight command") {
+TEST_CASE("should set event altitude when sent set event command") {
+  setup();
+  Serial1.insert("61100\n");
+
+  REQUIRE(event.getAltitude(1) == DEFAULT_MAIN_ALTITUDE);
+  step();
+  REQUIRE(event.getAltitude(1) == 100);
+  REQUIRE(commandStatus == COMMAND_ACK);
+}
+
+TEST_CASE("should arm igniter, enable logging, and zero sensors when sent start flight command") {
   setup();
   Serial1.insert("4\n");
 
   REQUIRE(event.isArmed() == 0);
+  REQUIRE(radio.isLogging() == 0);
+  REQUIRE(barometer.getAltitudeAboveGround() != 0);
+
   step();
+
   REQUIRE(event.isArmed() == 1);
+  REQUIRE(radio.isLogging() == 1);
+  REQUIRE(barometer.getAltitudeAboveGround() == 0);
+  REQUIRE(commandStatus == COMMAND_ACK);
+}
+
+TEST_CASE("should disarm igniter and disable logging when sent end flight command") {
+  setup();
+
+  // Start the flight before ending it
+  Serial1.insert("4\n");
+  step();
+
+  Serial1.insert("5\n");
+
+  REQUIRE(event.isArmed() == 1);
+  REQUIRE(radio.isLogging() == 1);
+
+  step();
+
+  REQUIRE(event.isArmed() == 0);
+  REQUIRE(radio.isLogging() == 0);
+  REQUIRE(commandStatus == COMMAND_ACK);
+}
+
+TEST_CASE("should set pressure when sent set pressure command") {
+  setup();
+
+  Serial1.insert("142.37\n");
+
+  REQUIRE(barometer.getPressureSetting() == DEFAULT_PRESSURE_SETTING);
+  step();
+  REQUIRE(barometer.getPressureSetting() == 42.37f);
+  REQUIRE(commandStatus == COMMAND_ACK);
 }
 
 void setupTestForFixture(char *fixture) {
@@ -104,8 +156,8 @@ void setupTestForFixture(char *fixture) {
 
   setup();
 
-  stub_t acceleration = {1};
-  stub_t altitude = {100};
+  stub_t acceleration = {DEFAULT_TEST_ACCELERATION};
+  stub_t altitude = {DEFAULT_TEST_ALTITUDE};
 
   stub.setField("acceleration", acceleration);
   stub.setField("pressure_altitude", altitude);

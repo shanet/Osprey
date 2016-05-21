@@ -10,16 +10,14 @@ char* Radio::previousMessage = message1;
 char* Radio::currentMessage = message2;
 int Radio::messagePosition = 0;
 
-Radio::Radio() {
-  logging = false;
-}
-
 int Radio::init() {
   RadioSerial->begin(RADIO_BAUD);
 
   if(!logger.init()) {
    return 0;
   }
+
+  logging = false;
 
   return 1;
 }

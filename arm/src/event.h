@@ -9,7 +9,7 @@
 
 #define NUM_EVENTS 2
 #define DURATION 100 // ms
-#define DEFAULT_ALTITUDE 152.4 // m
+#define DEFAULT_MAIN_ALTITUDE 152.4f // m
 #define APOGEE -1
 
 #define APOGEE_PIN 5
@@ -53,9 +53,9 @@ class Event : public virtual Sensor {
     int init();
     void check();
     void fire(int eventNum);
-    void set(int eventNum, float altitude);
     int didFire(int eventNum);
-    int altitude(int eventNum);
+    float getAltitude(int eventNum);
+    int setAltitude(int eventNum, float altitude);
     int numEvents();
     int getPhase();
     int getApogeeCause();

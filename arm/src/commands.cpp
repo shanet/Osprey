@@ -121,9 +121,12 @@ int Osprey::setEvent(char *arg) {
   int eventNum = *arg - '0';
   int altitude = atof(arg+1);
 
-  event.set(eventNum, altitude);
+  if(event.setAltitude(eventNum, altitude)) {
+    commandStatus = COMMAND_ACK;
+  } else {
+    commandStatus = COMMAND_ERR;
+  }
 
-  commandStatus = COMMAND_ACK;
   return commandStatus;
 }
 

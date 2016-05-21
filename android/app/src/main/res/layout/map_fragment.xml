@@ -21,8 +21,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     mapbox:access_token="@string/mapbox_api_key"
-    mapbox:attribution_enabled="false"
-    mapbox:logo_enabled="false"
     mapbox:center_latitude="47.6097"
     mapbox:center_longitude="-122.3331"
     mapbox:zoom="11" />

@@ -1,0 +1,22 @@
+body {
+  background-color: #eee;
+}
+
+.container_12 {
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+}
+
+h4 {
+  border-bottom: 1px solid #aaa;
+}
+
+#map {
+  width: 100%;
+  height: 500px;
+}
+
+#canvas {
+  width: 100%;
+  height: 500px;
+}

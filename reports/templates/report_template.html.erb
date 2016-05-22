@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <link rel="stylesheet" media="screen" href="assets/stylesheets/reset.css" />
+    <link rel="stylesheet" media="screen" href="assets/stylesheets/960.css" />
+
+    <link rel="stylesheet" media="screen" href="assets/lib/bootstrap.min.css">
+    <link rel="stylesheet" media="screen" href="assets/lib/c3/c3.min.css" />
+    <link rel="stylesheet" media="screen" href='assets/lib/mapbox/mapbox-gl.css' />
+
+    <link rel="stylesheet" media="screen" href="assets/stylesheets/page.css" />
+
+    <script src="assets/lib/d3.min.js"></script>
+    <script src="assets/lib/c3/c3.min.js"></script>
+    <script src='assets/lib/mapbox/mapbox-gl.js'></script>
+    <script src="assets/lib/three.min.js"></script>
+
+    <script src="assets/javascripts/canvas.js"></script>
+    <script src="assets/javascripts/chart.js"></script>
+    <script src="assets/javascripts/map.js"></script>
+    <script src="assets/javascripts/page.js"></script>
+
+    <script src="assets/data.js"></script>
+
+    <title><%= title %></title>
+  </head>
+
+  <body>
+    <div class="container_12">
+      <div class="grid_12">
+        <h3><%= title %></h3>
+      </div>
+
+      <div class="grid_12">
+        <h4>Stats</h4>
+
+        <table class="table">
+          <thead>
+            <th>Actual apogee</th>
+            <th>Calculated apogee</th>
+            <th>Flight time</th>
+            <th>Time to apogee</th>
+            <th>Descent time</th>
+            <th>Apogee cause</th>
+            <th>Average temperature</th>
+            <th>Main chute altitude</th>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td><%= @actual_apogee %>m</td>
+              <td><%= @calculated_apogee %>m</td>
+              <td>TODO</td>
+              <td>TODO</td>
+              <td>TODO</td>
+              <td><%= @apogee_cause %></td>
+              <td><%= @average_temperature.round(2) %> &deg;C</td>
+              <td><%= @main_chute_altitude %>m</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="grid_12">
+        <h4>Altitude Graph</h4>
+      </div>
+
+      <div class="grid_2">
+        <ul>
+          <li><label><input type="checkbox" checked="checked" data-series="Above Ground Level" />Altitude</label></li>
+          <li><label><input type="checkbox" data-series="Pressure Altitude" />Pressure Altitude</label></li>
+          <li><label><input type="checkbox" data-series="GPS Altitude" />GPS Altitude</label></li>
+          <li><label><input type="checkbox" checked="checked" data-series="Acceleration" />Acceleration</label></li>
+        </ul>
+      </div>
+
+      <div class="grid_10">
+        <div id="chart"></div>
+      </div>
+
+      <div class="grid_12">
+        <h4>Location</h4>
+      </div>
+
+      <div class="grid_2">
+        <ul>
+          <li><label><input type="radio" name="mapStyle" data-style="" checked="checked" />Satellite</label></li>
+          <li><label><input type="radio" name="mapStyle" data-style="" />Streets</label></li>
+          <li><label><input type="radio" name="mapStyle" data-style="" />Outdoors</label></li>
+          <li><label><input type="radio" name="mapStyle" data-style="" />Dark</label></li>
+          <li><label><input type="radio" name="mapStyle" data-style="" />Light</label></li>
+        </ul>
+      </div>
+
+      <div class="grid_10">
+        <div id="map"></div>
+      </div>
+
+      <div class="grid_12">
+        <h4>Orientation</h4>
+      </div>
+
+      <div class="grid_8">
+        <canvas id="canvas"></canvas>
+      </div>
+
+      <div class="grid_4">
+        <input type="range" />
+      </div>
+    </div>
+
+    <script>ready();</script>
+  </body>
+</html>

@@ -1,0 +1,6 @@
+var agl = ['Above Ground Level', <%= @points.map{|point| point[:agl]}.join(', ') %>];
+var pressureAltitude = ['Pressure Altitude', <%= @points.map{|point| point[:pressure_altitude]}.join(', ') %>];
+var gpsAltitude = ['GPS Altitude', <%= @points.map{|point| point[:gps_altitude]}.join(', ') %>];
+var acceleration = ['Acceleration', <%= @points.map{|point| point[:acceleration]}.join(', ') %>];
+
+var coordinates = <%= @points.map{|point| [point[:longitude], point[:latitude]]}.to_json %>;

@@ -1,6 +1,8 @@
 arm/bin/deploy
 arm/bin/test
 
+reports/launch_report_
+
 *.log
 *.py[cod]
 

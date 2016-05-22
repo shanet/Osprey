@@ -61,7 +61,7 @@ public class EventsFragment extends DatasetFragment implements ConfirmDialogFrag
     showFiredToast(mainFired, (Integer)dataset.getField("main_fired"), R.string.main_fired);
 
     armed = (Integer)dataset.getField("armed");
-    mainAltitude = mToFt((Integer)dataset.getField("main_alt"));
+    mainAltitude = mToFt(((Double)dataset.getField("main_alt")).intValue());
 
     apogeeFired = (Integer)dataset.getField("apogee_fired");
     mainFired = (Integer)dataset.getField("main_fired");

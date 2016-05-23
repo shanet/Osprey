@@ -1,25 +1,26 @@
 #define CATCH_CONFIG_MAIN
+
 #include "main.h"
 
 using namespace Osprey;
 
 TEST_CASE("should have correct flight phases with altitude apogee event") {
-  setupTestForFixture((char*)"test/fixtures/1.json");
+  setupTestForFixture((char*)"test/fixtures/flight_phase_1.json");
   testFlightPhases();
 }
 
 TEST_CASE("should have correct flight phases with countdown apogee event") {
-  setupTestForFixture((char*)"test/fixtures/2.json");
+  setupTestForFixture((char*)"test/fixtures/flight_phase_2.json");
   testFlightPhases();
 }
 
 TEST_CASE("should have correct flight phases with safety countdown apogee event") {
-  setupTestForFixture((char*)"test/fixtures/3.json");
+  setupTestForFixture((char*)"test/fixtures/flight_phase_3.json");
   testFlightPhases();
 }
 
 TEST_CASE("should have correct flight phases with free fall apogee event") {
-  setupTestForFixture((char*)"test/fixtures/4.json");
+  setupTestForFixture((char*)"test/fixtures/flight_phase_4.json");
   testFlightPhases();
 }
 
@@ -148,6 +149,40 @@ TEST_CASE("should set pressure when sent set pressure command") {
   REQUIRE(commandStatus == COMMAND_ACK);
 }
 
+TEST_CASE("should sanitize GPS coordinates properly") {
+  setupTestForFixture((char*)"test/fixtures/gps.json");
+
+  // Start at 0
+  step(1, 1);
+  REQUIRE(gps.getLatitude() == 0);
+  REQUIRE(gps.getLongitude() == 0);
+
+  // Pick up valid coordinates
+  step(1, 1);
+  REQUIRE(gps.getLatitude() == 50.0f);
+  REQUIRE(gps.getLongitude() == 100.0f);
+
+  // Ignore out of range coordinates
+  step(1, 1);
+  REQUIRE(gps.getLatitude() == 50.0f);
+  REQUIRE(gps.getLongitude() == 100.0f);
+
+  // Update to in-range coordinates
+  step(1, 1);
+  REQUIRE(gps.getLatitude() == 50.5f);
+  REQUIRE(gps.getLongitude() == 100.0f);
+
+  // Use seemingly invalid coordinates after we see them enough times
+  step(OUT_OF_RANGE_LIMIT+1, 1);
+  REQUIRE(gps.getLatitude() == -50.0f);
+  REQUIRE(gps.getLongitude() == -100.0f);
+
+  // Ignore zeros
+  step(1, 1);
+  REQUIRE(gps.getLatitude() == -50.0f);
+  REQUIRE(gps.getLongitude() == -100.0f);
+}
+
 void setupTestForFixture(char *fixture) {
   if(!stub.open(fixture)) {
     fprintf(stderr, "Error opening fixture: %s: %s\n", fixture, strerror(errno));
@@ -163,11 +198,16 @@ void setupTestForFixture(char *fixture) {
   stub.setField("pressure_altitude", altitude);
 }
 
-void step(size_t steps, size_t iterations) {
+int step(size_t steps, size_t iterations) {
   for(unsigned int i=0; i<steps; i++) {
-    stub.read();
+    int ret = stub.read();
     stabilize(iterations);
+
+    // Return if there is no more data to read
+    if(!ret) return ret;
   }
+
+  return 1;
 }
 
 void stabilize(size_t iterations) {

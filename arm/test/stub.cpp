@@ -11,6 +11,8 @@ field_t Stub::fields[] = {
   {"pressure_altitude", FIELD_FLOAT},
   {"expected_phase", FIELD_INT},
   {"expected_apogee_cause", FIELD_INT},
+  {"latitude", FIELD_FLOAT},
+  {"longitude", FIELD_FLOAT},
 };
 
 int Stub::open(const char *input) {
@@ -32,6 +34,7 @@ int Stub::read() {
 
   json current = json::parse(buffer);
   updateMap(current);
+  SERCOM1_Handler();
 
   return 1;
 }

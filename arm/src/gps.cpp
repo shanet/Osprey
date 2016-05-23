@@ -6,6 +6,10 @@ Adafruit_GPS GPS::gps = Adafruit_GPS(&GPS::GPSSerial);
 GPS::GPS() : Sensor(KALMAN_PROCESS_NOISE, KALMAN_MEASUREMENT_NOISE, KALMAN_ERROR) {
   latitude = 0;
   longitude = 0;
+
+  latitudeOutOfRange = 0;
+  longitudeOutOfRange = 0;
+
   speed = kalmanInit(0);
   altitude = kalmanInit(0);
 }
@@ -44,7 +48,7 @@ float GPS::getLatitude() {
   float newLatitude = gps.latitudeDegrees;
 
   // Return the previous coordinate if the next one isn't valid
-  if(validCoordinate(latitude, newLatitude) == 0) {
+  if(validCoordinate(latitude, newLatitude, &latitudeOutOfRange) == 0) {
     return latitude;
   }
 
@@ -56,7 +60,7 @@ float GPS::getLongitude() {
   float newLongitude = gps.longitudeDegrees;
 
   // Return the previous coordinate if the next one isn't valid
-  if(validCoordinate(longitude, newLongitude) == 0) {
+  if(validCoordinate(longitude, newLongitude, &longitudeOutOfRange) == 0) {
     return longitude;
   }
 
@@ -64,20 +68,27 @@ float GPS::getLongitude() {
   return longitude;
 }
 
-int GPS::validCoordinate(float previous, float next) {
-  // Disable this for now
-  return 1;
+int GPS::validCoordinate(float previous, float next, int *outOfRange) {
+  // If we keep reading seemingly invali coordinates over and over, they're probably valid
+  if(*outOfRange > OUT_OF_RANGE_LIMIT) {
+    *outOfRange = 0;
+    return 1;
+  }
 
-  // Ignore 0.00 coordinates (obviously doesn't work if within 1 degree of the equator or meridian, but oh well)
+  // Ignore ~0.00 coordinates (obviously doesn't work if within 1 degree of the equator or meridian, but good enough for now)
   if(next < 1 && next > -1) {
     return 0;
   }
 
   // Ignore anything > 1 degree from the previous coordinate as there's no way to move that fast
   // except in the case of initially acquiring a location when the previous coordinate will be 0
-  if((previous > 1 || previous < -1) && abs(next - previous) > 1) {
+  if(previous != 0 && abs(next - previous) > 1) {
+    (*outOfRange)++;
     return 0;
   }
+
+  // Reset the out of range counter if valid
+  *outOfRange = 0;
 
   return 1;
 }

@@ -13,6 +13,8 @@
 #define GPS_BAUD 9600
 #define ISO_8601_LENGTH 32
 
+#define OUT_OF_RANGE_LIMIT 5
+
 #define KALMAN_PROCESS_NOISE 0.01
 #define KALMAN_MEASUREMENT_NOISE 0.25
 #define KALMAN_ERROR 1
@@ -33,12 +35,16 @@ class GPS : public virtual Sensor {
     static Adafruit_GPS gps;
 
   protected:
-    int validCoordinate(float previous, float next);
+    int validCoordinate(float previous, float next, int *outOfRange);
 
     char iso8601[ISO_8601_LENGTH];
 
     float latitude;
     float longitude;
+
+    int latitudeOutOfRange;
+    int longitudeOutOfRange;
+
     kalman_t speed;
     kalman_t altitude;
 };

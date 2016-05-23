@@ -21,6 +21,8 @@ struct field_t {
   int type;
 };
 
+extern void SERCOM1_Handler();
+
 class Stub {
   public:
     int open(const char *input);

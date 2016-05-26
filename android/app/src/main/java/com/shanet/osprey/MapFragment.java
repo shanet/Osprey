@@ -1,5 +1,7 @@
 package com.shanet.osprey;
 
+import android.app.NotificationManager;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -11,6 +13,9 @@ import android.location.LocationManager;
 import android.graphics.Color;
 import android.os.Bundle;
 
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.NotificationCompat;
+
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,6 +25,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mapbox.mapboxsdk.annotations.Icon;
 import com.mapbox.mapboxsdk.annotations.IconFactory;
@@ -27,23 +33,44 @@ import com.mapbox.mapboxsdk.annotations.Marker;
 import com.mapbox.mapboxsdk.annotations.MarkerOptions;
 import com.mapbox.mapboxsdk.annotations.Polyline;
 import com.mapbox.mapboxsdk.annotations.PolylineOptions;
+
 import com.mapbox.mapboxsdk.camera.CameraPosition;
 import com.mapbox.mapboxsdk.camera.CameraUpdate;
 import com.mapbox.mapboxsdk.camera.CameraUpdateFactory;
+
 import com.mapbox.mapboxsdk.constants.Style;
 import com.mapbox.mapboxsdk.geometry.LatLng;
+import com.mapbox.mapboxsdk.geometry.LatLngBounds;
+
 import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
+
+import com.mapbox.mapboxsdk.offline.OfflineManager;
+import com.mapbox.mapboxsdk.offline.OfflineRegion;
+import com.mapbox.mapboxsdk.offline.OfflineRegionError;
+import com.mapbox.mapboxsdk.offline.OfflineRegionStatus;
+import com.mapbox.mapboxsdk.offline.OfflineTilePyramidRegionDefinition;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-public class MapFragment extends LocationFragment implements MapboxMap.OnScrollListener, MapStyleDialogFragment.MapStyleDialogListener {
+import org.json.JSONException;
+import org.json.JSONObject;
+
+public class MapFragment extends LocationFragment implements
+  DownloadMapDialogFragment.DownloadMapDialogListener,
+  OfflineMapsDialogFragment.OfflineMapsDialogListener,
+  MapboxMap.OnScrollListener,
+  MapStyleDialogFragment.MapStyleDialogListener {
+
   private static final int DEFAULT_ZOOM = 15;
   private static final int ORANGE = 0xFFFFAA00; // wtf? android has a constant for magenta but not orange?
+
+  public static final String JSON_CHARSET = "UTF-8";
+  public static final String JSON_FIELD_REGION_NAME = "FIELD_REGION_NAME";
 
   private boolean mapFollow;
   private LinkedList<LatLng> mapPathPoints;
@@ -51,6 +78,12 @@ public class MapFragment extends LocationFragment implements MapboxMap.OnScrollL
   private MapboxMap map;
   private MapView mapView;
   private Marker mapRocketMarker;
+
+  private NotificationManager notificationManager;
+  private NotificationCompat.Builder notificationBuilder;
+
+  private OfflineManager offlineMapManager;
+
   private Polyline mapRocketPath;
   private Polyline mapUserPath;
 
@@ -68,6 +101,9 @@ public class MapFragment extends LocationFragment implements MapboxMap.OnScrollL
     mapFollow = true;
     mapStyle = getMapStyle();
     mapPathPoints = new LinkedList<LatLng>();
+
+    offlineMapManager = OfflineManager.getInstance(getActivity());
+    offlineMapManager.setAccessToken(getString(R.string.mapbox_api_key));
 
     LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
     locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
@@ -207,9 +243,11 @@ public class MapFragment extends LocationFragment implements MapboxMap.OnScrollL
   }
 
   public boolean onOptionsItemSelected(MenuItem item) {
+    DialogFragment dialog;
+
     switch(item.getItemId()) {
       case R.id.map_style_option:
-        MapStyleDialogFragment dialog = new MapStyleDialogFragment(this, mapStyle);
+        dialog = new MapStyleDialogFragment(this, mapStyle);
         dialog.show(getActivity().getSupportFragmentManager(), "MapStyleDialog");
         return true;
       case R.id.map_follow_option:
@@ -222,6 +260,19 @@ public class MapFragment extends LocationFragment implements MapboxMap.OnScrollL
         return true;
       case R.id.show_last_known_location_option:
         showLastKnownLocation();
+        return true;
+      case R.id.list_offline_maps_option:
+        getOfflineMapsList(new OfflineMapsListListener() {
+          public void onOfflineMapsRetrieved(OfflineRegion[] regions) {
+            // Pass the regions to the offline map dialog
+            DialogFragment dialog = new OfflineMapsDialogFragment(MapFragment.this, regions);
+            dialog.show(getActivity().getSupportFragmentManager(), "OfflineMapsDialog");
+          }
+        });
+        return true;
+      case R.id.download_map_option:
+        dialog = new DownloadMapDialogFragment(this);
+        dialog.show(getActivity().getSupportFragmentManager(), "DownloadMapDialog");
         return true;
     }
 
@@ -249,6 +300,41 @@ public class MapFragment extends LocationFragment implements MapboxMap.OnScrollL
     updateMapMarker(latitude, longitude);
   }
 
+  public void onMapDownloadRequest(String regionName) {
+    downloadOfflineMap(regionName);
+    Toast.makeText(getActivity(), R.string.download_started, Toast.LENGTH_SHORT).show();
+  }
+
+  public void onOfflineMapSelected(final int region) {
+    getOfflineMapsList(new OfflineMapsListListener() {
+      public void onOfflineMapsRetrieved(OfflineRegion[] regions) {
+        // Show a toast if no regions exist
+        if(regions == null || regions.length == 0) {
+          Toast.makeText(getActivity(), R.string.no_regions, Toast.LENGTH_SHORT).show();
+          return;
+        }
+
+        OfflineTilePyramidRegionDefinition regionDefinition = (OfflineTilePyramidRegionDefinition)regions[region].getDefinition();
+
+        // Move the map to the given region
+        LatLngBounds bounds = regionDefinition.getBounds();
+        double regionZoom = regionDefinition.getMinZoom();
+
+        CameraPosition cameraPosition = new CameraPosition.Builder()
+          .target(bounds.getCenter())
+          .zoom(regionZoom)
+          .build();
+
+        map.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+        onMapStyleChanged(regionDefinition.getStyleURL());
+      }
+    });
+  }
+
+  public void onOfflineMapDeleted() {
+    Toast.makeText(getActivity(), R.string.map_deleted, Toast.LENGTH_SHORT).show();
+  }
+
   // Shared prefs
   // ---------------------------------------------------------------------------------------------------
   protected void updateMapStyle() {
@@ -256,13 +342,102 @@ public class MapFragment extends LocationFragment implements MapboxMap.OnScrollL
     SharedPreferences.Editor editor = preferences.edit();
 
     editor.putString(getString(R.string.map_style), mapStyle);
-
     editor.commit();
   }
 
   protected String getMapStyle() {
     SharedPreferences preferences = getActivity().getPreferences(Context.MODE_PRIVATE);
     return preferences.getString(getString(R.string.map_style), "mapbox://styles/mapbox/outdoors-v9");
+  }
+  // ---------------------------------------------------------------------------------------------------
+
+  // Offline maps
+  // ---------------------------------------------------------------------------------------------------
+  private void downloadOfflineMap(String regionName) {
+    OfflineTilePyramidRegionDefinition regionDefinition = getCurrentMapDefinition();
+    byte[] metadata = createOfflineMapMetadata(regionName);
+    createMapDownloadNotification();
+
+    // Download the region asynchronously
+    offlineMapManager.createOfflineRegion(regionDefinition, metadata, new OfflineManager.CreateOfflineRegionCallback() {
+      public void onCreate(OfflineRegion offlineRegion) {
+        offlineRegion.setDownloadState(OfflineRegion.STATE_ACTIVE);
+
+        offlineRegion.setObserver(new OfflineRegion.OfflineRegionObserver() {
+          public void onStatusChanged(OfflineRegionStatus status) {
+            // Calculate the download percentage and update the download notification
+            int percentage = (status.getRequiredResourceCount() >= 0 ? (int)(100 * status.getCompletedResourceCount() / status.getRequiredResourceCount()) : 0);
+
+            if(status.isComplete()) {
+              notificationBuilder.setContentText(getString(R.string.map_download_complete)).setProgress(0, 0, false);
+            } else if(status.isRequiredResourceCountPrecise()) {
+              notificationBuilder.setProgress(100, percentage, false);
+            }
+
+            notificationManager.notify(1, notificationBuilder.build());
+          }
+
+          public void onError(OfflineRegionError error) {
+            notificationBuilder.setContentText(getString(R.string.map_download_error)).setProgress(0, 0, false);
+            notificationManager.notify(1, notificationBuilder.build());
+          }
+
+          public void mapboxTileCountLimitExceeded(long limit) {
+            notificationBuilder.setContentText(getString(R.string.map_download_too_large)).setProgress(0, 0, false);
+            notificationManager.notify(1, notificationBuilder.build());
+          }
+        });
+      }
+
+      public void onError(String error) {
+        notificationBuilder.setContentText(getString(R.string.map_download_error)).setProgress(0, 0, false);
+        notificationManager.notify(1, notificationBuilder.build());
+      }
+    });
+  }
+
+  private void getOfflineMapsList(final OfflineMapsListListener listener) {
+    offlineMapManager.listOfflineRegions(new OfflineManager.ListOfflineRegionsCallback() {
+      public void onList(final OfflineRegion[] offlineRegions) {
+        // Pass the list of regions to the listener
+        listener.onOfflineMapsRetrieved(offlineRegions);
+      }
+
+      public void onError(String error) {
+        Toast.makeText(getActivity(), getString(R.string.offline_map_error), Toast.LENGTH_SHORT).show();
+      }
+    });
+  }
+
+  private OfflineTilePyramidRegionDefinition getCurrentMapDefinition() {
+    LatLngBounds bounds = map.getProjection().getVisibleRegion().latLngBounds;
+    double minZoom = map.getCameraPosition().zoom;
+    double maxZoom = map.getMaxZoom();
+    float pixelRatio = this.getResources().getDisplayMetrics().density;
+
+    return new OfflineTilePyramidRegionDefinition(mapStyle, bounds, minZoom, maxZoom, pixelRatio);
+  }
+
+  private byte[] createOfflineMapMetadata(String regionName) {
+    try {
+      JSONObject jsonObject = new JSONObject();
+      jsonObject.put(JSON_FIELD_REGION_NAME, regionName);
+      return jsonObject.toString().getBytes(JSON_CHARSET);
+    } catch(Exception e) {
+      return null;
+    }
+  }
+
+  private void createMapDownloadNotification() {
+    notificationManager = (NotificationManager)getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+    notificationBuilder = new NotificationCompat.Builder(getActivity());
+    notificationBuilder.setContentTitle(getString(R.string.map_downloading_title))
+      .setContentText(getString(R.string.map_downloading))
+      .setSmallIcon(R.drawable.ic_launcher);
+  }
+
+  private interface OfflineMapsListListener {
+    public void onOfflineMapsRetrieved(OfflineRegion[] regions);
   }
   // ---------------------------------------------------------------------------------------------------
 }

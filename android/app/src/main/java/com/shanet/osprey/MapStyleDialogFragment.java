@@ -21,8 +21,8 @@ class MapStyleDialogFragment extends DialogFragment {
     Style.SATELLITE_STREETS,
   };
 
-  MapStyleDialogListener listener;
-  int currentStyle;
+  private MapStyleDialogListener listener;
+  private int currentStyle;
 
   public MapStyleDialogFragment(MapStyleDialogListener listener, String currentStyle) {
     this.listener = listener;

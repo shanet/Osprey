@@ -28,12 +28,17 @@
   <string name="cancel">Cancel</string>
   <string name="yes">Yes</string>
   <string name="no">No</string>
+  <string name="download">Download</string>
+  <string name="go">Go</string>
+  <string name="delete">Delete</string>
 
   <string name="dialog_title_disabled_gps">GPS Disabled</string>
   <string name="dialog_disabled_gps">This device\'s GPS is disabled. For tracking to work, a GPS fix is required.</string>
   <string name="dialog_title_radio_error">Failed to initialize radio</string>
   <string name="dialog_radio_init">Is it plugged in?</string>
   <string name="dialog_title_map_style">Map Style</string>
+  <string name="dialog_title_launch_sites">Launch Sites</string>
+  <string name="dialog_title_download_map">Download Map</string>
   <string name="dialog_title_pressure_setting">Pressure Setting</string>
   <string name="dialog_title_event_altitude">Event Altitude (ft)</string>
   <string name="dialog_title_apogee_fire_confirm">FIRE APOGEE?</string>
@@ -43,6 +48,8 @@
   <string name="menu_option_map_follow">Map following</string>
   <string name="menu_option_clear_ground_track">Clear ground track</string>
   <string name="menu_option_show_last_known_location">Show last known location</string>
+  <string name="menu_option_list_offline_maps">Launch sites</string>
+  <string name="menu_option_download_map">Add launch site</string>
   <string name="menu_option_clear_graph">Clear graph</string>
   <string name="menu_option_set_main_altitude">Set main altitude</string>
   <string name="menu_option_arm_igniter">Arm igniter</string>
@@ -51,6 +58,17 @@
   <string name="menu_option_enable_logging">Enable logging</string>
   <string name="menu_option_disable_logging">Disable logging</string>
   <string name="menu_option_set_pressure_setting">Set pressure setting</string>
+
+  <string name="download_started">Download started</string>
+  <string name="no_regions">No launch sites exist</string>
+  <string name="offline_map_error">Error retrieving launch sites</string>
+  <string name="map_downloading_title">Launch site downloading</string>
+  <string name="map_downloading">Downloading offline map for launch site</string>
+  <string name="map_download_complete">Launch site map downloaded</string>
+  <string name="map_download_error">Error downloading launch site map</string>
+  <string name="map_download_too_large">The selected area is too large to download. Zoom in and try again.</string>
+  <string name="map_deleted">Launch site deleted</string>
+  <string name="download_map_info">The launch site will be defined as the current location on the map. Offline maps will be downloaded for this region. Note that only the currently selected map style will be saved for offline use.</string>
 
   <string name="start_flight">Start Flight</string>
   <string name="end_flight">End Flight</string>

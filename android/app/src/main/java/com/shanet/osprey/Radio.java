@@ -9,12 +9,17 @@ import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbDeviceConnection;
 import android.hardware.usb.UsbManager;
 
+import android.os.Environment;
+
 import com.hoho.android.usbserial.driver.UsbSerialDriver;
 import com.hoho.android.usbserial.driver.UsbSerialPort;
 import com.hoho.android.usbserial.driver.UsbSerialProber;
 import com.hoho.android.usbserial.util.SerialInputOutputManager;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.InputStreamReader;
 import java.io.IOException;
 import java.io.PipedInputStream;
@@ -31,6 +36,7 @@ public class Radio {
   private final ExecutorService executor;
 
   private BufferedReader reader;
+  private FileOutputStream log;
   private PipedInputStream input;
   private PipedOutputStream output;
 
@@ -42,6 +48,8 @@ public class Radio {
     output = new PipedOutputStream();
     input = new PipedInputStream(output);
     reader = new BufferedReader(new InputStreamReader(input));
+
+    this.context = context;
 
     port = null;
     executor = Executors.newSingleThreadExecutor();
@@ -106,17 +114,21 @@ public class Radio {
     return UsbSerialProber.getDefaultProber().findAllDrivers(usbManager);
   }
 
+  private void startIoManager() {
+    if(port != null) {
+      openLog();
+
+      serialIoManager = new SerialInputOutputManager(port, listener);
+      executor.submit(serialIoManager);
+    }
+  }
+
   private void stopIoManager() {
     if(serialIoManager != null) {
       serialIoManager.stop();
       serialIoManager = null;
-    }
-  }
 
-  private void startIoManager() {
-    if(port != null) {
-      serialIoManager = new SerialInputOutputManager(port, listener);
-      executor.submit(serialIoManager);
+      closeLog();
     }
   }
 
@@ -124,9 +136,39 @@ public class Radio {
     public void onNewData(final byte[] data) {
       try {
         output.write(data);
+        logData(data);
       } catch(IOException err) {}
     }
 
     public void onRunError(Exception err) {}
   };
+
+  private void openLog() {
+    // Open the log file
+    if(Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
+      try {
+        File file = new File(context.getExternalFilesDir(null), "osprey.log");
+        log = new FileOutputStream(file, true);
+      } catch(FileNotFoundException fnfe) {}
+    }
+  }
+
+  private void closeLog() {
+    if(log == null) return;
+
+    try {
+      log.close();
+    } catch(IOException ioe) {
+    } finally {
+      log = null;
+    }
+  }
+
+  private void logData(byte[] data) {
+    if(log == null) return;
+
+    try {
+      log.write(data);
+    } catch(IOException ioe) {}
+  }
 }

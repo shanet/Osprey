@@ -183,6 +183,13 @@ TEST_CASE("should sanitize GPS coordinates properly") {
   REQUIRE(gps.getLongitude() == -100.0f);
 }
 
+/*TEST_CASE("sample flight") {
+  setupTestForFixture((char*)"test/fixtures/sample.json");
+
+  Serial1.insert("4\n");
+  while(step(1, 1));
+}*/
+
 void setupTestForFixture(char *fixture) {
   if(!stub.open(fixture)) {
     fprintf(stderr, "Error opening fixture: %s: %s\n", fixture, strerror(errno));

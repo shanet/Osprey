@@ -21,7 +21,7 @@ class Radio(object):
       self.transformData(parsedData)
       self.writeLog('%s\n' % rawData)
       return parsedData
-    except json.decoder.JSONDecodeError as exception:
+    except ValueError as exception:
       message = 'Invalid JSON: %s:\n%s' % (exception, rawData)
       self.writeLog(message)
       raise exceptions.RadioReceiveError(message)

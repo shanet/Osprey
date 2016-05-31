@@ -17,6 +17,9 @@ class Launch
     @average_temperature = @points.inject(0) {|sum, point| sum + point[:temp]} / @points.count
     @main_chute_altitude = @points.first[:main_alt]
 
+    @flight_start = first_valid_timestamp + 30
+    @flight_end = last_valid_timestamp + 5 * 60
+
     create_output_directory
     copy_assets_to_output_directory
 
@@ -42,5 +45,23 @@ private
 
   def copy_assets_to_output_directory
     FileUtils.cp_r 'assets/', @output_path
+  end
+
+  def first_valid_timestamp
+    return valid_timestamp :each
+  end
+
+  def last_valid_timestamp
+    return valid_timestamp :reverse_each
+  end
+
+  def valid_timestamp(method)
+    @points.send(method) do |point|
+      begin
+        return Time.parse point[:iso8601]
+      rescue ArgumentError
+        next
+      end
+    end
   end
 end

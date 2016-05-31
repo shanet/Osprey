@@ -20,3 +20,7 @@ h4 {
   width: 100%;
   height: 500px;
 }
+
+#credits > * {
+  position: relative;
+}

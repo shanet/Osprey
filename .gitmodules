@@ -25,9 +25,6 @@
 [submodule "arm/test/catch"]
 	path = arm/test/catch
 	url = git@github.com:philsquared/Catch.git
-[submodule "reports/assets/javascripts/c3"]
-	path = reports/assets/javascripts/c3
-	url = git@github.com:c3js/c3.git
 [submodule "reports/assets/lib/c3"]
 	path = reports/assets/lib/c3
 	url = git@github.com:c3js/c3.git

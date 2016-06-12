@@ -1,7 +1,7 @@
 require 'json'
 
 EPSILON = 5
-BUFFER = 5
+BUFFER = 10
 
 class Log
   attr_accessor :launches

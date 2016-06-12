@@ -21,6 +21,8 @@
     <script src="assets/javascripts/chart.js"></script>
     <script src="assets/javascripts/page.js"></script>
 
+    <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.png" />
+
     <title><%= title %></title>
   </head>
 
@@ -28,6 +30,16 @@
     <div class="container_12">
       <div class="grid_12">
         <h3><%= title %></h3>
+      </div>
+
+      <div id="no_ajax_error" class="alert alert-danger grid_12">
+        Unable to access local files due to browser security restrictions. See below for workarounds.
+
+        <ul>
+          <li>Chrome: Start with <code>--allow-file-access-from-files</code> flag.</li>
+          <li>Firefox &amp; Safari: This shouldn't be a problem.</li>
+          <li>IE: <a href="https://getfirefox.com">https://getfirefox.com</a></li>
+        </ul>
       </div>
 
       <div class="grid_12">
@@ -45,11 +57,11 @@
 
           <tbody>
             <tr>
-              <td><%= @actual_apogee %>m</td>
-              <td><%= @calculated_apogee %>m</td>
+              <td><%= @actual_apogee %>m <div class="sub">(<%= @actual_apogee.feet.round(2) %>ft)</div></td>
+              <td><%= @calculated_apogee %>m <div class="sub">(<%= @calculated_apogee.feet.round(2) %>ft)</div></td>
               <td><%= @apogee_cause %></td>
-              <td><%= @main_chute_altitude %>m</td>
-              <td>TODO</td>
+              <td><%= @main_chute_altitude %>m <div class="sub">(<%= @main_chute_altitude.feet.round(2) %>ft)</div></td>
+              <td><%= @main_chute_actual %>m <div class="sub">(<%= @main_chute_actual.feet.round(2) %>ft)</div></td>
               <td><%= @average_temperature.round(2) %> &deg;C</td>
             </tr>
           </tbody>
@@ -67,12 +79,12 @@
 
           <tbody>
             <tr>
-              <td>TODO</td>
-              <td>TODO</td>
-              <td>TODO</td>
-              <td>TODO</td>
-              <td>TODO</td>
-              <td>TODO</td>
+              <td><%= @flight_time_minutes %>m <%= '%02d' % @flight_time_seconds %>s</td>
+              <td><%= @ascent_time %>s</td>
+              <td><%= @ascent_rate.round(2) %> m/s</td>
+              <td><%= @descent_time_minutes %>m <%= '%02d' % @descent_time_seconds %>s</td>
+              <td><%= @descent_rate_drogue.round(2) %> m/s</td>
+              <td><%= @descent_rate_main.round(2) %> m/s</td>
             </tr>
           </tbody>
         </table>
@@ -88,6 +100,7 @@
           <li><label><input type="checkbox" data-series="Pressure Altitude" />Pressure Altitude</label></li>
           <li><label><input type="checkbox" data-series="GPS Altitude" />GPS Altitude</label></li>
           <li><label><input type="checkbox" checked="checked" data-series="Acceleration" />Acceleration</label></li>
+          <li><label><input type="checkbox" checked="checked" data-series="Ground Speed" />Ground Speed</label></li>
         </ul>
       </div>
 

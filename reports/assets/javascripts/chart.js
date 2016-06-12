@@ -9,6 +9,7 @@ function initChart() {
         pressureAltitude,
         gpsAltitude,
         acceleration,
+        groundSpeed,
       ],
       axes: {
         Acceleration: 'y2',
@@ -35,14 +36,17 @@ function initChart() {
     grid: {
       x: {
         lines: [
-          {value: 2, text: 'Pad'},
-          {value: 50, text: 'Boost'},
-          {value: 100, text: 'Coast'},
-          {value: 150, text: 'Apogee'},
-          {value: 275, text: 'Main'},
-          {value: 300, text: 'Landed'},
+          {value: index_pad, text: 'Pad'},
+          {value: index_boost, text: 'Boost'},
+          {value: index_coast, text: 'Coast'},
+          {value: index_drogue, text: 'Drogue'},
+          {value: index_main, text: 'Main'},
+          {value: index_landed, text: 'Landed'},
         ],
       },
+    },
+    zoom: {
+      enabled: true,
     },
   });
 }

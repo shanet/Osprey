@@ -118,10 +118,7 @@ public class MapFragment extends LocationFragment implements
     // Don't update if not added to an activity yet
     if(!isAdded()) return;
 
-    String coordinates = dataset.getCoordinates();
-
-    // Update the coordinates label
-    coordinatesDisplay.setText(coordinates != null ? coordinates : getActivity().getString(R.string.default_coordinates));
+    updateCoordinatesLabel(dataset.getCoordinates());
 
     Double latitude = (Double)dataset.getField("latitude");
     Double longitude = (Double)dataset.getField("longitude");
@@ -165,6 +162,10 @@ public class MapFragment extends LocationFragment implements
 
     CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
     map.easeCamera(cameraUpdate, 1000);
+  }
+
+  private void updateCoordinatesLabel(String coordinates) {
+    coordinatesDisplay.setText(coordinates != null ? coordinates : getActivity().getString(R.string.default_coordinates));
   }
 
   private void updateMapMarker(double latitude, double longitude) {
@@ -296,6 +297,7 @@ public class MapFragment extends LocationFragment implements
     double latitude = lastKnownLocation.get("latitude").doubleValue();
     double longitude = lastKnownLocation.get("longitude").doubleValue();
 
+    updateCoordinatesLabel(String.format("%f, %f", latitude, longitude));
     updateMapCamera(latitude, longitude, DEFAULT_ZOOM);
     updateMapMarker(latitude, longitude);
   }

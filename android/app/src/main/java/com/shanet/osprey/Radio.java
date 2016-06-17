@@ -144,10 +144,9 @@ public class Radio {
   };
 
   private void openLog() {
-    // Open the log file
     if(Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
       try {
-        File file = new File(context.getExternalFilesDir(null), "osprey.log");
+        File file = new File(context.getExternalFilesDir(null), context.getString(R.string.log));
         log = new FileOutputStream(file, true);
       } catch(FileNotFoundException fnfe) {}
     }

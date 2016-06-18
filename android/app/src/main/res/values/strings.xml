@@ -4,9 +4,12 @@
   <string name="mapbox_api_key">pk.eyJ1Ijoic2hhbmV0IiwiYSI6ImNpbXZnbnBhMjAydDl3a2x1ejNoNWoydHMifQ.WIi_Jv4TO3hOzj-E120rYg</string>
   <string name="log">osprey.log</string>
 
-  <string name="last_known_latitude">latitude</string>
-  <string name="last_known_longitude">longitude</string>
+  <string name="last_known_latitude">last_known_latitude</string>
+  <string name="last_known_longitude">last_known_longitude</string>
+  <string name="tracked_latitude">tracked_latitude</string>
+  <string name="tracked_longitude">tracked_longitude</string>
   <string name="no_last_known_location">Unknown last location</string>
+  <string name="no_tracked_location">No tracked location set</string>
   <string name="map_style">map_style</string>
 
   <string name="page_title_map">Location</string>
@@ -32,6 +35,8 @@
   <string name="download">Download</string>
   <string name="go">Go</string>
   <string name="delete">Delete</string>
+  <string name="latitude">Latitude:</string>
+  <string name="longitude">Longitude:</string>
 
   <string name="dialog_title_disabled_gps">GPS Disabled</string>
   <string name="dialog_disabled_gps">This device\'s GPS is disabled. For tracking to work, a GPS fix is required.</string>
@@ -44,6 +49,7 @@
   <string name="dialog_title_event_altitude">Event Altitude (ft)</string>
   <string name="dialog_title_apogee_fire_confirm">FIRE APOGEE?</string>
   <string name="dialog_title_main_fire_confirm">FIRE MAIN?</string>
+  <string name="dialog_title_tracked_location">Set TrackedLocation</string>
 
   <string name="menu_option_map_style">Change map style</string>
   <string name="menu_option_map_follow">Map following</string>
@@ -59,6 +65,8 @@
   <string name="menu_option_enable_logging">Enable logging</string>
   <string name="menu_option_disable_logging">Disable logging</string>
   <string name="menu_option_set_pressure_setting">Set pressure setting</string>
+  <string name="menu_option_show_tracked_location">Show tracked location</string>
+  <string name="menu_option_set_tracked_location">Set tracked location</string>
 
   <string name="download_started">Download started</string>
   <string name="no_regions">No launch sites exist</string>
@@ -70,6 +78,7 @@
   <string name="map_download_too_large">The selected area is too large to download. Zoom in and try again.</string>
   <string name="map_deleted">Launch site deleted</string>
   <string name="download_map_info">The launch site will be defined as the current location on the map. Offline maps will be downloaded for this region. Note that only the currently selected map style will be saved for offline use.</string>
+  <string name="tracked_location_info">Set a custom location to track directly to on the map and tracking views.</string>
 
   <string name="start_flight">Start Flight</string>
   <string name="end_flight">End Flight</string>

@@ -20,4 +20,10 @@
   <item android:id="@+id/download_map_option"
     android:title="@string/menu_option_download_map"
     android:showAsAction="never" />
+  <item android:id="@+id/show_tracked_location_option_map"
+    android:title="@string/menu_option_show_tracked_location"
+    android:showAsAction="never" />
+  <item android:id="@+id/set_tracked_location_option"
+    android:title="@string/menu_option_set_tracked_location"
+    android:showAsAction="never" />
 </menu>

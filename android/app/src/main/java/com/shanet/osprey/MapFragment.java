@@ -135,7 +135,7 @@ public class MapFragment extends LocationFragment implements
       updateMapMarker(latitude.doubleValue(), longitude.doubleValue());
       mapRocketPath = updateMapPath(mapRocketPath, mapPathPoints, ORANGE);
 
-      updateLastKnownLocation((float)latitude.doubleValue(), (float)longitude.doubleValue());
+      setLastKnownLocation((float)latitude.doubleValue(), (float)longitude.doubleValue());
     }
   }
 
@@ -275,6 +275,12 @@ public class MapFragment extends LocationFragment implements
         dialog = new DownloadMapDialogFragment(this);
         dialog.show(getActivity().getSupportFragmentManager(), "DownloadMapDialog");
         return true;
+      case R.id.show_tracked_location_option_map:
+        showTrackedLocation();
+        return true;
+      case R.id.set_tracked_location_option:
+        setTrackedLocation();
+        return true;
     }
 
     return false;
@@ -286,16 +292,9 @@ public class MapFragment extends LocationFragment implements
     updateMapStyle();
   }
 
-  protected void showLastKnownLocation() {
-    Map<String, Double> lastKnownLocation = getLastKnownLocation();
-
-    if(lastKnownLocation == null) {
-      showNoLastKnownLocationToast();
-      return;
-    }
-
-    double latitude = lastKnownLocation.get("latitude").doubleValue();
-    double longitude = lastKnownLocation.get("longitude").doubleValue();
+  protected void showLocation(Map<String, Double> location) {
+    double latitude = location.get("latitude").doubleValue();
+    double longitude = location.get("longitude").doubleValue();
 
     updateCoordinatesLabel(String.format("%f, %f", latitude, longitude));
     updateMapCamera(latitude, longitude, DEFAULT_ZOOM);

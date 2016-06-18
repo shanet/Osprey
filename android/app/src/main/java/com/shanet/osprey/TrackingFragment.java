@@ -192,21 +192,20 @@ public class TrackingFragment extends LocationFragment implements SensorEventLis
       case R.id.show_last_known_location_option:
         showLastKnownLocation();
         return true;
+      case R.id.show_tracked_location_option_tracking:
+        showTrackedLocation();
+        return true;
+      case R.id.set_tracked_location_option:
+        setTrackedLocation();
+        return true;
     }
 
     return false;
   }
 
-  protected void showLastKnownLocation() {
-    Map<String, Double> lastKnownLocation = getLastKnownLocation();
-
-    if(lastKnownLocation == null) {
-      showNoLastKnownLocationToast();
-      return;
-    }
-
-    rocketLatitude = lastKnownLocation.get("latitude").doubleValue();
-    rocketLongitude = lastKnownLocation.get("longitude").doubleValue();
+  protected void showLocation(Map<String, Double> location) {
+    rocketLatitude = location.get("latitude").doubleValue();
+    rocketLongitude = location.get("longitude").doubleValue();
 
     updateDistance();
     updateRelativeBearing();

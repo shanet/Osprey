@@ -109,7 +109,7 @@ public class RawFragment extends DatasetFragment implements Runnable {
   private void openLog() {
     if(Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
       try {
-        File file = new File(getActivity().getExternalFilesDir(null), getString(R.string.log));
+        File file = new File(getActivity().getExternalFilesDir(null), getString(R.string.radio_log));
         log = new RandomAccessFile(file, "r");
       } catch(FileNotFoundException fnfe) {}
     }

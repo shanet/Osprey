@@ -2,7 +2,8 @@
 <resources>
   <string name="app_name">Osprey</string>
   <string name="mapbox_api_key">pk.eyJ1Ijoic2hhbmV0IiwiYSI6ImNpbXZnbnBhMjAydDl3a2x1ejNoNWoydHMifQ.WIi_Jv4TO3hOzj-E120rYg</string>
-  <string name="log">osprey.log</string>
+  <string name="radio_log">osprey.log</string>
+  <string name="exception_log">osprey_debug.log</string>
 
   <string name="last_known_latitude">last_known_latitude</string>
   <string name="last_known_longitude">last_known_longitude</string>

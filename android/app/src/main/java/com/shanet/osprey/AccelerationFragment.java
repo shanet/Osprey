@@ -52,7 +52,6 @@ public class AccelerationFragment extends GraphFragment {
     Integer delta = (Integer)dataset.getField("delta");
 
     updateDisplay(accelerationDisplay, acceleration, R.string.default_acceleration, 0, R.string.g);
-
     updateGraphDataset(accelerationDataset, acceleration.floatValue(), delta.intValue());
   }
 

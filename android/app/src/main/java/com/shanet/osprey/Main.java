@@ -23,7 +23,7 @@ import java.util.HashMap;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Main extends FragmentActivity {
+public class Main extends FragmentActivity implements Runnable {
   private static final int MAP_FRAGMENT = 0;
   private static final int TRACKING_FRAGMENT = 1;
   private static final int ALTITUDE_FRAGMENT = 2;
@@ -36,6 +36,7 @@ public class Main extends FragmentActivity {
   private int curFragment;
   private HashMap<Integer, DatasetFragment> fragments;
 
+  private Log log;
   private Radio radio;
   private Thread recvThread;
 
@@ -45,6 +46,9 @@ public class Main extends FragmentActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.main);
     curFragment = 0;
+
+    log = new Log(this, R.string.exception_log);
+    recvThread = new Thread(this);
 
     try {
       radio = new Radio(this);
@@ -72,7 +76,7 @@ public class Main extends FragmentActivity {
       radio.close();
     } catch(IOException err) {}
 
-    //finish();
+    log.close();
   }
 
   protected void onResume() {
@@ -88,23 +92,25 @@ public class Main extends FragmentActivity {
       return;
     }
 
-    recvThread = new Thread(new Runnable() {
-      public void run() {
-        while(true) {
-          try {
-            final String line = radio.readLine();
+    log.open();
 
-            runOnUiThread(new Runnable() {
-              public void run() {
-                updateReceivedData(line);
-              }
-            });
-          } catch(IOException err) {}
-        }
-      }
-    });
+    if(!recvThread.isAlive()) {
+      recvThread.start();
+    }
+  }
 
-    recvThread.start();
+  public void run() {
+    while(true) {
+      try {
+        final String line = radio.readLine();
+
+        runOnUiThread(new Runnable() {
+          public void run() {
+            updateReceivedData(line);
+          }
+        });
+      } catch(IOException err) {}
+    }
   }
 
   private void updateReceivedData(String line) {
@@ -115,7 +121,11 @@ public class Main extends FragmentActivity {
       for(DatasetFragment fragment : fragments.values()) {
         fragment.updateDataset(dataset);
       }
-    } catch(JSONException err) {}
+    } catch(JSONException err) {
+    } catch(Exception err) {
+      // We don't want to crash on malformed data so just log the exception for later inspection and continue
+      log.write(err);
+    }
   }
 
   public void write(String message) {

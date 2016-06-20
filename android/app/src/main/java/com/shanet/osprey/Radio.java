@@ -9,17 +9,12 @@ import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbDeviceConnection;
 import android.hardware.usb.UsbManager;
 
-import android.os.Environment;
-
 import com.hoho.android.usbserial.driver.UsbSerialDriver;
 import com.hoho.android.usbserial.driver.UsbSerialPort;
 import com.hoho.android.usbserial.driver.UsbSerialProber;
 import com.hoho.android.usbserial.util.SerialInputOutputManager;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.InputStreamReader;
 import java.io.IOException;
 import java.io.PipedInputStream;
@@ -36,7 +31,7 @@ public class Radio {
   private final ExecutorService executor;
 
   private BufferedReader reader;
-  private FileOutputStream log;
+  private Log log;
   private PipedInputStream input;
   private PipedOutputStream output;
 
@@ -54,6 +49,8 @@ public class Radio {
     port = null;
     executor = Executors.newSingleThreadExecutor();
     usbManager = (UsbManager)context.getSystemService(Context.USB_SERVICE);
+
+    log = new Log(context, R.string.radio_log);
   }
 
   public void open() throws Exceptions.NoUsbDriversException, Exceptions.UnableToOpenUsbDeviceException {
@@ -116,7 +113,7 @@ public class Radio {
 
   private void startIoManager() {
     if(port != null) {
-      openLog();
+      log.open();
 
       serialIoManager = new SerialInputOutputManager(port, listener);
       executor.submit(serialIoManager);
@@ -128,7 +125,7 @@ public class Radio {
       serialIoManager.stop();
       serialIoManager = null;
 
-      closeLog();
+      log.close();
     }
   }
 
@@ -136,38 +133,10 @@ public class Radio {
     public void onNewData(final byte[] data) {
       try {
         output.write(data);
-        logData(data);
+        log.write(data);
       } catch(IOException err) {}
     }
 
     public void onRunError(Exception err) {}
   };
-
-  private void openLog() {
-    if(Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
-      try {
-        File file = new File(context.getExternalFilesDir(null), context.getString(R.string.log));
-        log = new FileOutputStream(file, true);
-      } catch(FileNotFoundException fnfe) {}
-    }
-  }
-
-  private void closeLog() {
-    if(log == null) return;
-
-    try {
-      log.close();
-    } catch(IOException ioe) {
-    } finally {
-      log = null;
-    }
-  }
-
-  private void logData(byte[] data) {
-    if(log == null) return;
-
-    try {
-      log.write(data);
-    } catch(IOException ioe) {}
-  }
 }

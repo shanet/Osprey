@@ -158,7 +158,7 @@ void Event::fire(int eventNum) {
   event_t *event = &events[eventNum];
 
   digitalWrite(event->pin, HIGH);
-  delay(DURATION);
+  delay(FIRE_DURATION);
   digitalWrite(event->pin, LOW);
 
   event->fired = 1;
@@ -220,6 +220,10 @@ int Event::getPhase() {
 
 int Event::getApogeeCause() {
   return apogeeCause;
+}
+
+void Event::setApogeeCause(int cause) {
+  apogeeCause = cause;
 }
 
 void Event::arm() {

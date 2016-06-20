@@ -8,7 +8,7 @@
 #include "sensor.h"
 
 #define NUM_EVENTS 2
-#define DURATION 100 // ms
+#define FIRE_DURATION 100 // ms
 #define DEFAULT_MAIN_ALTITUDE 152.4f // m
 #define APOGEE -1
 
@@ -23,6 +23,7 @@
 #define APOGEE_CAUSE_COUNTDOWN 2
 #define APOGEE_CAUSE_SAFETY_COUNTDOWN 3
 #define APOGEE_CAUSE_FREE_FALL 4
+#define APOGEE_CAUSE_MANUAL 5
 
 // A crude approximation of the number of loop() cycles we go through in one second
 #define CYCLES_PER_SECOND 4
@@ -59,6 +60,7 @@ class Event : public virtual Sensor {
     int numEvents();
     int getPhase();
     int getApogeeCause();
+    void setApogeeCause(int cause);
     void arm();
     void disarm();
     int isArmed();

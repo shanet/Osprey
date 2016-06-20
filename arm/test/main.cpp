@@ -69,6 +69,7 @@ TEST_CASE("should firm apogee event when sent fire command") {
   REQUIRE(event.didFire(0) == 0);
   step();
   REQUIRE(event.didFire(0) == 1);
+  REQUIRE(event.getApogeeCause() == APOGEE_CAUSE_MANUAL);
   REQUIRE(commandStatus == COMMAND_ACK);
 }
 

@@ -137,7 +137,13 @@ int Osprey::fireEvent(char *arg) {
     return commandStatus;
   }
 
-  event.fire(*arg - '0');
+  int eventNum = *arg - '0';
+  event.fire(eventNum);
+
+  // If firing apogee, set the apogee cause to manual
+  if(eventNum == EVENT_APOGEE) {
+    event.setApogeeCause(APOGEE_CAUSE_MANUAL);
+  }
 
   commandStatus = COMMAND_ACK;
   return commandStatus;

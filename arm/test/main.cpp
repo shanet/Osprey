@@ -169,7 +169,7 @@ TEST_CASE("should sanitize GPS coordinates properly") {
 
   // Update to in-range coordinates
   step(1, 1);
-  REQUIRE(gps.getLatitude() == 50.5f);
+  REQUIRE(gps.getLatitude() == 50.0001f);
   REQUIRE(gps.getLongitude() == 100.0f);
 
   // Use seemingly invalid coordinates after we see them enough times

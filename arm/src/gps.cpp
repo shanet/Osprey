@@ -80,9 +80,10 @@ int GPS::validCoordinate(float previous, float next, int *outOfRange) {
     return 0;
   }
 
-  // Ignore anything > 1 degree from the previous coordinate as there's no way to move that fast
-  // except in the case of initially acquiring a location when the previous coordinate will be 0
-  if(previous != 0 && abs(next - previous) > 1) {
+  // Ignore anything greater than the out of range delta from the previous coordinate as there's
+  // no way to move that fast except in the case of initially acquiring a location when the
+  // previous coordinate will be 0
+  if(previous != 0 && abs(next - previous) > OUT_OF_RANGE_DELTA) {
     (*outOfRange)++;
     return 0;
   }

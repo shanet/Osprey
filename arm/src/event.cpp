@@ -115,14 +115,25 @@ void Event::phaseDrogue(float acceleration, float altitude) {
     if(event->altitude > 0 && altitude < event->altitude) {
       fire(i);
       phase = MAIN;
+
+      // Reset the previous altitude to the current altitude so the main phase function has current data to work with
+      previousAltitude = altitude;
     }
   }
 }
 
 void Event::phaseMain(float altitude) {
-  if(altitude < LANDED_ALTITUDE) {
+  // Increase the landed altitude in range counter for each time the altitude differs less than the set delta
+  if(abs(previousAltitude - altitude) < LANDED_ALTITUDE_DELTA) {
+    landedAltitudeInRange++;
+  }
+
+  // Once the altitude stops changing and is stable, go to landed
+  if(landedAltitudeInRange >= LANDED_ALTITUDE_LIMIT) {
     phase = LANDED;
   }
+
+  previousAltitude = altitude;
 }
 
 void Event::phaseLanded() {
@@ -246,6 +257,7 @@ void Event::reset() {
   previousAltitude = 0;
   pendingApogee = 0;
   apogeeCause = APOGEE_CAUSE_NONE;
+  landedAltitudeInRange = 0;
 
   apogeeCountdown = APOGEE_COUNTDOWN * CYCLES_PER_SECOND;
   safetyApogeeCountdown = SAFETY_APOGEE_COUNTDOWN * CYCLES_PER_SECOND;

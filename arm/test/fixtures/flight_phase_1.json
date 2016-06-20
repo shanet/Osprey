@@ -27,4 +27,4 @@
 {"acceleration": 1.0, "pressure_altitude": 250, "expected_phase": 4}
 
 // Landed
-{"acceleration": 1.0, "pressure_altitude": 109, "expected_phase": 5}
+{"acceleration": 1.0, "pressure_altitude": 200, "expected_phase": 5}

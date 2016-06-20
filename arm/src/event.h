@@ -34,7 +34,8 @@
 #define COAST_ACCELERATION 0.75 // g
 #define APOGEE_IDEAL 0.25 // g
 #define APOGEE_OKAY 0.5 // g
-#define LANDED_ALTITUDE 10 // meters
+#define LANDED_ALTITUDE_DELTA 1.5 // meters
+#define LANDED_ALTITUDE_LIMIT 5
 
 typedef struct event_t {
   int pin;
@@ -92,6 +93,7 @@ class Event : public virtual Sensor {
     int pendingApogee;
     int apogeeCause;
     float previousAltitude;
+    int landedAltitudeInRange;
 };
 
 #endif

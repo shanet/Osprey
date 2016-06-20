@@ -128,11 +128,13 @@ void Event::phaseMain(float altitude) {
 void Event::phaseLanded() {
   // Flush the log so that all data is written to disk in case the end
   // flight command is not sent and the log file isn't cleanly closed
-  static int flushed = 0;
+  static int landed = 0;
 
-  if(flushed == 0) {
+  if(landed == 0) {
     radio.flushLog();
-    flushed = 1;
+    radio.disableLogging();
+    radio.enableLogging();
+    landed = 1;
   }
 }
 

@@ -3,6 +3,7 @@
 
 #include "accelerometer.h"
 #include "barometer.h"
+#include "clock.h"
 #include "constants.h"
 #include "radio.h"
 #include "sensor.h"
@@ -25,9 +26,6 @@
 #define APOGEE_CAUSE_FREE_FALL 4
 #define APOGEE_CAUSE_MANUAL 5
 
-// A crude approximation of the number of loop() cycles we go through in one second
-#define CYCLES_PER_SECOND 4
-
 #define APOGEE_COUNTDOWN 3 // seconds
 #define SAFETY_APOGEE_COUNTDOWN 15 // seconds
 #define BOOST_ACCELERATION 1.25 // g
@@ -46,6 +44,7 @@ typedef struct event_t {
 namespace Osprey {
   extern Accelerometer accelerometer;
   extern Barometer barometer;
+  extern Osprey::Clock clock;
   extern Radio radio;
 }
 
@@ -76,7 +75,6 @@ class Event : public virtual Sensor {
     void phaseLanded();
     void atApogee(int apogeeCause);
 
-    void updateApogeeCountdowns();
     int checkApogeeCountdowns();
     void disableApogeeCountdowns();
 
@@ -84,11 +82,8 @@ class Event : public virtual Sensor {
     int phase;
     event_t events[NUM_EVENTS];
 
-    int apogeeCountdown;
-    int safetyApogeeCountdown;
-
-    int apogeeCountdownRunning;
-    int safetyApogeeCountdownRunning;
+    int apogeeCountdownStart;
+    int safetyApogeeCountdownStart;
 
     int pendingApogee;
     int apogeeCause;

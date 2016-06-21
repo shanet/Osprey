@@ -13,6 +13,7 @@ field_t Stub::fields[] = {
   {"expected_apogee_cause", FIELD_INT},
   {"latitude", FIELD_FLOAT},
   {"longitude", FIELD_FLOAT},
+  {"delta", FIELD_INT},
 };
 
 int Stub::open(const char *input) {

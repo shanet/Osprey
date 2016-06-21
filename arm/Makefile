@@ -166,5 +166,5 @@ test:
 	make -f Makefile.test
 	make -f Makefile.test run
 
-run_test:
+test_run:
 	make -f Makefile.test run

@@ -184,8 +184,8 @@ TEST_CASE("should sanitize GPS coordinates properly") {
   REQUIRE(gps.getLongitude() == -100.0f);
 }
 
-/*TEST_CASE("sample flight") {
-  setupTestForFixture((char*)"test/fixtures/sample.json");
+/*TEST_CASE("replay flight") {
+  setupTestForFixture((char*)"test/fixtures/replay.json");
 
   Serial1.insert("4\n");
   while(step(1, 1));

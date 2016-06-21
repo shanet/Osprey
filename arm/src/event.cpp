@@ -45,6 +45,8 @@ void Event::check() {
     default:
       break;
   }
+
+  previousAltitude = altitude;
 }
 
 void Event::phasePad(float acceleration) {
@@ -68,34 +70,31 @@ void Event::phaseBoost(float acceleration) {
 }
 
 void Event::phaseCoast(float acceleration, float altitude) {
-  updateApogeeCountdowns();
-
   // If apogee is pending, as soon as the altitude decreases, fire it
   if(pendingApogee) {
     if(previousAltitude > altitude) {
       atApogee(APOGEE_CAUSE_ALTITUDE);
-    } else {
-      previousAltitude = altitude;
     }
   }
 
   // If the apogee countdown is finished, fire it
-  if(checkApogeeCountdowns()) {
-    atApogee((apogeeCountdown <= 0 ? APOGEE_CAUSE_COUNTDOWN : APOGEE_CAUSE_SAFETY_COUNTDOWN));
+  int apogeeCountdownCheck = checkApogeeCountdowns();
+  if(apogeeCountdownCheck > 0) {
+    atApogee(apogeeCountdownCheck);
     return;
   }
 
   // Anything less than .25g means we're basically at apogee, but should start paying attention to altitude to get as close as possible
   if(acceleration < APOGEE_IDEAL) {
     pendingApogee = 1;
-    apogeeCountdownRunning = 1;
+    apogeeCountdownStart = Osprey::clock.getSeconds();
     return;
   }
 
   // Anything less than .5g is /probably/ apogee, but wait to see if we
   // can get closer and if not, the timer will expire causing an apogee event
   if(acceleration < APOGEE_OKAY) {
-    safetyApogeeCountdownRunning = 1;
+    safetyApogeeCountdownStart = Osprey::clock.getSeconds();
     return;
   }
 
@@ -115,9 +114,6 @@ void Event::phaseDrogue(float acceleration, float altitude) {
     if(event->altitude > 0 && altitude < event->altitude) {
       fire(i);
       phase = MAIN;
-
-      // Reset the previous altitude to the current altitude so the main phase function has current data to work with
-      previousAltitude = altitude;
     }
   }
 }
@@ -177,34 +173,23 @@ void Event::fire(int eventNum) {
   event->fired = 1;
 }
 
-void Event::updateApogeeCountdowns() {
-  // Decrement the countdowns if running
-  if(safetyApogeeCountdownRunning) {
-    safetyApogeeCountdown--;
-  }
-
-  if(apogeeCountdownRunning) {
-    apogeeCountdown--;
-  }
-}
-
 int Event::checkApogeeCountdowns() {
   // If the apogee countdown is finished, fire it
-  if(apogeeCountdownRunning && apogeeCountdown <= 0) {
-    return 1;
+  if(apogeeCountdownStart > 0 && abs(apogeeCountdownStart - Osprey::clock.getSeconds()) >= APOGEE_COUNTDOWN) {
+    return APOGEE_CAUSE_COUNTDOWN;
   }
 
   // If the safety apogee countdown is finished, fire it
-  if(safetyApogeeCountdownRunning && safetyApogeeCountdown <= 0) {
-    return 1;
+  if(safetyApogeeCountdownStart > 0 && abs(safetyApogeeCountdownStart - Osprey::clock.getSeconds()) >= SAFETY_APOGEE_COUNTDOWN) {
+    return APOGEE_CAUSE_SAFETY_COUNTDOWN;
   }
 
   return 0;
 }
 
 void Event::disableApogeeCountdowns() {
-  apogeeCountdownRunning = 0;
-  safetyApogeeCountdownRunning = 0;
+  apogeeCountdownStart = 0;
+  safetyApogeeCountdownStart = 0;
   pendingApogee = 0;
 }
 
@@ -259,11 +244,8 @@ void Event::reset() {
   apogeeCause = APOGEE_CAUSE_NONE;
   landedAltitudeInRange = 0;
 
-  apogeeCountdown = APOGEE_COUNTDOWN * CYCLES_PER_SECOND;
-  safetyApogeeCountdown = SAFETY_APOGEE_COUNTDOWN * CYCLES_PER_SECOND;
-
-  apogeeCountdownRunning = 0;
-  safetyApogeeCountdownRunning = 0;
+  apogeeCountdownStart = 0;
+  safetyApogeeCountdownStart = 0;
 
   for(int i=0; i<numEvents(); i++) {
     events[i].fired = 0;

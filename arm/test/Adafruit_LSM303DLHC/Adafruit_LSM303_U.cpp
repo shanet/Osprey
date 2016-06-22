@@ -7,7 +7,7 @@ bool Adafruit_LSM303_Accel_Unified::begin(void) {
 }
 
 bool Adafruit_LSM303_Accel_Unified::getEvent(sensors_event_t* event) {
-  event->acceleration.x = getField("acceleration").floatVal / MS2_TO_G;
+  event->acceleration.x = getField("raw_acceleration").floatVal / MS2_TO_G;
   event->acceleration.y = 0;
   event->acceleration.z = 0;
 

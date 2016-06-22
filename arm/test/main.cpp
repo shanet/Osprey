@@ -184,12 +184,23 @@ TEST_CASE("should sanitize GPS coordinates properly") {
   REQUIRE(gps.getLongitude() == -100.0f);
 }
 
-/*TEST_CASE("replay flight") {
-  setupTestForFixture((char*)"test/fixtures/replay.json");
+TEST_CASE("replay flight") {
+  char *path = (char*)"test/fixtures/replay.json";
+
+  // Don't do anything if the log doesn't exist
+  if(access(path, R_OK) == -1) {
+    return;
+  }
+
+  setupTestForFixture(path);
 
   Serial1.insert("4\n");
+
+  // Enable echo so the output is printed to stdout
+  Serial1.enableEcho();
   while(step(1, 1));
-}*/
+  Serial1.disableEcho();
+}
 
 void setupTestForFixture(char *fixture) {
   if(!stub.open(fixture)) {

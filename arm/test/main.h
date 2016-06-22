@@ -1,7 +1,8 @@
+#include <catch/single_include/catch.hpp>
 #include <errno.h>
 #include <stdio.h>
 #include <string.h>
-#include <catch/single_include/catch.hpp>
+#include <unistd.h>
 
 #include "event.h"
 #include "gps.h"
@@ -22,8 +23,6 @@ namespace Osprey {
 
   extern int commandStatus;
 }
-
-using namespace Osprey;
 
 extern void setup(void);
 extern void loop(void);

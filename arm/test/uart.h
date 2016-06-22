@@ -24,10 +24,13 @@ class Uart : public HardwareSerial {
     char read();
     void insert(const char *buffer);
     void IrqHandler();
+    void enableEcho();
+    void disableEcho();
   private:
     char buffer[BUFFER];
     int bufferReadPosition;
     int bufferWritePosition;
+    int echo;
 };
 
 extern SERCOM sercom1;

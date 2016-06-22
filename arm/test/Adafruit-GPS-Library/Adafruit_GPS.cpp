@@ -21,8 +21,7 @@ char Adafruit_GPS::read() {
 }
 
 bool Adafruit_GPS::parse(char *message) {
-  //std::string iso8601 = getField("iso8601").;
-  //sscanf(iso8601.c_str(), "%hhu-%hhu-%hhuT%hhu:%hhu:%hhu.%huZ", &year, &month, &day, &hour, &minute, &seconds, &milliseconds);
+  sscanf("2000-01-01T00:00:00.00Z", "20%hhu-%hhu-%hhuT%hhu:%hhu:%hhu.%huZ", &year, &month, &day, &hour, &minute, &seconds, &milliseconds);
 
   latitudeDegrees = getField("latitude").floatVal;
   longitudeDegrees = getField("longitude").floatVal;

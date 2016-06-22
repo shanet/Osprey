@@ -6,15 +6,16 @@ Uart Serial1;
 Uart::Uart() {
   bufferReadPosition = 0;
   bufferWritePosition = 0;
+  echo = 0;
 }
 
 Uart::Uart(SERCOM *sercom, int a, int b, int c, int d) {}
 void Uart::begin(int pin) {}
 
 void Uart::write(char c) {
-  #ifdef UART_WRITE
+  if(echo == 1) {
     putchar(c);
-  #endif
+  }
 }
 
 int Uart::available() {
@@ -44,3 +45,11 @@ void Uart::insert(const char *buffer) {
 }
 
 void Uart::IrqHandler() {}
+
+void Uart::enableEcho() {
+  echo = 1;
+}
+
+void Uart::disableEcho() {
+  echo = 0;
+}

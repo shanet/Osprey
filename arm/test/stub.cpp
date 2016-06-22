@@ -7,13 +7,13 @@ FILE* Stub::file;
 map Stub::current;
 
 field_t Stub::fields[] = {
-  {"acceleration", FIELD_FLOAT},
-  {"pressure_altitude", FIELD_FLOAT},
-  {"expected_phase", FIELD_INT},
+  {"delta", FIELD_INT},
   {"expected_apogee_cause", FIELD_INT},
+  {"expected_phase", FIELD_INT},
   {"latitude", FIELD_FLOAT},
   {"longitude", FIELD_FLOAT},
-  {"delta", FIELD_INT},
+  {"pressure_altitude", FIELD_FLOAT},
+  {"raw_acceleration", FIELD_FLOAT},
 };
 
 int Stub::open(const char *input) {

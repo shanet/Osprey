@@ -57,7 +57,7 @@ void Barometer::zero() {
 }
 
 float Barometer::getPressureAltitude(float setting, float pressure, float temperature) {
-  // Convert atmospheric pressure, SLP and temp to altitude
+  // Convert atmospheric pressure, SLP, and temp to altitude
   return barometer.pressureToAltitude(setting, pressure, temperature);
 }
 

@@ -26,12 +26,13 @@
 #define APOGEE_CAUSE_FREE_FALL 4
 #define APOGEE_CAUSE_MANUAL 5
 
-#define APOGEE_COUNTDOWN 3 // seconds
-#define SAFETY_APOGEE_COUNTDOWN 15 // seconds
+#define APOGEE_COUNTDOWN 6 // seconds
+#define SAFETY_APOGEE_COUNTDOWN 12 // seconds
 #define BOOST_ACCELERATION 1.25 // g
 #define COAST_ACCELERATION 0.75 // g
-#define APOGEE_IDEAL 0.25 // g
-#define APOGEE_OKAY 0.5 // g
+#define APOGEE_IDEAL 0.15 // g
+#define APOGEE_OKAY 0.3 // g
+#define APOGEE_ALTITUDE_DELTA 1 // meters
 #define LANDED_ALTITUDE_DELTA 1.5 // meters
 #define LANDED_ALTITUDE_LIMIT 5
 

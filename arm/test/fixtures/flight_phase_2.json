@@ -1,28 +1,28 @@
 // Pad
-{"acceleration": 1.0, "pressure_altitude": 100, "expected_phase": 0, "delta": 0, "expected_apogee_cause": 2}
+{"raw_acceleration": 1.0, "pressure_altitude": 100, "expected_phase": 0, "delta": 0, "expected_apogee_cause": 2}
 
 // Boost
-{"acceleration": 2.5, "pressure_altitude": 1000, "expected_phase": 1, "delta": 1}
-{"acceleration": 2.0, "pressure_altitude": 1000, "expected_phase": 1, "delta": 2}
-{"acceleration": 1.5, "pressure_altitude": 1000, "expected_phase": 1, "delta": 3}
-{"acceleration": 1.0, "pressure_altitude": 1000, "expected_phase": 1, "delta": 4}
-{"acceleration": 0.75, "pressure_altitude": 1000, "expected_phase": 1, "delta": 5}
+{"raw_acceleration": 2.5, "pressure_altitude": 1000, "expected_phase": 1, "delta": 1}
+{"raw_acceleration": 2.0, "pressure_altitude": 1000, "expected_phase": 1, "delta": 2}
+{"raw_acceleration": 1.5, "pressure_altitude": 1000, "expected_phase": 1, "delta": 3}
+{"raw_acceleration": 1.0, "pressure_altitude": 1000, "expected_phase": 1, "delta": 4}
+{"raw_acceleration": 0.75, "pressure_altitude": 1000, "expected_phase": 1, "delta": 5}
 
 // Coast
-{"acceleration": 0.74, "pressure_altitude": 2000, "expected_phase": 2, "delta": 6}
+{"raw_acceleration": 0.74, "pressure_altitude": 2000, "expected_phase": 2, "delta": 6}
 
 // Apogee (okay -- starts safety countdown)
-{"acceleration": 0.4, "pressure_altitude": 2100, "expected_phase": 2, "delta": 7}
+{"raw_acceleration": 0.25, "pressure_altitude": 2100, "expected_phase": 2, "delta": 7}
 
 // Apogee (ideal -- with countdown expiration)
-{"acceleration": 0.2, "pressure_altitude": 2200, "expected_phase": 2, "delta": 8}
-{"acceleration": 0.2, "pressure_altitude": 2200, "expected_phase": 3, "delta": 11}
+{"raw_acceleration": 0.1, "pressure_altitude": 2200, "expected_phase": 2, "delta": 8}
+{"raw_acceleration": 0.1, "pressure_altitude": 2200, "expected_phase": 3, "delta": 14}
 
 // Drogue
-{"acceleration": 1.0, "pressure_altitude": 1000, "expected_phase": 3, "delta": 12}
+{"raw_acceleration": 1.0, "pressure_altitude": 1000, "expected_phase": 3, "delta": 15}
 
 // Main
-{"acceleration": 1.0, "pressure_altitude": 250, "expected_phase": 4, "delta": 13}
+{"raw_acceleration": 1.0, "pressure_altitude": 250, "expected_phase": 4, "delta": 16}
 
 // Landed
-{"acceleration": 1.0, "pressure_altitude": 109, "expected_phase": 5, "delta": 14}
+{"raw_acceleration": 1.0, "pressure_altitude": 109, "expected_phase": 5, "delta": 17}

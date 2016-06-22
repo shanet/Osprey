@@ -72,7 +72,7 @@ void Event::phaseBoost(float acceleration) {
 void Event::phaseCoast(float acceleration, float altitude) {
   // If apogee is pending, as soon as the altitude decreases, fire it
   if(pendingApogee) {
-    if(previousAltitude > altitude) {
+    if(previousAltitude - altitude > APOGEE_ALTITUDE_DELTA) {
       atApogee(APOGEE_CAUSE_ALTITUDE);
     }
   }
@@ -84,17 +84,22 @@ void Event::phaseCoast(float acceleration, float altitude) {
     return;
   }
 
-  // Anything less than .25g means we're basically at apogee, but should start paying attention to altitude to get as close as possible
+  // Anything less than the ideal acceleration means we're basically at apogee, but should start paying attention to altitude to get as close as possible
   if(acceleration < APOGEE_IDEAL) {
     pendingApogee = 1;
-    apogeeCountdownStart = Osprey::clock.getSeconds();
+
+    // Only start the countdown if it's not already started
+    if(apogeeCountdownStart == 0) apogeeCountdownStart = Osprey::clock.getSeconds();
+
     return;
   }
 
-  // Anything less than .5g is /probably/ apogee, but wait to see if we
+  // Anything less than okay acceleration is /probably/ apogee, but wait to see if we
   // can get closer and if not, the timer will expire causing an apogee event
   if(acceleration < APOGEE_OKAY) {
-    safetyApogeeCountdownStart = Osprey::clock.getSeconds();
+    // Only start the countdown if it's not already started
+    if(safetyApogeeCountdownStart == 0) safetyApogeeCountdownStart = Osprey::clock.getSeconds();
+
     return;
   }
 

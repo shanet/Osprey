@@ -9,7 +9,7 @@ class Launch
   MAIN = 4
   LANDED = 5
 
-  APOGEE_CAUSES = ['No apogee detected', 'Altitude', 'Countdown', 'Safety countdown', 'Free fall']
+  APOGEE_CAUSES = ['No apogee detected', 'Altitude', 'Countdown', 'Safety countdown', 'Free fall', 'Manual']
 
   attr_accessor :title
 
@@ -96,6 +96,8 @@ private
         next
       end
     end
+
+    return nil
   end
 
   def apogee

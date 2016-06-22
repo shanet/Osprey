@@ -9,9 +9,11 @@ def main
   case ARGV.count
     when 0
       puts('No input log file specified')
+      help
       exit
     when 1
       puts('No output directory specified')
+      help
       exit
   end
 
@@ -27,7 +29,7 @@ def main
 end
 
 def help
-  # TODO
+  puts 'Usage: %s [input log] [output directory]' % $PROGRAM_NAME
 end
 
-main()
+main

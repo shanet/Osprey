@@ -1,6 +1,5 @@
 require 'json'
 
-EPSILON = 5
 BUFFER = 10
 
 class Log
@@ -33,25 +32,30 @@ private
   def find_launches
     @launches = []
 
-    start_index = -1
-    end_index = -1
+    start_index = 0;
+    end_index = 0
 
-    # Find each launch in the log by looking for altitude increases
-    @points.each_with_index do |point, index|
-      # If the altitude is greater than the epsilon value, we found a new launch
-      if start_index == -1 && point[:agl] > EPSILON
-        start_index = (index - BUFFER > 0 ? index - BUFFER : index)
-      elsif start_index != -1 && point[:agl] < EPSILON
-        # If we're already in a launch and the altitude is less than the epsilon value again, we're at the end
-        # TODO: This assumes the landing altitude is very similar to the launch altitude
+    while start_index
+      # Find the first point in the boost phase
+      start_index = @points[start_index..-1].index {|point| point[:phase] == Launch::BOOST}
+      next unless start_index
 
-        end_index = (index + BUFFER < @points.count ? index + BUFFER : index)
+      # Find the first point in the landed phase
+      end_index = @points[start_index..-1].index {|point| point[:phase] == Launch::LANDED}
 
-        points_in_launch = @points.slice start_index, end_index - start_index
-        @launches << Launch.new(points_in_launch, @output_path)
+      # If an end index wasn't found, go to the end of the list
+      end_index = @points.count-1 unless end_index
 
-        start_index = -1
-      end
+      # Adjust the indicies to add some buffer data points
+      start_index = (start_index - BUFFER >= 0 ? start_index - BUFFER : start_index-1)
+      end_index = (end_index + BUFFER < @points.count ? end_index + BUFFER : @points.count-1)
+
+      # Create a new launch for the found indicies
+      points_in_launch = @points.slice start_index, end_index - start_index
+      @launches << Launch.new(points_in_launch, @output_path)
+
+      # Move to the next pad phase
+      start_index = @points[end_index..-1].index {|point| point[:phase] == Launch::PAD}
     end
   end
 end

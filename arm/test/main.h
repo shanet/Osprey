@@ -6,6 +6,7 @@
 
 #include "event.h"
 #include "gps.h"
+#include "radio.h"
 #include "stub.h"
 
 #define STABILIZE_ITERATIONS 5
@@ -32,3 +33,5 @@ void setupTestForFixture(char *fixture);
 
 int step(size_t steps=1, size_t iterations=STABILIZE_ITERATIONS);
 void stabilize(size_t iterations=STABILIZE_ITERATIONS);
+void sendCommand(int command);
+void sendCommand(int command, char *args);

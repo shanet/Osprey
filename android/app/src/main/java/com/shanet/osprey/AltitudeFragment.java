@@ -157,7 +157,7 @@ public class AltitudeFragment extends GraphFragment implements NumberInputDialog
 
   public void onNumberReceived(double number, int which) {
     // Once the pressure setting is retrived from the user, send the set pressure command
-    sendCommand(String.format("1%s", Double.toString(number)));
+    sendCommand(String.format("%d%s", getInteger(R.integer.command_set_pressure), Double.toString(number)));
   }
   // ---------------------------------------------------------------------------------------------------
 }

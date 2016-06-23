@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <integer name="command_zero_sensors">0</integer>
+  <integer name="command_set_pressure">1</integer>
+  <integer name="command_enable_logging">2</integer>
+  <integer name="command_disable_logging">3</integer>
+  <integer name="command_start_flight">4</integer>
+  <integer name="command_end_flight">5</integer>
+  <integer name="command_set_event">6</integer>
+  <integer name="command_fire_event">7</integer>
+  <integer name="command_arm_igniter">8</integer>
+  <integer name="command_disarm_igniter">9</integer>
+</resources>

@@ -26,7 +26,7 @@ TEST_CASE("should have correct flight phases with free fall apogee event") {
 
 void testFlightPhases() {
   // Start flight command
-  Serial1.insert("4\n");
+  sendCommand(COMMAND_START_FLIGHT);
 
   while(stub.read()) {
     stabilize();
@@ -40,7 +40,7 @@ TEST_CASE("should arm igniter when sent arm igniter command") {
   setup();
 
   // Send the arm igniter command
-  Serial1.insert("8\n");
+  sendCommand(COMMAND_ARM_IGNITER);
 
   REQUIRE(event.isArmed() == 0);
   step();
@@ -53,7 +53,7 @@ TEST_CASE("should disarm igniter when sent disarm igniter command") {
   event.arm();
 
   // Send the disarm igniter command
-  Serial1.insert("9\n");
+  sendCommand(COMMAND_DISARM_IGNITER);
 
   REQUIRE(event.isArmed() == 1);
   step();
@@ -64,7 +64,7 @@ TEST_CASE("should disarm igniter when sent disarm igniter command") {
 TEST_CASE("should firm apogee event when sent fire command") {
   setup();
   event.arm();
-  Serial1.insert("70\n");
+  sendCommand(COMMAND_FIRE_EVENT, (char*)"0");
 
   REQUIRE(event.didFire(0) == 0);
   step();
@@ -76,7 +76,7 @@ TEST_CASE("should firm apogee event when sent fire command") {
 TEST_CASE("should fire main event when sent fire command") {
   setup();
   event.arm();
-  Serial1.insert("71\n");
+  sendCommand(COMMAND_FIRE_EVENT, (char*)"1");
 
   REQUIRE(event.didFire(1) == 0);
   step();
@@ -86,7 +86,7 @@ TEST_CASE("should fire main event when sent fire command") {
 
 TEST_CASE("should not fire apogee when disarmed and sent fire command") {
   setup();
-  Serial1.insert("70\n");
+  sendCommand(COMMAND_FIRE_EVENT, (char*)"0");
 
   REQUIRE(event.didFire(0) == 0);
   step();
@@ -96,7 +96,7 @@ TEST_CASE("should not fire apogee when disarmed and sent fire command") {
 
 TEST_CASE("should set event altitude when sent set event command") {
   setup();
-  Serial1.insert("61100\n");
+  sendCommand(COMMAND_SET_EVENT, (char*)"1100");
 
   REQUIRE(event.getAltitude(1) == DEFAULT_MAIN_ALTITUDE);
   step();
@@ -106,7 +106,7 @@ TEST_CASE("should set event altitude when sent set event command") {
 
 TEST_CASE("should arm igniter, enable logging, and zero sensors when sent start flight command") {
   setup();
-  Serial1.insert("4\n");
+  sendCommand(COMMAND_START_FLIGHT);
 
   REQUIRE(event.isArmed() == 0);
   REQUIRE(radio.isLogging() == 0);
@@ -124,10 +124,10 @@ TEST_CASE("should disarm igniter and disable logging when sent end flight comman
   setup();
 
   // Start the flight before ending it
-  Serial1.insert("4\n");
+  sendCommand(COMMAND_START_FLIGHT);
   step();
 
-  Serial1.insert("5\n");
+  sendCommand(COMMAND_END_FLIGHT);
 
   REQUIRE(event.isArmed() == 1);
   REQUIRE(radio.isLogging() == 1);
@@ -142,7 +142,7 @@ TEST_CASE("should disarm igniter and disable logging when sent end flight comman
 TEST_CASE("should set pressure when sent set pressure command") {
   setup();
 
-  Serial1.insert("142.37\n");
+  sendCommand(COMMAND_SET_PRESSURE, (char*)"42.37");
 
   REQUIRE(barometer.getPressureSetting() == DEFAULT_PRESSURE_SETTING);
   step();
@@ -194,7 +194,7 @@ TEST_CASE("replay flight") {
 
   setupTestForFixture(path);
 
-  Serial1.insert("4\n");
+  sendCommand(COMMAND_START_FLIGHT);
 
   // Enable echo so the output is printed to stdout
   Serial1.enableEcho();
@@ -233,4 +233,15 @@ void stabilize(size_t iterations) {
   for(unsigned int i=0; i<iterations; i++) {
     loop();
   }
+}
+
+void sendCommand(int command) {
+  sendCommand(command, (char*)"");
+}
+
+void sendCommand(int command, char *args) {
+  char full_command[RADIO_MAX_LINE_LENGTH];
+  sprintf(full_command, "%d%s\n", command, args);
+
+  Serial1.insert(full_command);
 }

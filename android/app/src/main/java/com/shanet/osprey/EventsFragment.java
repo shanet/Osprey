@@ -122,11 +122,11 @@ public class EventsFragment extends DatasetFragment implements ConfirmDialogFrag
   };
 
   public void onConfirmation(int which) {
-    sendCommand(String.format("7%d", which));
+    sendCommand(String.format("%d%d", getInteger(R.integer.command_fire_event), which));
   }
 
   private void showNotArmedToast() {
-    if(armed.intValue() != 1) {
+    if(armed == null || armed.intValue() != 1) {
       Toast.makeText(getActivity(), R.string.not_armed, Toast.LENGTH_SHORT).show();
     }
   }
@@ -141,10 +141,10 @@ public class EventsFragment extends DatasetFragment implements ConfirmDialogFrag
   public boolean onOptionsItemSelected(MenuItem item) {
     switch(item.getItemId()) {
       case R.id.arm_igniter_option:
-        sendCommand("8");
+        sendCommand(R.integer.command_arm_igniter);
         return true;
       case R.id.disarm_igniter_option:
-        sendCommand("9");
+        sendCommand(R.integer.command_disarm_igniter);
         return true;
       case R.id.set_main_altitude_option:
         // Show a dialog to get a new altitude from the user
@@ -157,7 +157,7 @@ public class EventsFragment extends DatasetFragment implements ConfirmDialogFrag
   }
 
   public void onNumberReceived(double number, int which) {
-    sendCommand(String.format("6%d%d", which, ftToM((int)number)));
+    sendCommand(String.format("%d%d%d", getInteger(R.integer.command_set_event), which, ftToM((int)number)));
   }
   // ---------------------------------------------------------------------------------------------------
 }

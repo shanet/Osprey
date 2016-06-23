@@ -66,7 +66,7 @@ public class StatusFragment extends DatasetFragment {
   // ---------------------------------------------------------------------------------------------------
   private View.OnClickListener startFlight = new View.OnClickListener() {
     public void onClick(View view) {
-      sendCommand("4");
+      sendCommand(R.integer.command_start_flight);
 
       // Clear the graphs for the new flight
       ((Main)getActivity()).clearGraphs();
@@ -75,7 +75,7 @@ public class StatusFragment extends DatasetFragment {
 
   private View.OnClickListener endFlight = new View.OnClickListener() {
     public void onClick(View view) {
-      sendCommand("5");
+      sendCommand(R.integer.command_end_flight);
     }
   };
   // ---------------------------------------------------------------------------------------------------
@@ -89,13 +89,13 @@ public class StatusFragment extends DatasetFragment {
   public boolean onOptionsItemSelected(MenuItem item) {
     switch(item.getItemId()) {
       case R.id.zero_sensors_option:
-        sendCommand("0");
+        sendCommand(R.integer.command_zero_sensors);
         return true;
       case R.id.enable_logging_option:
-        sendCommand("2");
+        sendCommand(R.integer.command_enable_logging);
         return true;
       case R.id.disable_logging_option:
-        sendCommand("3");
+        sendCommand(R.integer.command_disable_logging);
         return true;
     }
 

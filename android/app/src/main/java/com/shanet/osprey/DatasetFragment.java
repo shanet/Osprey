@@ -41,6 +41,10 @@ public abstract class DatasetFragment extends Fragment {
     textView.setText(text);
   }
 
+  protected void sendCommand(int command) {
+    sendCommand(Integer.toString(getInteger(command)));
+  }
+
   protected void sendCommand(String command) {
     ((Main)getActivity()).write(command + "\n");
   }
@@ -55,5 +59,9 @@ public abstract class DatasetFragment extends Fragment {
 
   protected Integer mToFt(Integer meters) {
     return new Integer(mToFt(meters.intValue()));
+  }
+
+  protected int getInteger(int id) {
+    return getActivity().getResources().getInteger(id);
   }
 }

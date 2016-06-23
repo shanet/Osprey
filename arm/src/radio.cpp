@@ -123,22 +123,10 @@ void Radio::flushLog() {
 }
 
 void Radio::floatToString(float num, int precision, char *buffer) {
-  // Get the whole part of the number
-  int characteristic = num;
-
-  // Subtract the whole part leaving only the fractional part
-  num -= characteristic;
-
-  // If negative, make positive
-  if(num < 0) {
-    num = -num;
-  }
-
-  // Move the decimal place by the amount of precision specified
-  int mantissa = num * pow(10, precision);
-
-  // Combine the characteristic and mantissa in a string
-  sprintf(buffer, "%d.%d", characteristic, mantissa);
+  // Modified from https://raw.githubusercontent.com/arduino/Arduino/master/hardware/arduino/sam/cores/arduino/avr/dtostrf.c
+  char format[20];
+  sprintf(format, "%%%d.%df", 3, precision);
+  sprintf(buffer, format, num);
 }
 
 char* Radio::getMostRecentMessage() {

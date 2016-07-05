@@ -31,9 +31,7 @@ private
 
   def find_launches
     @launches = []
-
-    start_index = 0;
-    end_index = 0
+    start_index = 0
 
     while start_index
       # Find the first point in the boost phase
@@ -43,8 +41,13 @@ private
       # Find the first point in the landed phase
       end_index = @points[start_index..-1].index {|point| point[:phase] == Launch::LANDED}
 
-      # If an end index wasn't found, go to the end of the list
-      end_index = @points.count-1 unless end_index
+      # If an end index wasn't found, go to the end of the list. Otherwise, add the start
+      # index to the to the end index so it is not longer relative to the start index
+      if !end_index
+        end_index = @points.count-1 unless end_index
+      else
+        end_index += start_index
+      end
 
       # Adjust the indicies to add some buffer data points
       start_index = (start_index - BUFFER >= 0 ? start_index - BUFFER : start_index-1)

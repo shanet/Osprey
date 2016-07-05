@@ -15,7 +15,7 @@ class Launch
 
   def initialize(points, output_path)
     @points = points
-    @output_path = '%s/launch_report_%s' % [output_path, '']#Time.now] # TODO: use the time in the putput path
+    @output_path = '%s/launch_report_%s' % [output_path, first_valid_timestamp.iso8601]
   end
 
   def render

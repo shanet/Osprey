@@ -48,3 +48,22 @@ h4 {
   color: #000;
   text-shadow: none;
 }
+
+input[type="checkbox"] {
+  display: none;
+}
+
+input[type="checkbox"] + label {
+  background-image: url('../images/unchecked.png');
+  background-repeat: no-repeat;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 12px;
+  height: 30px;
+  line-height: 25px;
+  padding-left: 35px;
+}
+
+input[type="checkbox"]:checked + label {
+  background-image: url('../images/checked.png');
+}

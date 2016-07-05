@@ -52,7 +52,7 @@ function initChart() {
 }
 
 function initCheckboxes() {
-  var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+  var checkboxes = document.getElementById('chart_controls').querySelectorAll('input[type="checkbox"]');
 
   for(var i=0; i<checkboxes.length; i++) {
     checkboxes[i].addEventListener('change', onCheckboxChange);

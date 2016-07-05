@@ -19,6 +19,7 @@
 
     <script src="assets/javascripts/cesium.js"></script>
     <script src="assets/javascripts/chart.js"></script>
+    <script src="assets/javascripts/model.js"></script>
     <script src="assets/javascripts/page.js"></script>
 
     <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.png" />
@@ -94,13 +95,28 @@
         <h4>Altitude Graph</h4>
       </div>
 
-      <div class="grid_2">
+      <div id="chart_controls" class="grid_2">
         <ul>
-          <li><label><input type="checkbox" checked="checked" data-series="Above Ground Level" />Altitude</label></li>
-          <li><label><input type="checkbox" data-series="Pressure Altitude" />Pressure Altitude</label></li>
-          <li><label><input type="checkbox" data-series="GPS Altitude" />GPS Altitude</label></li>
-          <li><label><input type="checkbox" checked="checked" data-series="Acceleration" />Acceleration</label></li>
-          <li><label><input type="checkbox" checked="checked" data-series="Ground Speed" />Ground Speed</label></li>
+          <li>
+            <input type="checkbox" id="series_agl" checked="checked" data-series="Above Ground Level" />
+            <label for="series_agl">Altitude</label>
+          </li>
+          <li>
+            <input type="checkbox" id="series_pressure_altitude" data-series="Pressure Altitude" />
+            <label for="series_pressure_altitude">Pressure Altitude</label>
+          </li>
+          <li>
+            <input type="checkbox" id="series_gps_altitude" data-series="GPS Altitude" />
+            <label for="series_gps_altitude">GPS Altitude</label>
+          </li>
+          <li>
+            <input type="checkbox" id="series_acceleration" checked="checked" data-series="Acceleration" />
+            <label for="series_acceleration">Acceleration</label>
+          </li>
+          <li>
+            <input type="checkbox" id="series_ground_speed" checked="checked" data-series="Ground Speed" />
+            <label for="series_ground_speed">Ground Speed</label>
+          </li>
         </ul>
       </div>
 
@@ -113,6 +129,8 @@
       </div>
 
       <div class="grid_12">
+        <input type="checkbox" id="track_rocket" /><label for="track_rocket">Track rocket</label>
+
         <div id="cesium"></div>
         <div id="credits"></div>
       </div>

@@ -13,4 +13,6 @@ var index_landed = <%= @index_landed %>;
 
 var flightEnd = '<%= @flight_end.iso8601 %>';
 var launchTime = '<%= @launch_time.iso8601 %>';
-var coordinates = <%= @points.map{|point| [point[:delta] - @points[0][:delta] + 5, point[:longitude], point[:latitude], point[:agl]]}.flatten.to_json %>;
+var apogee =  <%= @actual_apogee %>;
+var coordinates = <%= @points.map {|point| [point[:delta] - @points[0][:delta], point[:longitude], point[:latitude], point[:agl]]}.flatten.to_json %>;
+var orientation = <%= @points.map {|point| [point[:delta] - @points[0][:delta], point[:roll], point[:pitch].abs, point[:heading], 0]}.flatten.to_json %>;

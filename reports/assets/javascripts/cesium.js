@@ -1,7 +1,4 @@
 var LINE_COLOR = [255, 0, 255, 255];
-
-var CAMERA_LATITUDE_ADJUSTMENT = -0.04;
-var CAMERA_HEIGHT_MULTIPLIER = 1.25;
 var CAMERA_ANGLE = -20;
 
 var flightPath;
@@ -103,16 +100,6 @@ function getOrientation() {
   return orientation;
 }
 
-function getCartographicCoordinates() {
-  var points = [];
-
-  for(var i=0; i<coordinates.length; i+=4) {
-    points.push(Cesium.Cartographic.fromDegrees(coordinates[i+1], coordinates[i+2], coordinates[i+3]));
-  }
-
-  return points;
-}
-
 function onTrackRocketChange(event) {
   // Don't do anything unless Cesium is initialized already
   if(!viewer) return;
@@ -133,10 +120,11 @@ function resetCamera(pauseClock) {
     viewer.clock.shouldAnimate = false;
   }
 
-  viewer.camera.flyTo({
-    'destination': Cesium.Cartesian3.fromDegrees(coordinates[1], coordinates[2] + CAMERA_LATITUDE_ADJUSTMENT, apogee * CAMERA_HEIGHT_MULTIPLIER),
+  var boundingSphere = Cesium.BoundingSphere.fromPoints(getCartesianCoordinates());
+
+  viewer.camera.flyToBoundingSphere(boundingSphere, {
     'orientation': {
-      'heading': Cesium.Math.toRadians(0),
+      'heading': 0,
       'pitch': Cesium.Math.toRadians(CAMERA_ANGLE),
       'roll': 0,
     },
@@ -166,4 +154,24 @@ function trackRocket() {
       }
     },
   });
+}
+
+function getCartographicCoordinates() {
+  var points = [];
+
+  for(var i=0; i<coordinates.length; i+=4) {
+    points.push(Cesium.Cartographic.fromDegrees(coordinates[i+1], coordinates[i+2], coordinates[i+3]));
+  }
+
+  return points;
+}
+
+function getCartesianCoordinates() {
+  var points = [];
+
+  for(var i=0; i<coordinates.length; i+=4) {
+    points.push(Cesium.Cartesian3.fromDegrees(coordinates[i+1], coordinates[i+2], coordinates[i+3]));
+  }
+
+  return points;
 }

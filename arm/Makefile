@@ -3,8 +3,8 @@
 BOARD := adafruit_feather_m0
 DEVICE_PORT := ttyACM1
 TARGET := osprey
-PACKAGE_DIR := /home/shane/.arduino15/packages/adafruit
-SAMD_DIR := $(PACKAGE_DIR)/hardware/samd/1.0.4
+PACKAGE_DIR := $(HOME)/.arduino15/packages/adafruit
+SAMD_DIR := $(PACKAGE_DIR)/hardware/samd/1.0.9
 
 SOURCES := $(wildcard $(addprefix src/, *.c *.cpp))
 HEADERS :=  $(wildcard $(addprefix src/, *.h))

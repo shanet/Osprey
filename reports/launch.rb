@@ -19,6 +19,11 @@ class Launch
   end
 
   def render
+    if File.exist? @output_path
+      puts 'Launch report already exists at %s. Skipping.' % @output_path
+      return
+    end
+
     @title = 'Launch report for %s' % first_valid_timestamp.getlocal.strftime('%b %e, %Y, %H:%M:%S %Z')
 
     set_stats

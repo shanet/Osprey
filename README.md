@@ -3,89 +3,47 @@
 Osprey
 ======
 
-Osprey is a free and open source tracking and telemetry system for amateur rocketry. It is currently under heavy development.
+Osprey is a free and open source tracking, telemetry, and dual deployment system for amateur rocketry utilizing only off-the-shelf components. It consists of five major components:
 
-Currently the following data is collected:
+0. [The microcontroller and associated sensors](docs/arm.md)
+0. [The e-match igniter circuit](docs/igniter.md)
+0. [The Android application for receiving data during a flight](docs/android.md)
+0. [The desktop application for laptop-based analysis and debugging](docs/desktop.md)
+0. [The launch report generation script for post-flight analysis](docs/reports.md)
 
-* Latitude & longitude
-* Roll, pitch, heading
-* Pressure altitude
-* GPS altitude & speed
-* Absolute & relative timestamps
-* Temperature
-* Battery voltage
+The final assembled product, corresponding Android application, and launch report:
 
-All data is both logged to an on-board microSD card and transmitted via radio to a desktop client with graphing capabilities or an Android application.
+![](/images/header.png?raw=true)
 
-## Hardware
+The following data is collected:
 
-All assembled, the total size is 9.5cm x 3.3cm x 2.8cm and weighs in at 47g.
+|                    |                    |                    |
+|--------------------|--------------------|--------------------|
+|Latitude & longitude|Roll, pitch, heading|Acceleration        |
+|Above ground level  |Pressure altitude   |GPS altitude & speed|
+|ISO 8601 timestamps |Integer timestamps  |Flight phase        |
+|Temperature         |Battery voltage     |Event fired flags   |
 
-![](/images/assembled_1.jpg?raw=true)
-![](/images/assembled_2.jpg?raw=true)
+All data is logged to an on-board microSD card and transmitted via radio to the Android application.
 
-The following hardware is used:
+## High Level Build Overview
 
-* [Adafruit Feather M0 Adalogger](https://www.adafruit.com/products/2796)
-* [Adafruit Ultimate GPS](https://www.adafruit.com/products/746)
-* [Adafruit 10-DOF IMU](https://www.adafruit.com/products/1604)
-* [XBee Pro 900 Wire Antenna](https://www.sparkfun.com/products/9097)
-* [XBee Pro 900 RP-SMA](https://www.sparkfun.com/products/9099)
-* [Adafruit XBee Adapter Kit](https://www.adafruit.com/product/126)
-* [SparkFun XBee Explorer Dongle](https://www.sparkfun.com/products/11697)
-* [Adafruit 500mAh LiPo battery](https://www.adafruit.com/product/1578)
-* [Adafruit Perma-Proto Half-size Breadboard PCB](https://www.adafruit.com/products/1609) (cut in half for use as a mounting board)
-* Either an RP-SMA omnidirectional antenna or a Yagi antenna
-* Female USB to male microUSB if connecting to an Android device
-* Foam tape to hold everything to the mounting board
+Osprey, by nature, is extremely DIY. This is necessary to achieve its goal of not using any custom printed hardware or non-free software. If you are not comfortable soldering your own circuits together or compiling software from source, this is not the project for you. In fact, it's quite likely, even inevitable, that something won't go as intended during a build. Those looking for a more plug'n'play solution should look elsewhere. For the adventurous out there, to fully construct everything follow these steps:
 
-## Wiring
+0. [Assemble the microcontroller and associated sensors](docs/arm.md)
+0. [Assemble the igniter board](docs/igniter.md)
+0. [Compile and upload the microcontroller software](docs/arm.md#software)
+0. [Set the reguired radio configuration](docs/radio.md)
+0. [Assemble the complete microcontroller, sensors, igniter, and switch to your e-bay sled](docs/assembly.md)
+0. [Compile and install the Android application](docs/android.md)
+0. [Review the usage section](docs/usage.md)
+0. Do some ground tests, then stick it in a rocket and cross your fingers.
 
-**NOTE:** The diagram below is a crude approximation because a model for the Adafruit Feather boards are not available yet in Fritzing.
-
-![](/images/wiring.png?raw=true)
-
-Actual wiring:
-
-|Radio       | GPS          | IMU         |
-|------------|--------------|-------------|
-|Pin 1 -> RX | Pin 10 -> RX | SDA -> SDA  |
-|Pin 0 -> TX | Pin 11 -> TX | SCL -> SCL  |
-|3.3V -> Vin | 3.3V -> Vin  | 3.3V -> Vin |
-|GND -> GND  | GND -> GND   | GND -> GND  |
-
-## Dependencies
-
-TODO
-
-## Compiling
-
-### Embedded
-
-TODO
-
-### Android
-
-TODO
-
-## Usage
-
-TODO
-
-* SDHC microSD card formatted as FAT32
-
-### Commands
-
-* `start_flight`
-* `end_flight`
-* `pressure`
-* `zero`
-* `start_logging`
-* `end_logging`
+For everything else, see the documentation in the `docs` directory.
 
 ## Contributing
 
-TODO
+Pull requests, bug reports, and general questions are welcome. Additionally, suggestions on where the documentation can be made more clear are extremely useful. Log files and generated launch reports are appreciated as well for helping to improve the project and as a showcase.
 
 ## License
 

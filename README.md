@@ -9,7 +9,7 @@ Osprey is a free and open source tracking, telemetry, and dual deployment system
 0. [The e-match igniter circuit](docs/igniter.md)
 0. [The Android application for receiving data during a flight](docs/android.md)
 0. [The desktop application for laptop-based analysis and debugging](docs/desktop.md)
-0. [The launch report generation script for post-flight analysis](docs/reports.md)
+0. [The launch report generation script for post-flight analysis](docs/reports.md) ([sample launch report](https://shanet.github.io/Osprey/))
 
 The final assembled product, corresponding Android application, and launch report:
 

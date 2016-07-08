@@ -13,7 +13,7 @@ And:
 * Graph of altitude, acceleration, and ground speed vs. time
 * 3D view of flight path and rocket orientation (roll, pitch, heading)
 
-TODO: link to sample launch report?
+[See here for a sample launch report](https://shanet.github.io/Osprey/)
 
 ### Dependencies
 

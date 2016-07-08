@@ -1,0 +1,69 @@
+body {
+  background-color: #eee;
+}
+
+.container_12 {
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+}
+
+h4 {
+  border-bottom: 1px solid #aaa;
+}
+
+.sub {
+  color: #666;
+  font-size: 10px;
+}
+
+#no_ajax_error {
+  display: none;
+}
+
+#no_ajax_error li {
+  list-style-type: disc;
+  margin-left: 30px;
+}
+
+#map {
+  width: 100%;
+  height: 500px;
+}
+
+#canvas {
+  width: 100%;
+  height: 500px;
+}
+
+#credits > * {
+  position: relative;
+}
+
+.cesium-widget-credits {
+  color: #000;
+  text-shadow: none;
+}
+
+.cesium-widget-credits a {
+  color: #000;
+  text-shadow: none;
+}
+
+input[type="checkbox"] {
+  display: none;
+}
+
+input[type="checkbox"] + label {
+  background-image: url('../images/unchecked.png');
+  background-repeat: no-repeat;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 12px;
+  height: 30px;
+  line-height: 25px;
+  padding-left: 35px;
+}
+
+input[type="checkbox"]:checked + label {
+  background-image: url('../images/checked.png');
+}

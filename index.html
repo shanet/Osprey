@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <link rel="stylesheet" media="screen" href="assets/stylesheets/reset.css" />
+    <link rel="stylesheet" media="screen" href="assets/stylesheets/960.css" />
+
+    <link rel="stylesheet" media="screen" href="assets/lib/bootstrap.min.css">
+    <link rel="stylesheet" media="screen" href="assets/lib/c3/c3.min.css" />
+    <link rel="stylesheet" media="screen" href='assets/lib/cesium/Widgets/widgets.css' />
+
+    <link rel="stylesheet" media="screen" href="assets/stylesheets/page.css" />
+
+    <script src="assets/lib/d3.min.js"></script>
+    <script src="assets/lib/c3/c3.min.js"></script>
+    <script src="assets/lib/cesium/Cesium.js"></script>
+
+    <script src="assets/data.js"></script>
+
+    <script src="assets/javascripts/cesium.js"></script>
+    <script src="assets/javascripts/chart.js"></script>
+    <script src="assets/javascripts/model.js"></script>
+    <script src="assets/javascripts/page.js"></script>
+
+    <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.png" />
+
+    <title>Launch report for May 28, 2016, 16:18:56 PDT</title>
+  </head>
+
+  <body>
+    <div class="container_12">
+      <div class="grid_12">
+        <h3>Launch report for May 28, 2016, 16:18:56 PDT</h3>
+      </div>
+
+      <div id="no_ajax_error" class="alert alert-danger grid_12">
+        Unable to access local files due to browser security restrictions. See below for workarounds.
+
+        <ul>
+          <li>Chrome: Start with <code>--allow-file-access-from-files</code> flag.</li>
+          <li>Firefox &amp; Safari: This shouldn't be a problem.</li>
+          <li>IE: <a href="https://getfirefox.com">https://getfirefox.com</a></li>
+        </ul>
+      </div>
+
+      <div class="grid_12">
+        <h4>Stats</h4>
+
+        <table class="table">
+          <thead>
+            <th>Actual apogee</th>
+            <th>Calculated apogee</th>
+            <th>Apogee cause</th>
+            <th>Main chute target</th>
+            <th>Main chute actual</th>
+            <th>Average temperature</th>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td>2160.28m <div class="sub">(7087.53ft)</div></td>
+              <td>2121.83m <div class="sub">(6961.38ft)</div></td>
+              <td>Countdown</td>
+              <td>121.0m <div class="sub">(396.98ft)</div></td>
+              <td>116.15m <div class="sub">(381.07ft)</div></td>
+              <td>23.76 &deg;C</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <table class="table">
+          <thead>
+            <th>Flight time</th>
+            <th>Ascent time</th>
+            <th>Ascent rate</th>
+            <th>Descent time</th>
+            <th>Descent rate - drogue</th>
+            <th>Descent rate - main</th>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td>4m 20s</td>
+              <td>19.0s</td>
+              <td>113.7 m/s</td>
+              <td>4m 01s</td>
+              <td>9.04 m/s</td>
+              <td>7.74 m/s</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="grid_12">
+        <h4>Altitude Graph</h4>
+      </div>
+
+      <div id="chart_controls" class="grid_2">
+        <ul>
+          <li>
+            <input type="checkbox" id="series_agl" checked="checked" data-series="Above Ground Level" />
+            <label for="series_agl">Altitude</label>
+          </li>
+          <li>
+            <input type="checkbox" id="series_pressure_altitude" data-series="Pressure Altitude" />
+            <label for="series_pressure_altitude">Pressure Altitude</label>
+          </li>
+          <li>
+            <input type="checkbox" id="series_gps_altitude" data-series="GPS Altitude" />
+            <label for="series_gps_altitude">GPS Altitude</label>
+          </li>
+          <li>
+            <input type="checkbox" id="series_acceleration" checked="checked" data-series="Acceleration" />
+            <label for="series_acceleration">Acceleration</label>
+          </li>
+          <li>
+            <input type="checkbox" id="series_ground_speed" checked="checked" data-series="Ground Speed" />
+            <label for="series_ground_speed">Ground Speed</label>
+          </li>
+        </ul>
+      </div>
+
+      <div class="grid_10">
+        <div id="chart"></div>
+      </div>
+
+      <div class="grid_12">
+        <h4>Flight Path</h4>
+      </div>
+
+      <div class="grid_12">
+        <input type="checkbox" id="track_rocket" /><label for="track_rocket">Track rocket</label>
+
+        <div id="cesium"></div>
+        <div id="credits"></div>
+      </div>
+    </div>
+
+    <script>ready();</script>
+  </body>
+</html>

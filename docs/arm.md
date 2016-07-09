@@ -35,7 +35,7 @@ The following hardware is used:
 
 #### Dependencies
 
-These instructions are for Linux (x86_64). See below for where to find instructions for other platforms.
+These instructions are for Linux (x86_64). See below for where to find instructions for other platforms. Do not ask for Windows support.
 
 * Download and extract the [Adafruit SAMD library](https://github.com/adafruit/arduino-board-index/raw/gh-pages/boards/adafruit-samd-1.0.9.tar.bz2) to `~/.arduino15/packages/adafruit/hardware/samd/1.0.9`
 * Download and extract the [ARM compiler](http://downloads.arduino.cc/gcc-arm-none-eabi-4.8.3-2014q1-linux64.tar.gz) to `~/.arduino15/packages/adafruit/tools/arm-none-eabi-gcc/4.8.3-2014q1`

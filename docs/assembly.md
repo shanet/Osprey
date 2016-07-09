@@ -5,6 +5,7 @@ A variety of switches may be used. For simplicity, a single switch for both the 
 ![](/images/sled.jpg?raw=true)
 
 In short, the final assembly includes:
+
 * Connect the igniter to the micrcontroller via the terminal blocks.
 * Connect the battery to the switch and the switch to the igniter and microcontroller.
   * JST wires and [a JST breakout board](https://www.adafruit.com/product/1862) are used in the photo above to make for quick connects/disconnects.

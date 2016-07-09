@@ -35,5 +35,5 @@ And you're ready to fly!
 * End logging: Stop logging data points to the log file on the SD card.
 * Set event: Set the altitude at which the given event will fire.
 * Fire event: Immediately fire the e-match connected to the igniter for the given event. Note: The igniter must be armed in order for it to fire.
-* Arm igniter: Arm the igniter to allow it to be fired
-* Disarm igniter: Disarm the igniter to not allow it to be fired
+* Arm igniter: Arm the igniter to allow it to be fired.
+* Disarm igniter: Disarm the igniter to not allow it to be fired.

@@ -17,12 +17,11 @@ The final assembled product, corresponding Android application, and launch repor
 
 The following data is collected:
 
-|                    |                    |                    |
-|--------------------|--------------------|--------------------|
-|Latitude & longitude|Roll, pitch, heading|Acceleration        |
-|Above ground level  |Pressure altitude   |GPS altitude & speed|
-|ISO 8601 timestamps |Integer timestamps  |Flight phase        |
-|Temperature         |Battery voltage     |Event fired flags   |
+|                     |                     |                    |                  |
+|---------------------|---------------------|--------------------|------------------|
+|Latitude & longitude |Above ground level   |ISO 8601 timestamp  |Battery voltage   |
+|Roll, pitch, heading |Pressure altitude    |Integer timestamp   |Temperature       |
+|Acceleration         |GPS altitude & speed |Flight phase        |Event fired flags |
 
 All data is logged to an on-board microSD card and transmitted via radio to the Android application.
 
@@ -33,13 +32,24 @@ Osprey, by nature, is extremely DIY. This is necessary to achieve its goal of no
 0. [Assemble the microcontroller and associated sensors](docs/arm.md)
 0. [Assemble the igniter board](docs/igniter.md)
 0. [Compile and upload the microcontroller software](docs/arm.md#software)
-0. [Set the reguired radio configuration](docs/radio.md)
-0. [Assemble the complete microcontroller, sensors, igniter, and switch to your e-bay sled](docs/assembly.md)
+0. [Set the required radio configuration](docs/radio.md)
+0. [Install the completed microcontroller, sensors, igniter, and switch to your e-bay sled](docs/assembly.md)
 0. [Compile and install the Android application](docs/android.md)
 0. [Review the usage section](docs/usage.md)
 0. Do some ground tests, then stick it in a rocket and cross your fingers.
 
 For everything else, see the documentation in the `docs` directory.
+
+## Roadmap
+
+Some potential future additions:
+
+* "Micro version" with only a processor, IMU, and battery for data logging purposes only.
+* The 3D flight path playback in the launch report could be made more rich with the addition of altitude and flight phase data.
+* Writing documentation on how some of the internals work. Eg. How is apogee detected? What Kalman implementation is used?
+* Support for multiple flight stages.
+* Reworking the igniter circuit to only need a single capacitor.
+* Support for offline maps in the generated launch report webpage.
 
 ## Contributing
 

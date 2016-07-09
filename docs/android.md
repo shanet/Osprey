@@ -1,12 +1,14 @@
 ## Android Application
 
+The Android app is the main method of interfacing with the rocket during flight and during recovery. It contains a display of all data from the rocket as well as the ability to issue commands to the rocket. Moreover, it tracks the rocket's location and continuously calculates the distance and direction from the device's location to the rocket.
+
 A pre-built APK is not available in order to preserve the author's sanity that would surely be lost from publishing an app on the Play store.
 
 ### Dependencies
 
-Install Android Studio or at least the Android command line tools available at: https://developer.android.com/studio/index.html#downloads.
+Install Android Studio or at least the Android command line tools from https://developer.android.com/studio/index.html#downloads.
 
-In Osprey's directory, you may have to create a file, `android/local.properties` with the following content:
+In Osprey's directory, you may have to create a file, `android/local.properties`, with the following content:
 ```
 sdk.dir=/path/to/android/sdk
 ```
@@ -31,8 +33,8 @@ $ ./gradlew installDebug
 
 With the radio plugged in and GPS enabled, start the app. There are eight main views:
 
-* Location: A map with the current rocket location, device location, flight path of rocket, and path from current device location to rocket location. The options menu contains options to change the map style, show the last known location of the rocket, save maps for offline use, and track a given pair of coordinates.
-* Tracking: The distance and relative bearing to the rocket's current location as well a compass and big arrow that points towards the rocket. The options menu contains options to show the last known location of the rocket and track a given pair of coordinates.
+* Location: A map with the current rocket location, device location, flight path of rocket, and path from current device location to the rocket. The options menu contains options to change the map style, show the last known location of the rocket, save maps for offline use, and track a given pair of coordinates.
+* Tracking: The distance and relative bearing to the rocket's current location as well a compass and unnecessarily large arrow that points towards the rocket. The options menu contains options to show the last known location of the rocket and track a given pair of coordinates.
 * Altitude: A graph of the above ground level, pressure altitude, and GPS altitude along with the pressure setting and an option to set it.
 * Acceleration: A graph of the combined X, Y, and Z axes acceleration.
 * Orientation: A graph of the roll, pitch, and heading angles.

@@ -1,6 +1,6 @@
 ## Igniter
 
-Osprey uses a custom designed, capacitor-based igniter circuit with two channels and capable of being powered by a 3.7V lipo battery. *This is an optional component.* It is perfectly okay to simply skip this for use in a non-dual deployment or low power rocket. The microcontroller itself can fit inside a 1.65" diameter rocket which makes for a great standalone tracking system.
+Osprey uses a custom designed, capacitor-based igniter circuit with two channels and capable of being powered by a 3.7V lipo battery. **This is an optional component.** It is perfectly okay to simply skip this for use in a non-dual deployment or low power rocket. The microcontroller itself can fit inside a 1.65" diameter rocket which makes for a great standalone tracking system.
 
 All assembled, the total size is 8.2cm x 2.5cm x 2.1cm and weighs in at 26g.
 

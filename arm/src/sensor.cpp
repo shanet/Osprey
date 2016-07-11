@@ -20,11 +20,10 @@ kalman_t Sensor::kalmanInit(float initialValue) {
 }
 
 void Sensor::kalmanUpdate(kalman_t* state, float measurement) {
-  // prediction update
-  //omit x = x
+  // Prediction update
   state->error = state->error + state->processNoise;
 
-  // measurement update
+  // Measurement update
   state->gain = state->error / (state->error + state->measurementNoise);
   state->value = state->value + state->gain * (measurement - state->value);
   state->error = (1 - state->gain) * state->error;

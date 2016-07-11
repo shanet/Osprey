@@ -40,13 +40,14 @@ Osprey, by nature, is extremely DIY. This is necessary to achieve its goal of no
 
 For everything else, see the documentation in the `docs` directory.
 
+A write-up of some of Osprey's internals (Kalman filter, apogee detection, testing, etc.) is [available on my blog](https://shanetully.com/2016/07/inside-the-construction-of-an-amateur-rocketry-flight-computer).
+
 ## Roadmap
 
 Some potential future additions:
 
 * "Micro version" with only a processor, IMU, and battery for data logging purposes only.
 * The 3D flight path playback in the launch report could be made more rich with the addition of altitude and flight phase data.
-* Writing documentation on how some of the internals work. Eg. How is apogee detected? What Kalman implementation is used?
 * Support for multiple flight stages.
 * Reworking the igniter circuit to only need a single capacitor.
 * Support for offline maps in the generated launch report webpage.

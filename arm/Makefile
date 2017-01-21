@@ -80,16 +80,15 @@ LIBRARY_SEARCH_PATHS ?= lib $(SAMD_DIR)/libraries
 FOUND_LIBRARIES := $(filter $(notdir $(wildcard $(addsuffix /*, $(LIBRARY_SEARCH_PATHS)))), \
 	$(shell sed -ne "s/^ *\# *include *[<\"]\(.*\)\.h[>\"]/\1/p" $(HEADERS)))
 
-# Explicitly add everything in lib/
-FOUND_LIBRARIES += $(notdir $(wildcard lib/*))
-
 # Add the path to the found libraries
 LIBRARY_DIRS := $(foreach lib, $(FOUND_LIBRARIES), \
 	$(firstword $(wildcard $(addsuffix /$(lib), $(LIBRARY_SEARCH_PATHS)))))
 
-# Add each path again, but with its utility directory tacked onto the end
-LIBRARY_DIRS += $(foreach lib, $(FOUND_LIBRARIES), \
-	$(firstword $(wildcard $(addsuffix /utility, $(addsuffix /$(lib), $(LIBRARY_SEARCH_PATHS))))))
+# Explicitly add everything in lib/
+EXPLICIT_LIBRARIES = $(notdir $(wildcard lib/*))
+
+LIBRARY_DIRS += $(foreach lib, $(EXPLICIT_LIBRARIES), \
+	$(shell find lib/$(lib) -type d))
 
 # Platform Libraries
 # -------------------------------------------------------------------------------------------------------------

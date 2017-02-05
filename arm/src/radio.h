@@ -7,7 +7,7 @@
 #include "sensor.h"
 #include "logger.h"
 
-#define RADIO_BAUD 115200
+#define RADIO_BAUD 230400
 #define RADIO_MAX_LINE_LENGTH 64
 
 class Radio : public virtual Sensor {

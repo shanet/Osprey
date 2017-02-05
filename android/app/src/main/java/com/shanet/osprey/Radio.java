@@ -25,7 +25,7 @@ import java.util.concurrent.Executors;
 import java.util.List;
 
 public class Radio {
-  private static final int BAUD_RATE = 115200;
+  private static final int BAUD_RATE = 230400;
 
   private static UsbSerialPort port;
   private final ExecutorService executor;

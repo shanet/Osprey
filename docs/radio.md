@@ -1,6 +1,6 @@
 ## Radio Configuration
 
-Xbee Pro radios are used for communication between the rocket and the ground. Xbee Pros were chosen because of their increased range. Despite being more expensive, the cost is more than made up for simply by being able to recover a rocket due to the increased range. However, keep in mind that 900mHz is still line of sight. If your rocket lands on the other side of a hill, the signal will be temporarily lost. A high gain directional antenna is also highly recommended.
+Xbee Pro radios are used for communication between the rocket and the ground. Xbee Pros were chosen because of their increased range. Despite being more expensive, the cost is more than made up for simply by being able to recover a rocket due to the increased range. However, keep in mind that 900mHz is still line of sight. If your rocket lands on the other side of a hill, the signal will be temporarily lost. A directional antenna is also highly recommended.
 
 The radios themselves require some configuration, however, config files are provided so it's just a matter of setting two fields and uploading them to the radios.
 

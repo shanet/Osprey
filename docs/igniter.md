@@ -13,10 +13,18 @@ All assembled, the total size is 8.2cm x 2.5cm x 2.1cm and weighs in at 26g.
 * [500k Ohm resistor x2](http://www.mouser.com/ProductDetail/Vishay/RN65E5003BB14/?qs=%2fha2pyFaduidusYt8VW5IWPh4O0tbXQgGT9h5gjhx09KlAwI9RvHYA%3d%3d)
 * [100k Ohm resistor x2](http://www.mouser.com/ProductDetail/Vishay-BC-Components/PR02000201003JR500/?qs=sGAEpiMZZMu61qfTUdNhG%2f4r7Iw6CIky20eXd4jNHbg%3d)
 * [1k Ohm resistor x2](http://www.mouser.com/ProductDetail/Vishay-BC-Components/PR02000201001JR500/?qs=sGAEpiMZZMu61qfTUdNhG1DYDXWaU6u7M9KgRGRIM2c%3d)
-* 3-position terminal block
-* 4-position terminal block
-* JST connector for battery
-* [Magnetic switch](http://aeroconsystems.com/cart/switches/magnetic-switch-with-led-indicator/). Note: Any switch will work; I used a magnetic switch for the ability to easily turn the electronics on/off without the need to put a large access hole in the e-bay. You'll also most likely want a bigger magnet for turning the switch on/off.
+* [3-position terminal block](http://www.mouser.com/ProductDetail/Adafruit/2136/)
+* [4-position terminal block](http://www.mouser.com/Search/ProductDetail.aspx?qs=GURawfaeGuCecymQwHHL1g%3d%3d)
+* JST-PH connector for battery
+* [JST-PH Breakout board](https://www.adafruit.com/product/1862)
+* [Magnetic switch](http://shop.featherweightaltimeters.com/product.sc?productId=33&categoryId=2).
+** Magnets: I used a combination of both a [cube magnet](https://www.amazon.com/gp/product/B0012DNFP6/ref=oh_aui_search_detailpage?ie=UTF8&psc=1) and [circular magnets](https://www.amazon.com/gp/product/B008H40U10/ref=oh_aui_search_detailpage?ie=UTF8&psc=1).
+
+### Switch
+
+Any switch will work; I used a magnetic switch for the ability to easily turn the electronics on/off without the need to put a large access hole in the e-bay. If going this route, you may need a more/less powerful magnet depending on the diameter of the rocket. The magnets listed above worked well for a 2.56" diameter rocket with the switch placed roughly in the center.
+
+The switch is connected to the JST breakout board which is then connected to the igniter with a JST cable. This allows for all components to be swapped out independent of one another.
 
 ### Schematic & Wiring
 

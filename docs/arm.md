@@ -9,16 +9,18 @@ The following hardware is used:
 * [Adafruit Feather M0 Adalogger](https://www.adafruit.com/products/2796)
 * [Adafruit Ultimate GPS](https://www.adafruit.com/products/746)
 * [Adafruit 10-DOF IMU](https://www.adafruit.com/products/1604)
-* [XBee Pro 900 Wire Antenna](https://www.sparkfun.com/products/9097)
-* [XBee Pro 900 RP-SMA](https://www.sparkfun.com/products/9099)
+* [XBee Pro 900 Wire Antenna](http://www.mouser.com/ProductDetail/Digi-International/XBP9B-DMWT-002)
+* [XBee Pro 900 RP-SMA Connector](http://www.mouser.com/ProductDetail/Digi-International/XBP9B-DMST-002)
 * [Adafruit XBee Adapter Kit](https://www.adafruit.com/product/126)
 * [SparkFun XBee Explorer Dongle](https://www.sparkfun.com/products/11697)
 * [Adafruit 500mAh LiPo battery](https://www.adafruit.com/product/1578)
 * [Adafruit Perma-Proto Half-size Breadboard PCB](https://www.adafruit.com/products/1609) (cut in half for use as a mounting board)
-* Either an RP-SMA omnidirectional antenna or a Yagi antenna
+* Either an omnidirectional antenna or a Yagi antenna with an RP-SMA connector
 * [3 position terminal block](https://www.adafruit.com/products/725)
 * USB OTG if connecting to an Android device
-* Foam tape to hold everything to the mounting board
+* [Foam mounting tape to hold everything to the mounting board](https://www.amazon.com/3M-Scotch-Mounting-125-Inch-314/dp/B0007P5G8Y/ref=sr_1_1?ie=UTF8&qid=1486328647&sr=8-1&keywords=Scotch+Mounting+Tape)
+
+**Note:** Adafruit is occasionally out of stock with their components. I have had good luck in the past finding them in stock with [Mouser](http://www.mouser.com).
 
 ### Wiring
 

@@ -41,6 +41,13 @@ class Launch
     end
   end
 
+  def debug
+    @points.each do |point|
+      # Put debug stuff here...
+      puts '%f,%f,%f,%d' % [point[:agl], point[:latitude], point[:longitude], point[:delta]]
+    end
+  end
+
 private
 
   def set_stats
@@ -106,11 +113,11 @@ private
   end
 
   def apogee
-    return @points.find {|point| point[:phase] == DROGUE}
+    return @points.find {|point| point[:phase] == DROGUE} || {}
   end
 
   def main
-    return @points.find {|point| point[:phase] == MAIN}
+    return @points.find {|point| point[:phase] == MAIN} || {agl: 0.0, iso8601: Time.now.to_s}
   end
 
   def phase_index(phase)

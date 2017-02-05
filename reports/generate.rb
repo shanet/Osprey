@@ -22,6 +22,7 @@ def main
   if log.launches.any?
     log.launches.each do |launch|
       launch.render
+      # launch.debug
     end
   else
     puts 'No launches detected in log'

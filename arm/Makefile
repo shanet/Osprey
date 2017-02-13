@@ -1,10 +1,11 @@
 # The Basics
 # -------------------------------------------------------------------------------------------------------------
 BOARD := adafruit_feather_m0
-DEVICE_PORT := ttyACM1
+DEVICE := ttyACM1
 TARGET := osprey
 PACKAGE_DIR := $(HOME)/.arduino15/packages/adafruit
 SAMD_DIR := $(PACKAGE_DIR)/hardware/samd/1.0.9
+BAUD := 230400
 
 SOURCES := $(wildcard $(addprefix src/, *.c *.cpp))
 HEADERS :=  $(wildcard $(addprefix src/, *.h))
@@ -104,17 +105,20 @@ CORE_LIB_OBJECTS := $(foreach dir, $(ARDUINOCOREDIR) $(LIBRARY_DIRS), \
 # Recipes
 # -------------------------------------------------------------------------------------------------------------
 
-.PHONY:	all target upload size clean test
+.PHONY:	all target upload size console clean test
 
 all: target
 
 target: $(TARGET).bin
 
 upload: target
-	$(UPLOADER) -i -d --port=$(DEVICE_PORT) -U true -i -e -w -v $(OUTPUT)/$(TARGET).bin -R
+	$(UPLOADER) -i -d --port=$(DEVICE) -U true -i -e -w -v $(OUTPUT)/$(TARGET).bin -R
 
 size: $(TARGET).elf
 	echo && avr-size $(OUTPUT)/$(TARGET).elf
+
+console:
+	screen /dev/$(DEVICE) $(BAUD)
 
 $(TARGET).bin: $(TARGET).elf
 	$(OBJCOPY) -O binary $(OUTPUT)/$< $(OUTPUT)/$@

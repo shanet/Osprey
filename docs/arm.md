@@ -20,7 +20,7 @@ The following hardware is used:
 * USB OTG if connecting to an Android device
 * [Foam mounting tape to hold everything to the mounting board](https://www.amazon.com/3M-Scotch-Mounting-125-Inch-314/dp/B0007P5G8Y/ref=sr_1_1?ie=UTF8&qid=1486328647&sr=8-1&keywords=Scotch+Mounting+Tape)
 
-**Note:** Adafruit is occasionally out of stock with their components. I have had good luck in the past finding them in stock with [Mouser](http://www.mouser.com).
+**Note:** Adafruit is occasionally out of stock with their components. I have had good luck in the past finding them in stock at [Mouser](http://www.mouser.com).
 
 ### Wiring
 
@@ -47,6 +47,21 @@ These instructions are for Linux (x86_64). See below for where to find instructi
 Note: The archives above can be extracted whenever you'd like, but the paths at the top of the Makefile must be adjusted accordingly.
 
 Alternatively, Adafruit has good instructions for getting the above set up with the help of the Arduino software. If not using Linux, this is most likely the easiest way to gather the dependencies.
+
+For convenience, here's a list of commands to download each of the tarballs above and put them in the correct location:
+
+```
+mkdir -p ~/.arduino15/packages/adafruit/hardware/samd/1.0.9
+mkdir -p ~/.arduino15/packages/adafruit/tools/arm-none-eabi-gcc/4.8.3-2014q1
+mkdir -p ~/.arduino15/packages/adafruit/tools/bossac/1.6.1-arduino
+mkdir -p ~/.arduino15/packages/adafruit/tools/CMSIS/4.0.0-atmel
+
+curl --location https://github.com/adafruit/arduino-board-index/raw/gh-pages/boards/adafruit-samd-1.0.9.tar.bz2 | tar -xjf - --strip-components=1 --directory ~/.arduino15/packages/adafruit/hardware/samd/1.0.9
+curl http://downloads.arduino.cc/gcc-arm-none-eabi-4.8.3-2014q1-linux64.tar.gz | tar -xzf - --strip-components=1 --directory ~/.arduino15/packages/adafruit/tools/arm-none-eabi-gcc/4.8.3-2014q1
+curl http://downloads.arduino.cc/bossac-1.6.1-arduino-x86_64-linux-gnu.tar.gz | tar -xzf - --strip-components=1 --directory ~/.arduino15/packages/adafruit/tools/bossac/1.6.1-arduino
+curl http://downloads.arduino.cc/CMSIS-4.0.0.tar.bz2 | tar -xjf - --strip-components=1 --directory ~/.arduino15/packages/adafruit/tools/CMSIS/4.0.0-atmel
+
+```
 
 #### Compiling & Uploading
 

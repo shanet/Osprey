@@ -6,6 +6,7 @@ TARGET := osprey
 PACKAGE_DIR := $(HOME)/.arduino15/packages/adafruit
 SAMD_DIR := $(PACKAGE_DIR)/hardware/samd/1.0.9
 BAUD := 230400
+RADIO := ttyUSB0
 
 SOURCES := $(wildcard $(addprefix src/, *.c *.cpp))
 HEADERS :=  $(wildcard $(addprefix src/, *.h))
@@ -118,7 +119,7 @@ size: $(TARGET).elf
 	echo && avr-size $(OUTPUT)/$(TARGET).elf
 
 console:
-	screen /dev/$(DEVICE) $(BAUD)
+	screen /dev/$(RADIO) $(BAUD)
 
 $(TARGET).bin: $(TARGET).elf
 	$(OBJCOPY) -O binary $(OUTPUT)/$< $(OUTPUT)/$@

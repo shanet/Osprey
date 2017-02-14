@@ -33,6 +33,8 @@
 #define APOGEE_IDEAL 0.15 // g
 #define APOGEE_OKAY 0.3 // g
 #define APOGEE_ALTITUDE_DELTA 1 // meters
+#define FREE_FALL_ALTITUDE_DELTA 10 // meters
+#define FREE_FALL_ALTITUDE_LIMIT 3
 #define LANDED_ALTITUDE_DELTA 1.5 // meters
 #define LANDED_ALTITUDE_LIMIT 5
 
@@ -79,6 +81,9 @@ class Event : public virtual Sensor {
     int checkApogeeCountdowns();
     void disableApogeeCountdowns();
 
+    int isInFreeFall(float altitude);
+    void panic();
+
     int armed;
     int phase;
     event_t events[NUM_EVENTS];
@@ -89,6 +94,7 @@ class Event : public virtual Sensor {
     int pendingApogee;
     int apogeeCause;
     float previousAltitude;
+    int freeFallAltitudeInRange;
     int landedAltitudeInRange;
 };
 

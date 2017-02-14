@@ -5,6 +5,7 @@ using namespace Osprey;
 void setup(void) {
   initSensors();
   pinMode(HEARTBEAT_LED, OUTPUT);
+  counter = 0;
 }
 
 void loop(void) {
@@ -12,6 +13,8 @@ void loop(void) {
   printJSON();
   processCommand();
   heartbeat();
+
+  counter++;
 }
 
 void Osprey::printJSON() {
@@ -29,24 +32,30 @@ void Osprey::printJSON() {
   radio.send(", \"heading\": ");
   radio.send(accelerometer.getHeading());
 
-  radio.send(", \"acceleration\": ");
-  radio.send(accelerometer.getAcceleration());
-
   radio.send(", \"raw_acceleration\": ");
   radio.send(accelerometer.getRawAcceleration());
 
   radio.send(", \"pressure_altitude\": ");
   radio.send(barometer.getAltitudeAboveSeaLevel());
 
-  radio.send(", \"agl\": ");
-  radio.send(barometer.getAltitudeAboveGround());
-
   radio.send(", \"temp\": ");
   radio.send(thermometer.getTemperature());
+
+  radio.send(", \"id\": ");
+  radio.send(counter);
+
+  radio.send(", \"delta\": ");
+  radio.send(Osprey::clock.getSeconds());
 
   radio.send(", \"iso8601\": \"");
   radio.send(gps.getIso8601());
   radio.send("\"");
+
+  radio.send(", \"agl\": ");
+  radio.send(barometer.getAltitudeAboveGround());
+
+  radio.send(", \"acceleration\": ");
+  radio.send(accelerometer.getAcceleration());
 
   radio.send(", \"latitude\": ");
   radio.send(gps.getLatitude(), 6);
@@ -73,17 +82,11 @@ void Osprey::printJSON() {
   radio.send(", \"pressure_setting\": ");
   radio.send(barometer.getPressureSetting());
 
-  radio.send(", \"logging\": ");
-  radio.send(radio.isLogging());
+  radio.send(", \"phase\": ");
+  radio.send(event.getPhase());
 
   radio.send(", \"battery\": ");
   radio.send(battery.getVoltage(), 2);
-
-  radio.send(", \"delta\": ");
-  radio.send(Osprey::clock.getSeconds());
-
-  radio.send(", \"phase\": ");
-  radio.send(event.getPhase());
 
   radio.send(", \"apogee_cause\": ");
   radio.send(event.getApogeeCause());
@@ -99,6 +102,9 @@ void Osprey::printJSON() {
 
   radio.send(", \"main_alt\": ");
   radio.send(event.getAltitude(EVENT_MAIN));
+
+  radio.send(", \"logging\": ");
+  radio.send(radio.isLogging());
 
   radio.send("}");
   radio.send("\r\n");

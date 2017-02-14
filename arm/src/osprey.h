@@ -25,6 +25,7 @@ namespace Osprey {
   Thermometer thermometer;
 
   extern int commandStatus;
+  int counter;
 
   void printJSON();
   void heartbeat();

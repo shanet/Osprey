@@ -11,14 +11,17 @@
 // Coast
 {"raw_acceleration": 0.74, "pressure_altitude": 2000, "expected_phase": 2, "delta": 6}
 
-// Apogee (acceleration never hit threshold required for apogee and accelerating again (not good!))
-{"raw_acceleration": 1.2, "pressure_altitude": 2100, "expected_phase": 3, "delta": 7}
+// Apogee (acceleration never hit threshold required for apogee and is now in free fall (not good!))
+{"raw_acceleration": 0.74, "pressure_altitude": 1989, "expected_phase": 2, "delta": 7}
+{"raw_acceleration": 0.74, "pressure_altitude": 1978, "expected_phase": 2, "delta": 8}
 
-// Drogue
-{"raw_acceleration": 1.0, "pressure_altitude": 1000, "expected_phase": 3, "delta": 8}
+// Drogue (still in free fall)
+{"raw_acceleration": 0.74, "pressure_altitude": 1967, "expected_phase": 3, "delta": 9}
+{"raw_acceleration": 0.74, "pressure_altitude": 1956, "expected_phase": 3, "delta": 10}
+{"raw_acceleration": 0.74, "pressure_altitude": 1945, "expected_phase": 3, "delta": 11}
 
 // Main
-{"raw_acceleration": 1.0, "pressure_altitude": 250, "expected_phase": 4, "delta": 9}
+{"raw_acceleration": 0.74, "pressure_altitude": 1934, "expected_phase": 4, "delta": 12}
 
 // Landed
-{"raw_acceleration": 1.0, "pressure_altitude": 109, "expected_phase": 5, "delta": 10}
+{"raw_acceleration": 1.0, "pressure_altitude": 109, "expected_phase": 5, "delta": 13}

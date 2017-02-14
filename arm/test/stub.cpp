@@ -7,6 +7,7 @@ FILE* Stub::file;
 map Stub::current;
 
 field_t Stub::fields[] = {
+  {"id", FIELD_INT},
   {"delta", FIELD_INT},
   {"expected_apogee_cause", FIELD_INT},
   {"expected_phase", FIELD_INT},

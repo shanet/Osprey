@@ -89,7 +89,9 @@ void Event::phaseCoast(float acceleration, float altitude) {
     pendingApogee = 1;
 
     // Only start the countdown if it's not already started
-    if(apogeeCountdownStart == 0) apogeeCountdownStart = Osprey::clock.getSeconds();
+    if(apogeeCountdownStart == 0) {
+      apogeeCountdownStart = Osprey::clock.getSeconds();
+    }
 
     return;
   }
@@ -98,13 +100,15 @@ void Event::phaseCoast(float acceleration, float altitude) {
   // can get closer and if not, the timer will expire causing an apogee event
   if(acceleration < APOGEE_OKAY) {
     // Only start the countdown if it's not already started
-    if(safetyApogeeCountdownStart == 0) safetyApogeeCountdownStart = Osprey::clock.getSeconds();
+    if(safetyApogeeCountdownStart == 0) {
+      safetyApogeeCountdownStart = Osprey::clock.getSeconds();
+    }
 
     return;
   }
 
-  // If the acceleration is back to 1 then we're falling but without a drogue chute (uh oh)
-  if(acceleration > 1) {
+  // If we're now in free fall we must have missed apogee so immediately fire the drogue
+  if(isInFreeFall(altitude)) {
     atApogee(APOGEE_CAUSE_FREE_FALL);
     phase = DROGUE;
     return;
@@ -112,6 +116,13 @@ void Event::phaseCoast(float acceleration, float altitude) {
 }
 
 void Event::phaseDrogue(float acceleration, float altitude) {
+  // If we're in the drogue phase and still in free fall fire everything in a desperate attempt to save our ass
+  if(isInFreeFall(altitude)) {
+    panic();
+    phase = MAIN;
+    return;
+  }
+
   // If the event altitude is reached fire it
   for(int i=0; i<numEvents(); i++) {
     event_t *event = &events[i];
@@ -133,8 +144,6 @@ void Event::phaseMain(float altitude) {
   if(landedAltitudeInRange >= LANDED_ALTITUDE_LIMIT) {
     phase = LANDED;
   }
-
-  previousAltitude = altitude;
 }
 
 void Event::phaseLanded() {
@@ -163,6 +172,9 @@ void Event::atApogee(int apogeeCause) {
       fire(i);
     }
   }
+
+  // Reset the free fall counter so that the drogue phase can do its own free fall detection
+  freeFallAltitudeInRange = 0;
 }
 
 void Event::fire(int eventNum) {
@@ -196,6 +208,20 @@ void Event::disableApogeeCountdowns() {
   apogeeCountdownStart = 0;
   safetyApogeeCountdownStart = 0;
   pendingApogee = 0;
+}
+
+int Event::isInFreeFall(float altitude) {
+  if(previousAltitude - altitude > FREE_FALL_ALTITUDE_DELTA) {
+    freeFallAltitudeInRange++;
+  }
+
+  return (freeFallAltitudeInRange >= FREE_FALL_ALTITUDE_LIMIT);
+}
+
+void Event::panic() {
+  for(int i=0; i<numEvents(); i++) {
+    fire(i);
+  }
 }
 
 int Event::didFire(int eventNum) {
@@ -248,6 +274,7 @@ void Event::reset() {
   pendingApogee = 0;
   apogeeCause = APOGEE_CAUSE_NONE;
   landedAltitudeInRange = 0;
+  freeFallAltitudeInRange = 0;
 
   apogeeCountdownStart = 0;
   safetyApogeeCountdownStart = 0;

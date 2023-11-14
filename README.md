@@ -3,6 +3,8 @@
 Osprey
 ======
 
+**Note: I am no longer active in rocketry and as such this repo is unmaintained. Everything here is fairly self-enclosed, however, so it should be possible to get running without too much trouble if you are interested in it.**
+
 Osprey is a free and open source tracking, telemetry, and dual deployment system for amateur rocketry utilizing only off-the-shelf components. It consists of five major components:
 
 0. [The microcontroller and associated sensors](docs/arm.md)
